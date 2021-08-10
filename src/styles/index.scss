@@ -1,0 +1,47 @@
+@import './value.scss';
+@import './reset_element_plus.scss';
+@import './theme.scss'; // 变量定义
+
+* {
+  user-select: none;
+}
+
+::-webkit-scrollbar {
+  /*滚动条整体样式*/
+  width: 10px;
+  /*高宽分别对应横竖滚动条的尺寸*/
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  /*滚动条里面小方块*/
+  border-radius: 10px;
+  background-color: #bbbbbb;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: $theme;
+}
+
+::-webkit-scrollbar-track {
+  /*滚动条里面轨道*/
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  background: #ededed;
+  border-radius: 10px;
+}
+
+.app-container {
+  padding: 20px;
+}
+.block {
+  margin-top: 20px;
+}
+h1 {
+  color: $h1c;
+}
+h2 {
+  color: $h2c;
+}
+h3 {
+  color: $h3c;
+}

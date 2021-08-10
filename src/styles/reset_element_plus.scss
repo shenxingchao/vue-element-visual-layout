@@ -1,0 +1,15 @@
+//重置按钮内部内容水平对齐
+.el-button span {
+  display: inline-flex;
+  align-items: center;
+}
+
+//重置表格颜色
+.el-table thead {
+  color: $h1c !important;
+}
+
+//重置select 样式
+.el-select {
+  width: 100%;
+}

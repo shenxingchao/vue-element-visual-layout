@@ -1,0 +1,39 @@
+$theme: #c62f2f;
+$deep-theme: #ad0f0f;
+$light-theme: #eb5c5c;
+$bg-theme: url('../assets/images/bg_theme.png') no-repeat;
+$white: #ffffff;
+$h1c: #333333;
+$h2c: #555555;
+$h3c: #777777;
+$border: 1px solid #ececec;
+$border-transparent: 1px solid #77777770;
+$bg: #fafafa;
+
+//其他主题变量 只用于切换主题
+$theme2: #409eff;
+$deep-theme2: #1463b3;
+$light-theme2: #66b1ff;
+$bg-theme2: url('../assets/images/bg_theme2.png') no-repeat;
+
+$theme3: #2ba245;
+$deep-theme3: #137c2a;
+$light-theme3: #3fb837;
+$bg-theme3: url('../assets/images/bg_theme3.png') no-repeat;
+
+$theme4: #967efd;
+$deep-theme4: #876ff3;
+$light-theme4: #a692fc;
+$bg-theme4: url('../assets/images/bg_theme4.png') no-repeat center center;
+
+:export {
+  theme: $theme;
+  deep-theme: $deep-theme;
+  light-theme: $light-theme;
+  white: $white;
+  h1c: $h1c;
+  h2c: $h2c;
+  h3c: $h3c;
+  border: $border;
+  border: $border-transparent;
+}

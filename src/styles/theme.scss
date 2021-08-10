@@ -1,0 +1,136 @@
+@mixin theme($theme, $deep-theme, $light-theme, $bg-theme) {
+  // 下面写需要该主题的文件
+  //状态栏
+  .title_bar {
+    background: $bg-theme;
+    .tool_btn {
+      .icon {
+        &:hover {
+          background: $light-theme;
+        }
+        &:active {
+          background: $deep-theme;
+        }
+      }
+    }
+    .title {
+      .icon {
+        &:hover {
+          background: $light-theme;
+        }
+        &:active {
+          background: $deep-theme;
+        }
+      }
+      .icon-disabled {
+        &:hover {
+          background: none !important;
+        }
+        &:active {
+          background: none !important;
+        }
+      }
+    }
+  }
+
+  //滚动条
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: $theme;
+  }
+  //以下是elementui控件颜色
+  //分页颜色
+  .el-pagination.is-background .el-pager li:not(.disabled).active {
+    background-color: $deep-theme;
+  }
+  .el-select .el-input.is-focus .el-input__inner {
+    border-color: $deep-theme;
+  }
+  .el-pagination .el-select .el-input .el-input__inner {
+    &:hover {
+      border-color: $deep-theme;
+    }
+    &:focus {
+      border-color: $deep-theme;
+    }
+  }
+  //按钮
+  .el-button--primary {
+    background-color: $theme;
+    border-color: $theme;
+    &:hover {
+      background-color: $deep-theme;
+      border-color: $deep-theme;
+    }
+  }
+  //输入框
+  .el-input.is-active .el-input__inner,
+  .el-input__inner:focus {
+    border-color: $deep-theme;
+  }
+  //textarea
+  .el-textarea__inner:focus {
+    border-color: $deep-theme;
+  }
+  //日历
+  .el-backtop,
+  .el-calendar-table td.is-today {
+    color: $deep-theme;
+  }
+  //checkbox
+  .el-checkbox__input.is-checked + .el-checkbox__label {
+    color: $deep-theme;
+  }
+  .el-checkbox__input.is-checked .el-checkbox__inner,
+  .el-checkbox__input.is-indeterminate .el-checkbox__inner {
+    background-color: $deep-theme;
+    border-color: $deep-theme;
+  }
+  //下拉选项框
+  .el-select-dropdown__item.selected {
+    span {
+      color: $deep-theme;
+    }
+  }
+  //单选按钮
+  .el-radio__input.is-checked + .el-radio__label {
+    color: $deep-theme;
+  }
+  .el-radio__input.is-checked .el-radio__inner {
+    background-color: $deep-theme;
+    border-color: $deep-theme;
+  }
+}
+
+//下面是实际的主题类  用@include mixin 混入
+.theme1 {
+  @include theme(
+    $theme !important,
+    $deep-theme !important,
+    $light-theme !important,
+    $bg-theme !important
+  );
+}
+.theme2 {
+  @include theme(
+    $theme2 !important,
+    $deep-theme2 !important,
+    $light-theme2 !important,
+    $bg-theme2 !important
+  );
+}
+.theme3 {
+  @include theme(
+    $theme3 !important,
+    $deep-theme3 !important,
+    $light-theme3 !important,
+    $bg-theme3 !important
+  );
+}
+.theme4 {
+  @include theme(
+    $theme4 !important,
+    $deep-theme4 !important,
+    $light-theme4 !important,
+    $bg-theme4 !important
+  );
+}
