@@ -1,6 +1,6 @@
 <template>
   <status-bar>
-    <template v-slot:title>
+    <template #title>
       <div class="title">vue-element-visual-layout</div>
     </template>
   </status-bar>

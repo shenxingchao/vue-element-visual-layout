@@ -6,7 +6,8 @@ export default createStore({
       show_drawer: false, //是否显示抽屉
       theme_type: getTheme() //主题
     },
-    route_list: [] //维护一个路由数组,用于判断是否可以返回或者前进
+    route_list: [], //维护一个路由数组,用于判断是否可以返回或者前进
+    component_tree_list: [] //设计组件树 全局变量
   },
   mutations: {
     SET_SHOW_DRAWER: (state, bool) => {
@@ -17,12 +18,15 @@ export default createStore({
     },
     SET_ROUTE_LIST: (state, route_list) => {
       state.route_list = route_list
+    },
+    SET_COMPONENT_TREE_LIST: (state, component_tree_list) => {
+      state.component_tree_list = component_tree_list
     }
   },
   actions: {
     /**
      * 切换抽屉显示状态
-     * @param param0 commit
+     * @param commit
      * @param bool 显示状态
      */
     handleChangeDrawer({ commit }, bool) {
@@ -31,7 +35,7 @@ export default createStore({
 
     /**
      * 切换主题
-     * @param param0 commit
+     * @param commit
      * @param theme_type number 主题类型数字
      */
     handleChangeTheme({ commit }, theme_type) {
@@ -42,11 +46,20 @@ export default createStore({
 
     /**
      * 改变路由数组
-     * @param param0 commit
+     * @param commit
      * @param route_list 路由列表
      */
     handleChangeRouteList({ commit }, route_list) {
       commit('SET_ROUTE_LIST', route_list)
+    },
+
+    /**
+     * 改变设计组件树
+     * @param commit
+     * @param component_tree_list 组件树
+     */
+    handleChangeComponentTreeList({ commit }, component_tree_list) {
+      commit('SET_COMPONENT_TREE_LIST', component_tree_list)
     }
   },
   modules: {}
