@@ -50,7 +50,7 @@ export default defineComponent({
       attribute,
       (a: any, b: any) => {
         nextTick(() => {
-          //清除高亮
+          //清除高亮边框
           let border = document.getElementsByClassName(
             'border'
           )[0] as HTMLElement
@@ -63,7 +63,6 @@ export default defineComponent({
           ) as HTMLElement
           if (node_element) {
             node_element.className = node_element.className + ' border'
-            console.log(node_element.className)
           }
         })
       },

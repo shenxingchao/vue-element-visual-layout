@@ -37,12 +37,35 @@ const mixins: any = () => {
       } else {
         if (item.children && item.children.length > 0) {
           parent_node = item
-          _handleRecursionGetParentNode(node, item.children, parent_node)
+          return _handleRecursionGetParentNode(node, item.children, parent_node)
         }
       }
     }
     return parent_node
   }
-  return { _handleRecursionDelete, _handleRecursionGetParentNode }
+
+  //递归根据节点id查找节点信息
+  const _handleRecursionGetNodeByNodeId: any = (
+    id: any,
+    component_tree_list: any,
+    find_node: null
+  ) => {
+    for (const item of component_tree_list) {
+      if (item.id == id) {
+        find_node = item
+        break
+      } else {
+        if (item.children && item.children.length > 0) {
+          return _handleRecursionGetNodeByNodeId(id, item.children, find_node)
+        }
+      }
+    }
+    return find_node
+  }
+  return {
+    _handleRecursionDelete,
+    _handleRecursionGetParentNode,
+    _handleRecursionGetNodeByNodeId
+  }
 }
 export default mixins

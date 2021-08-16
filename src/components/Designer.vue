@@ -1,6 +1,7 @@
 <template>
   <el-container style="height:calc(100vh - 40px);">
-    <el-main @dragenter="handleDragEnter" @dragover="handleDragOver" @dragleave="handleDragLeave" @drop="handleDrop">
+    <el-main @dragenter="handleDragEnter" @dragover="handleDragOver" @dragleave="handleDragLeave" @drop="handleDrop"
+             @click="handleClick">
       <!-- 使用递归组件 -->
       <component-tree :component_tree_list="component_tree_list"></component-tree>
     </el-main>
@@ -22,8 +23,8 @@ export default defineComponent({
   setup() {
     const store = useStore()
 
-    //递归删除旧的占位块
-    const { _handleRecursionDelete } = mixins()
+    //递归删除旧的占位块  递归根据节点id查找节点信息
+    const { _handleRecursionDelete, _handleRecursionGetNodeByNodeId } = mixins()
 
     //数据对象
     let data: any = reactive({
@@ -108,12 +109,53 @@ export default defineComponent({
       store.dispatch('handleChangeCurrentNodeInfo', node_info)
     }
 
+    //点击main
+    const handleClick = (e: any) => {
+      //点击空白区域
+      if (e.target.className == 'el-main') {
+        //清除高亮边框
+        let border = document.getElementsByClassName('border')[0] as HTMLElement
+        if (border) {
+          border.className = border.className.replace(' border', '')
+        }
+        //隐藏属性栏 设置当前操作对象
+        store.dispatch('handleChangeCurrentNodeInfo', { props: {} })
+      } else {
+        //选中高亮区域
+        if (e.target.id) {
+          let node_info: any = _handleRecursionGetNodeByNodeId(
+            e.target.id,
+            data.component_tree_list
+          )
+          console.log(e.target.id)
+          //设置当前操作对象
+          console.log(node_info)
+          store.dispatch('handleChangeCurrentNodeInfo', node_info)
+          //清除高亮边框
+          let border = document.getElementsByClassName(
+            'border'
+          )[0] as HTMLElement
+          if (border) {
+            border.className = border.className.replace(' border', '')
+          }
+          //高亮控件边框
+          let node_element = document.getElementById(
+            store.state.current_node_info.id
+          ) as HTMLElement
+          if (node_element) {
+            node_element.className = node_element.className + ' border'
+          }
+        }
+      }
+    }
+
     return {
       ...toRefs(data),
       handleDragEnter,
       handleDragOver,
       handleDragLeave,
       handleDrop,
+      handleClick,
     }
   },
 })
