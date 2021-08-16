@@ -32,11 +32,15 @@
       }
     }
   }
-
   //滚动条
   ::-webkit-scrollbar-thumb:hover {
     background-color: $theme;
   }
+  //高亮边框线
+  .border {
+    border-color: $theme;
+  }
+
   //以下是elementui控件颜色
   //分页颜色
   .el-pagination.is-background .el-pager li:not(.disabled).active {

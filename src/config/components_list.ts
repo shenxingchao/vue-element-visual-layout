@@ -30,7 +30,8 @@ const components_list: any = {
           name: 'el-row',
           title: '行 el-row(flex)',
           props: {
-            gutter: 0
+            gutter: 0,
+            class: ''
           },
           children: [],
           drop: true
@@ -39,7 +40,8 @@ const components_list: any = {
           name: 'el-col',
           title: '列 el-col',
           props: {
-            span: 1 //默认一列 属性右边自己调
+            span: 2, //默认一列 属性右边自己调
+            class: ''
           },
           children: [],
           drop: true
@@ -47,7 +49,10 @@ const components_list: any = {
         {
           name: 'el-button',
           title: '按钮 el-button',
-          props: {},
+          props: {
+            class: '',
+            type: 'primary'
+          },
           children: [],
           drop: true
         }

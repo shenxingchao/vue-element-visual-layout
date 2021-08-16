@@ -5,8 +5,6 @@
                @dragenter.stop.prevent="handleDragEnterOnNode"
                @dragover.stop.prevent="handleDragOverOnNode(node,$event)"
                @drop.stop.prevent="handleDropOnNode(node, $event)">
-      {{node.title}}
-      id:{{node.id}}
       <template v-if="node.children">
         <component-tree :component_tree_list="node.children"></component-tree>
       </template>
@@ -14,7 +12,7 @@
   </template>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from 'vue'
+import { defineComponent, reactive, toRefs, nextTick } from 'vue'
 import { useStore } from 'vuex'
 
 //导入公共方法
@@ -73,7 +71,8 @@ export default defineComponent({
           title: '占位块',
           name: 'el-row',
           props: {},
-          style: 'width:100%;height:100px;background:green;border:none;',
+          style:
+            'width:100%;height:100px;border:1px dashed #cccccc;box-sizing:border-box;background:#ffffff;',
         }
 
         //插入到元素内部
@@ -99,12 +98,18 @@ export default defineComponent({
         node = parent_node
       }
 
+      //获取拖动数据
+      let node_info: any = JSON.parse(e.dataTransfer.getData('node'))
+
       if (node.children) {
-        node.children.push(JSON.parse(e.dataTransfer.getData('node')))
+        //添加到子控件
+        node.children.push(node_info)
       } else {
         //说明是在最外层 添加占位块
-        node.push(JSON.parse(e.dataTransfer.getData('node')))
+        node.push(node_info)
       }
+      //设置当前操作对象
+      store.dispatch('handleChangeCurrentNodeInfo', node_info)
     }
 
     return {
@@ -120,6 +125,9 @@ export default defineComponent({
 .el-container,
 [class*='el-col-'] {
   padding: 20px 0;
-  border: 1px solid red;
+  border: 1px dashed #aaaaaa;
+}
+.border {
+  border: 1px solid $theme;
 }
 </style>

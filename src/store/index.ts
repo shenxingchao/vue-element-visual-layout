@@ -7,7 +7,15 @@ export default createStore({
       theme_type: getTheme() //主题
     },
     route_list: [], //维护一个路由数组,用于判断是否可以返回或者前进
-    component_tree_list: [] //设计组件树 全局变量
+    component_tree_list: [], //设计组件树 全局变量
+    current_node_info: {
+      props: {} //当前控件的属性
+    } //当前操作对象 全局变量
+  },
+  getters: {
+    // xx: state => {
+    //   return state.xx
+    // }
   },
   mutations: {
     SET_SHOW_DRAWER: (state, bool) => {
@@ -21,6 +29,9 @@ export default createStore({
     },
     SET_COMPONENT_TREE_LIST: (state, component_tree_list) => {
       state.component_tree_list = component_tree_list
+    },
+    SET_CURRENT_NODE_INFO: (state, node_info) => {
+      state.current_node_info = node_info
     }
   },
   actions: {
@@ -60,6 +71,15 @@ export default createStore({
      */
     handleChangeComponentTreeList({ commit }, component_tree_list) {
       commit('SET_COMPONENT_TREE_LIST', component_tree_list)
+    },
+
+    /**
+     * 改变当前操作对象
+     * @param commit
+     * @param node_info 当前操作对象
+     */
+    handleChangeCurrentNodeInfo({ commit }, node_info) {
+      commit('SET_CURRENT_NODE_INFO', node_info)
     }
   },
   modules: {}

@@ -7,7 +7,7 @@
   </el-container>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from 'vue'
+import { defineComponent, reactive, toRefs, nextTick } from 'vue'
 import { useStore } from 'vuex'
 //导入公共方法
 import mixins from '@/mixins/index'
@@ -79,10 +79,11 @@ export default defineComponent({
       //生成一个占位块
       let block_node: any = {
         id: 'block_node',
-        title: '占位块',
+        title: '',
         name: 'el-row',
         props: {},
-        style: 'width:100%;height:100px;background:green;border:none;',
+        style:
+          'width:100%;height:100px;border:1px dashed #cccccc;box-sizing:border-box;background:#ffffff;',
       }
       //插入到指定位置
       data.component_tree_list.splice(data.insert_index, 0, block_node)
@@ -99,12 +100,12 @@ export default defineComponent({
       console.log('5.控件在最外层释放区放下 handleDrop')
       //删除占位块
       _handleRecursionDelete(data.component_tree_list)
+      //获取拖动数据
+      let node_info: any = JSON.parse(e.dataTransfer.getData('node'))
       //插入到指定位置
-      data.component_tree_list.splice(
-        data.insert_index,
-        0,
-        JSON.parse(e.dataTransfer.getData('node'))
-      )
+      data.component_tree_list.splice(data.insert_index, 0, node_info)
+      //设置当前操作对象
+      store.dispatch('handleChangeCurrentNodeInfo', node_info)
     }
 
     return {
