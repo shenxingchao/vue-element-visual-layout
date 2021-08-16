@@ -7,8 +7,7 @@
           <el-menu-item-group>
             <template #title>{{components.type}}</template>
             <template v-for="(component,i) in components.children" :key="i">
-              <el-menu-item id="left" :index="index+'-'+i" :draggable="true"
-                            @dragstart="handleDragStart(component,$event)">
+              <el-menu-item :index="index+'-'+i" :draggable="true" @dragstart="handleDragStart(component,$event)">
                 {{component.title}}
               </el-menu-item>
             </template>
@@ -35,8 +34,8 @@ export default defineComponent({
     //数据对象
     let data: any = reactive({})
 
-    //公共方法
-    const {} = mixins()
+    //递归删除旧的占位块
+    const { _handleRecursionDelete } = mixins()
 
     /**
      * 控件拖动开始
@@ -55,7 +54,10 @@ export default defineComponent({
      * 拖入控件栏，用于删除组件树内的占位块
      */
     const handleDragEnterContrlList = (e: any) => {
-      console.log('7.拖入控件栏 handleDragEnterContrlList')
+      console.log(
+        '7.拖入控件栏，用于删除组件树内的占位块 handleDragEnterContrlList'
+      )
+      _handleRecursionDelete(store.state.component_tree_list)
     }
 
     return {
