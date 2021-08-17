@@ -42,15 +42,11 @@ export default defineComponent({
     //递归删除旧的占位块,递归查找父级节点
     const { _handleRecursionDelete, _handleRecursionGetParentNode } = mixins()
 
-    //被拖动元素进入到释放区所占据得屏幕空间时触发
-    const handleDragEnterOnNode = (e: any) => {
-      console.log('6.控件进入子控件触发 handleDragEnterOnNode')
-    }
+    //被拖动元素进入到释放区所占据得屏幕空间时触发  console.log('6.控件进入子控件触发 handleDragEnterOnNode')
+    const handleDragEnterOnNode = (e: any) => {}
 
-    //当被拖动元素在释放区内移动时触发
+    //当被拖动元素在释放区内移动时触发   console.log('7.控件进入子控件触发 handleDragOverOnNode')
     const handleDragOverOnNode = (node: any, e: any) => {
-      console.log('7.控件进入子控件触发 handleDragOverOnNode')
-
       //如果是在占位块上移动，则算是在他父级上移动,且占位块不发生任何变化
       let parent_node: any = null
       if (node.id == 'block_node') {
@@ -72,7 +68,7 @@ export default defineComponent({
           name: 'el-row',
           props: {},
           style:
-            'width:100%;height:100px;border:1px dashed #cccccc;box-sizing:border-box;background:#ffffff;',
+            'width:100%;height:100px;border:1px dashed #cccccc;box-sizing:border-box;background:#fafafa;',
         }
 
         //插入到元素内部
@@ -87,8 +83,6 @@ export default defineComponent({
 
     //当被拖动元素在节点上释放时
     const handleDropOnNode = (node: any, e: any) => {
-      //删除之前的占位块
-      _handleRecursionDelete(data.sotre_component_tree_list)
       if (node.id == 'block_node') {
         //如果是在占位块上释放，则算是在他父级上释放
         let parent_node = _handleRecursionGetParentNode(
@@ -97,6 +91,9 @@ export default defineComponent({
         )
         node = parent_node
       }
+
+      //删除之前的占位块 要在找父级之后，不然占位块都没了，怎么找父级
+      _handleRecursionDelete(data.sotre_component_tree_list)
 
       //获取拖动数据
       let node_info: any = JSON.parse(e.dataTransfer.getData('node'))
@@ -125,7 +122,7 @@ export default defineComponent({
 .el-container,
 [class*='el-col-'] {
   padding: 20px 0;
-  border: 1px dashed #aaaaaa;
+  border: 1px dashed #cccccc;
 }
 .border {
   border: 1px solid $theme;

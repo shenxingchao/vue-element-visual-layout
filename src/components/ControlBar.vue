@@ -38,25 +38,21 @@ export default defineComponent({
     const { _handleRecursionDelete } = mixins()
 
     /**
-     * 控件拖动开始
+     * 控件拖动开始       console.log('1.拖动控件节点信息 handleDragStart:', component)
      * @param componet 单个控件节点 包含children
      */
     const handleDragStart = (component: any, e: any) => {
       //参考自 https://github.com/OXOYO/X-Page-Editor-Vue/blob/master/example/components/CustomListItem.vue
       // 生成唯一id
       component.id = 'node-' + new Date().getTime()
-      console.log('1.拖动控件节点信息 handleDragStart:', component)
       //设置拖拽数据
       e.dataTransfer.setData('node', JSON.stringify(component))
     }
 
     /**
-     * 拖入控件栏，用于删除组件树内的占位块
+     * 拖入控件栏，用于删除组件树内的占位块 console.log('7.拖入控件栏，用于删除组件树内的占位块 handleDragEnterContrlList')
      */
     const handleDragEnterContrlList = (e: any) => {
-      console.log(
-        '7.拖入控件栏，用于删除组件树内的占位块 handleDragEnterContrlList'
-      )
       _handleRecursionDelete(store.state.component_tree_list)
     }
 

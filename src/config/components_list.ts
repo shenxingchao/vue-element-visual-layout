@@ -28,9 +28,12 @@ const components_list: any = {
       children: [
         {
           name: 'el-row',
-          title: '行 el-row(flex)',
+          title: '行 el-row',
           props: {
             gutter: 0,
+            justify: '',
+            align: '',
+            type: 'flex',
             class: ''
           },
           children: [],

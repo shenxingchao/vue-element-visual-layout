@@ -1,5 +1,5 @@
 <template>
-  <el-container style="height:calc(100vh - 40px);">
+  <el-container style="height:calc(100vh - 40px);background-color: rgb(255, 255, 255)">
     <el-main @dragenter="handleDragEnter" @dragover="handleDragOver" @dragleave="handleDragLeave" @drop="handleDrop"
              @click="handleClick">
       <!-- 使用递归组件 -->
@@ -32,15 +32,12 @@ export default defineComponent({
       insert_index: 0, //当前控件插入位置索引
     })
 
-    //被拖动元素进入到释放区所占据得屏幕空间时触发
-    const handleDragEnter = (e: any) => {
-      console.log('2.控件进入最外层主窗口触发 handleDragEnter')
-    }
+    //被拖动元素进入到释放区所占据得屏幕空间时触发 console.log('2.控件进入最外层主窗口触发 handleDragEnter')
+    const handleDragEnter = (e: any) => {}
 
-    //当被拖动元素在释放区内移动或停留时触发
+    //当被拖动元素在释放区内移动或停留时触发 console.log('3.控件在最外层主窗口移动或停留时触发 handleDragOver')
     const handleDragOver = (e: any) => {
       e.preventDefault()
-      console.log('3.控件在最外层主窗口移动或停留时触发 handleDragOver')
 
       let flag_position = false //有没有找到元素所在位置标志
 
@@ -84,21 +81,18 @@ export default defineComponent({
         name: 'el-row',
         props: {},
         style:
-          'width:100%;height:100px;border:1px dashed #cccccc;box-sizing:border-box;background:#ffffff;',
+          'width:100%;height:100px;border:1px dashed #cccccc;box-sizing:border-box;background:#fafafa;',
       }
       //插入到指定位置
       data.component_tree_list.splice(data.insert_index, 0, block_node)
     }
 
-    //当被拖动元素没有放下就离开释放区时触发
-    const handleDragLeave = (e: any) => {
-      console.log('4.控件移出最外层主窗口触发 handleDragLeave')
-    }
+    //当被拖动元素没有放下就离开释放区时触发       console.log('4.控件移出最外层主窗口触发 handleDragLeave')
+    const handleDragLeave = (e: any) => {}
 
-    //当被拖动元素在释放区里放下时触发
+    //当被拖动元素在释放区里放下时触发       console.log('5.控件在最外层释放区放下 handleDrop')
     const handleDrop = (e: any) => {
       e.preventDefault()
-      console.log('5.控件在最外层释放区放下 handleDrop')
       //删除占位块
       _handleRecursionDelete(data.component_tree_list)
       //获取拖动数据
@@ -127,9 +121,7 @@ export default defineComponent({
             e.target.id,
             data.component_tree_list
           )
-          console.log(e.target.id)
           //设置当前操作对象
-          console.log(node_info)
           store.dispatch('handleChangeCurrentNodeInfo', node_info)
           //清除高亮边框
           let border = document.getElementsByClassName(
