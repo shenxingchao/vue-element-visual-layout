@@ -8,12 +8,13 @@
   </el-container>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, toRefs, nextTick } from 'vue'
+import { defineComponent, reactive, toRefs, nextTick, onMounted } from 'vue'
 import { useStore } from 'vuex'
 //导入公共方法
 import mixins from '@/mixins/index'
 //导入递归组件树
 import ComponentTree from '@/components/ComponentTree.vue'
+import store from '@/store'
 
 export default defineComponent({
   name: 'Designer',
@@ -30,6 +31,26 @@ export default defineComponent({
     let data: any = reactive({
       component_tree_list: store.state.component_tree_list, //组件树
       insert_index: 0, //当前控件插入位置索引
+    })
+
+    //挂载事件
+    onMounted(() => {
+      //监听 键盘按下事件
+      document.onkeydown = function (event: any) {
+        var e = event || window.event || arguments.callee.caller.arguments[0]
+        if (e && e.keyCode == 46) {
+          // 按下DELETE 删除控件
+          if (store.state.current_node_info.id) {
+            //递归删除节点及其子节点
+            _handleRecursionDelete(
+              store.state.current_node_info.id,
+              data.component_tree_list
+            )
+            //隐藏属性栏 设置当前操作对象
+            store.dispatch('handleChangeCurrentNodeInfo', { props: {} })
+          }
+        }
+      }
     })
 
     //被拖动元素进入到释放区所占据得屏幕空间时触发 console.log('2.控件进入最外层主窗口触发 handleDragEnter')
@@ -73,7 +94,7 @@ export default defineComponent({
         }
       }
       //递归删除所有占位块
-      _handleRecursionDelete(data.component_tree_list)
+      _handleRecursionDelete('block_node', data.component_tree_list)
       //生成一个占位块
       let block_node: any = {
         id: 'block_node',
@@ -94,7 +115,7 @@ export default defineComponent({
     const handleDrop = (e: any) => {
       e.preventDefault()
       //删除占位块
-      _handleRecursionDelete(data.component_tree_list)
+      _handleRecursionDelete('block_node', data.component_tree_list)
       //获取拖动数据
       let node_info: any = JSON.parse(e.dataTransfer.getData('node'))
       //插入到指定位置

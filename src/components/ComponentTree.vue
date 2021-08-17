@@ -60,7 +60,7 @@ export default defineComponent({
       //如果没有父级说明不是在占位块上移动，则删除占位块并重新生成
       if (!parent_node) {
         //删除之前的占位块
-        _handleRecursionDelete(data.sotre_component_tree_list)
+        _handleRecursionDelete('block_node', data.sotre_component_tree_list)
         //生成一个占位块
         let block_node: any = {
           id: 'block_node',
@@ -93,7 +93,7 @@ export default defineComponent({
       }
 
       //删除之前的占位块 要在找父级之后，不然占位块都没了，怎么找父级
-      _handleRecursionDelete(data.sotre_component_tree_list)
+      _handleRecursionDelete('block_node', data.sotre_component_tree_list)
 
       //获取拖动数据
       let node_info: any = JSON.parse(e.dataTransfer.getData('node'))

@@ -32,7 +32,7 @@
       <!-- el-col start -->
       <template v-if="node_info.name == 'el-col'">
         <el-form-item v-if="attribute.span" label="span">
-          <el-input-number v-model="attribute.span" :controls="true">
+          <el-input-number v-model="attribute.span" :controls="true" :min="1" :max="24">
           </el-input-number>
         </el-form-item>
       </template>

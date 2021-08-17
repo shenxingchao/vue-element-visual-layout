@@ -1,13 +1,14 @@
 const mixins: any = () => {
-  //递归删除旧的占位块
+  //递归删除指定id的节点及其子节点
   const _handleRecursionDelete: any = (
+    id: any,
     component_tree_list: any,
     flag: any = false
   ) => {
     for (let i = component_tree_list.length - 1; i >= 0; i--) {
-      //找到了占位块节点
-      if (component_tree_list[i].id == 'block_node') {
-        //删除占位块并返回 占位块只能存在一块 所以有多的占位块就是BUG
+      //找到了节点
+      if (component_tree_list[i].id == id) {
+        //删除并返回
         component_tree_list.splice(i, 1)
         flag = true
         break
@@ -17,7 +18,11 @@ const mixins: any = () => {
           component_tree_list[i].children &&
           component_tree_list[i].children.length > 0
         ) {
-          flag = _handleRecursionDelete(component_tree_list[i].children, flag)
+          flag = _handleRecursionDelete(
+            id,
+            component_tree_list[i].children,
+            flag
+          )
           if (flag) {
             //如果删除了，则终止递归
             break
@@ -81,6 +86,7 @@ const mixins: any = () => {
     }
     return find_node
   }
+
   return {
     _handleRecursionDelete,
     _handleRecursionGetParentNode,

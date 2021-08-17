@@ -53,7 +53,7 @@ export default defineComponent({
      * 拖入控件栏，用于删除组件树内的占位块 console.log('7.拖入控件栏，用于删除组件树内的占位块 handleDragEnterContrlList')
      */
     const handleDragEnterContrlList = (e: any) => {
-      _handleRecursionDelete(store.state.component_tree_list)
+      _handleRecursionDelete('block_node', store.state.component_tree_list)
     }
 
     return {
