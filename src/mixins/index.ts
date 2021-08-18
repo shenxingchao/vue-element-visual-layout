@@ -112,6 +112,10 @@ const mixins: any = () => {
 
       html += start_tag + '>\n' //开始标签左半边加属性加右半边
       /****************************中间如果有插槽的话，再判断，在这个位置加,后面先做一个select*********************************/
+      //渲染内部文本内容 el-button
+      if (element.text && element.text != '') {
+        html += repeat_space + element.text + '\n'
+      }
       switch (element.name) {
         case 'el-select':
           //未实现

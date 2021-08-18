@@ -37,6 +37,13 @@
         </el-form-item>
       </template>
       <!-- el-col end -->
+      <!-- el-button start -->
+      <template v-if="node_info.name == 'el-button'">
+        <el-form-item v-if="node_info.text||node_info.text==''" label="文本">
+          <el-input v-model="node_info.text"></el-input>
+        </el-form-item>
+      </template>
+      <!-- el-button end -->
       <!-- public attribute start-->
       <el-form-item v-if="attribute.class||attribute.class==''" label="class">
         <el-input v-model="attribute.class"></el-input>
@@ -65,7 +72,12 @@ export default defineComponent({
     let data: any = reactive({})
 
     //当前操作控件信息
-    const node_info: any = computed(() => store.state.current_node_info)
+    const node_info: any = computed({
+      get() {
+        return store.state.current_node_info
+      },
+      set(val) {},
+    })
 
     //计算属性
     const attribute: any = computed({

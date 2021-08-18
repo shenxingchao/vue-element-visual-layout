@@ -5,6 +5,7 @@
                @dragenter.stop.prevent="handleDragEnterOnNode"
                @dragover.stop.prevent="handleDragOverOnNode(node,$event)"
                @drop.stop.prevent="handleDropOnNode(node, $event)">
+      {{node.text}}
       <template v-if="node.children">
         <component-tree :component_tree_list="node.children"></component-tree>
       </template>

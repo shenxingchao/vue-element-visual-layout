@@ -8,8 +8,8 @@
         <component-tree :component_tree_list="component_tree_list"></component-tree>
       </el-main>
       <el-main v-if="tab_index == 2" v-highlightjs>
-        <h5>html</h5>
-        <pre contenteditable="true"><code class="language-html">{{code}}</code></pre>
+        <h5 v-if="code!=''">html</h5>
+        <pre v-if="code!=''"><code class="language-html" contenteditable="true">{{code}}</code></pre>
       </el-main>
     </el-container>
   </el-container>
@@ -151,10 +151,26 @@ export default defineComponent({
         //隐藏属性栏 设置当前操作对象
         store.dispatch('handleChangeCurrentNodeInfo', { props: {} })
       } else {
+        //递归找id 这里可能点了内部的文字所以要递归找
+        const recursionFindNodeId: any = (e: any, level: number = 0) => {
+          if (e.target && e.target.id) {
+            return e.target.id
+          } else if (e.id) {
+            return e.id
+          } else if (level > 2) {
+            //找三层 后返回
+            return false
+          } else {
+            //如果是点击了内部的文字则往上找id
+            level++
+            return recursionFindNodeId(e.target.parentElement, level)
+          }
+        }
+        let target_id = recursionFindNodeId(e)
         //选中高亮区域
-        if (e.target.id) {
+        if (target_id) {
           let node_info: any = _handleRecursionGetNodeByNodeId(
-            e.target.id,
+            target_id,
             data.component_tree_list
           )
           //设置当前操作对象
