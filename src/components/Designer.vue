@@ -1,7 +1,8 @@
 <template>
   <el-container style="height:calc(100vh - 40px);background-color: rgb(255, 255, 255);">
     <el-container style="flex-direction: column;">
-      <tool-bar @handleChangeDesigner="handleChangeDesigner"></tool-bar>
+      <tool-bar @handleChangeDesigner="handleChangeDesigner" @handleClearLayout="handleClearLayout"
+                @handleDeleteControl="handleDeleteControl"> </tool-bar>
       <el-main v-if="tab_index == 1" @dragenter="handleDragEnter" @dragover="handleDragOver"
                @dragleave="handleDragLeave" @drop="handleDrop" @click="handleClick">
         <!-- 使用递归组件 -->
@@ -55,15 +56,7 @@ export default defineComponent({
         var e = event || window.event || arguments.callee.caller.arguments[0]
         if (e && e.keyCode == 46) {
           // 按下DELETE 删除控件
-          if (store.state.current_node_info.id) {
-            //递归删除节点及其子节点
-            _handleRecursionDelete(
-              store.state.current_node_info.id,
-              data.component_tree_list
-            )
-            //隐藏属性栏 设置当前操作对象
-            store.dispatch('handleChangeCurrentNodeInfo', { props: {} })
-          }
+          handleDeleteControl()
         }
       }
     })
@@ -205,6 +198,25 @@ export default defineComponent({
       }
     }
 
+    //清空布局
+    const handleClearLayout = () => {
+      store.dispatch('handleChangeCurrentNodeInfo', { props: {} })
+      data.component_tree_list = []
+    }
+
+    //删除控件
+    const handleDeleteControl = () => {
+      if (store.state.current_node_info.id) {
+        //递归删除节点及其子节点
+        _handleRecursionDelete(
+          store.state.current_node_info.id,
+          data.component_tree_list
+        )
+        //隐藏属性栏 设置当前操作对象
+        store.dispatch('handleChangeCurrentNodeInfo', { props: {} })
+      }
+    }
+
     return {
       ...toRefs(data),
       handleDragEnter,
@@ -213,6 +225,8 @@ export default defineComponent({
       handleDrop,
       handleClick,
       handleChangeDesigner,
+      handleClearLayout,
+      handleDeleteControl,
     }
   },
 })
