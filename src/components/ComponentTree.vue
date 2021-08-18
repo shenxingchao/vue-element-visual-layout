@@ -1,7 +1,7 @@
 <template>
   <!-- 递归循环渲染组件树 -->
   <template v-for="(node, index) in component_tree_list" :key="node.id + index">
-    <component :id="node.id" :is="node.name" v-bind="node.props" :style="node.style" draggable
+    <component :id="node.id" :is="node.name" v-bind="node.props" :style="node.style" :draggable="false"
                @dragenter.stop.prevent="handleDragEnterOnNode"
                @dragover.stop.prevent="handleDragOverOnNode(node,$event)"
                @drop.stop.prevent="handleDropOnNode(node, $event)">
@@ -12,7 +12,7 @@
   </template>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, toRefs, nextTick } from 'vue'
+import { defineComponent, reactive, getCurrentInstance } from 'vue'
 import { useStore } from 'vuex'
 
 //导入公共方法
@@ -29,10 +29,14 @@ export default defineComponent({
       },
     },
   },
-  //组件发出的事件需要定义
-  emits: ['handleChangeComponentTreeList'],
   setup(props, { emit }) {
     const store = useStore()
+
+    //当前组件实例
+    const internalInstance = getCurrentInstance()
+
+    //访问 globalProperties
+    const global: any = internalInstance?.appContext.config.globalProperties
 
     //数据对象
     let data: any = reactive({
@@ -102,7 +106,7 @@ export default defineComponent({
         //添加到子控件
         node.children.push(node_info)
       } else {
-        //说明是在最外层 添加占位块
+        //放入最外层数组或者是子控件的children数组里面
         node.push(node_info)
       }
       //设置当前操作对象

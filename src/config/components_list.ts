@@ -36,8 +36,7 @@ const components_list: any = {
             type: 'flex',
             class: ''
           },
-          children: [],
-          drop: true
+          children: []
         },
         {
           name: 'el-col',
@@ -46,8 +45,7 @@ const components_list: any = {
             span: 2, //默认一列 属性右边自己调
             class: ''
           },
-          children: [],
-          drop: true
+          children: []
         },
         {
           name: 'el-button',
@@ -56,8 +54,8 @@ const components_list: any = {
             class: '',
             type: 'primary'
           },
-          children: [],
-          drop: true
+          text: '按钮',
+          children: []
         }
       ]
     }

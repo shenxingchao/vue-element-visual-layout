@@ -1,10 +1,17 @@
 <template>
-  <el-container style="height:calc(100vh - 40px);background-color: rgb(255, 255, 255)">
-    <el-main @dragenter="handleDragEnter" @dragover="handleDragOver" @dragleave="handleDragLeave" @drop="handleDrop"
-             @click="handleClick">
-      <!-- 使用递归组件 -->
-      <component-tree :component_tree_list="component_tree_list"></component-tree>
-    </el-main>
+  <el-container style="height:calc(100vh - 40px);background-color: rgb(255, 255, 255);">
+    <el-container style="flex-direction: column;">
+      <tool-bar @handleChangeDesigner="handleChangeDesigner"></tool-bar>
+      <el-main v-if="tab_index == 1" @dragenter="handleDragEnter" @dragover="handleDragOver"
+               @dragleave="handleDragLeave" @drop="handleDrop" @click="handleClick">
+        <!-- 使用递归组件 -->
+        <component-tree :component_tree_list="component_tree_list"></component-tree>
+      </el-main>
+      <el-main v-if="tab_index == 2" v-highlightjs>
+        <h5>html</h5>
+        <pre contenteditable="true"><code class="language-html">{{code}}</code></pre>
+      </el-main>
+    </el-container>
   </el-container>
 </template>
 <script lang="ts">
@@ -14,23 +21,31 @@ import { useStore } from 'vuex'
 import mixins from '@/mixins/index'
 //导入递归组件树
 import ComponentTree from '@/components/ComponentTree.vue'
+//导入工具栏
+import ToolBar from '@/components/ToolBar.vue'
 import store from '@/store'
 
 export default defineComponent({
   name: 'Designer',
   components: {
     ComponentTree,
+    ToolBar,
   },
   setup() {
     const store = useStore()
 
-    //递归删除旧的占位块  递归根据节点id查找节点信息
-    const { _handleRecursionDelete, _handleRecursionGetNodeByNodeId } = mixins()
+    const {
+      _handleRecursionDelete, //递归删除旧的占位块
+      _handleRecursionGetNodeByNodeId, //递归根据节点id查找节点信息
+      _generateCode, //递归生成代码
+    } = mixins()
 
     //数据对象
     let data: any = reactive({
+      tab_index: 1, //页面内容 1界面设计 2查看代码
       component_tree_list: store.state.component_tree_list, //组件树
       insert_index: 0, //当前控件插入位置索引
+      code: '', //根据组件树生成的代码
     })
 
     //挂载事件
@@ -162,6 +177,18 @@ export default defineComponent({
       }
     }
 
+    //改变主设计窗口显示内容
+    const handleChangeDesigner = (val: number) => {
+      //隐藏属性栏 设置当前操作对象 暂时先隐藏
+      store.dispatch('handleChangeCurrentNodeInfo', { props: {} })
+      //切换显示内容索引
+      data.tab_index = val
+      if (val == 2) {
+        //递归生成代码
+        data.code = _generateCode(store.state.component_tree_list)
+      }
+    }
+
     return {
       ...toRefs(data),
       handleDragEnter,
@@ -169,6 +196,7 @@ export default defineComponent({
       handleDragLeave,
       handleDrop,
       handleClick,
+      handleChangeDesigner,
     }
   },
 })

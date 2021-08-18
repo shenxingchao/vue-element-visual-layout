@@ -87,10 +87,58 @@ const mixins: any = () => {
     return find_node
   }
 
+  const _generateCode = (
+    component_tree_list: any,
+    html: string = '',
+    level: number = 0
+  ) => {
+    component_tree_list.forEach((element: any) => {
+      let repeat_space = '' //缩进换行
+      if (level > 0) {
+        repeat_space = ' '.repeat(level * 2) //按子级嵌套层次 重复缩进
+      }
+      let start_tag = repeat_space + '<' + element.name //开始标签的左半边名称
+      /****这里开始添加属性****/
+      for (const key in element.props) {
+        const prop: any = element.props[key]
+        if (typeof prop == 'string' && prop != '') {
+          start_tag += ' ' + key + '="' + prop + '"'
+        }
+        if (typeof prop == 'number' || typeof prop == 'boolean') {
+          start_tag += ' :' + key + '="' + prop + '"'
+        }
+      }
+      /****添加属性结束****/
+
+      html += start_tag + '>\n' //开始标签左半边加属性加右半边
+      /****************************中间如果有插槽的话，再判断，在这个位置加,后面先做一个select*********************************/
+      switch (element.name) {
+        case 'el-select':
+          //未实现
+          break
+        default:
+          break
+      }
+      if (element.children && element.children.length > 0) {
+        //记录递归前的层级
+        let temp_level = level
+        level++
+        //递归嵌套组件
+        html = _generateCode(element.children, html, level)
+        //递归完了赋值递归前的层级
+        level = temp_level
+      }
+      //标签尾部
+      html += repeat_space + '</' + element.name + '>\n'
+    })
+    return html
+  }
+
   return {
     _handleRecursionDelete,
     _handleRecursionGetParentNode,
-    _handleRecursionGetNodeByNodeId
+    _handleRecursionGetNodeByNodeId,
+    _generateCode
   }
 }
 export default mixins

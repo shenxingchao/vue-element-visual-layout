@@ -13,6 +13,9 @@ import 'normalize.css/normalize.css'
 import '@/styles/index.scss'
 //引入svg
 import SvgPlugin from '@/components/SvgIcon'
+//引入代码高亮
+import HightLightjsPlugin from '@/components/HightLightjs'
+
 //引入nedb数据库
 import Db from '@/db/index'
 //引入momentjs
@@ -54,5 +57,7 @@ app.use(ElementPlus, { locale })
 app.use(SvgPlugin, {
   imports: []
 })
+//使用代码高亮
+app.use(HightLightjsPlugin)
 
 app.mount('#app')
