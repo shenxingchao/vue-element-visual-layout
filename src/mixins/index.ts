@@ -104,7 +104,10 @@ const mixins: any = () => {
         if (typeof prop == 'string' && prop != '') {
           start_tag += ' ' + key + '="' + prop + '"'
         }
-        if (typeof prop == 'number' || typeof prop == 'boolean') {
+        if (typeof prop == 'number' && prop != 0) {
+          start_tag += ' :' + key + '="' + prop + '"'
+        }
+        if (typeof prop == 'boolean' && prop) {
           start_tag += ' :' + key + '="' + prop + '"'
         }
       }

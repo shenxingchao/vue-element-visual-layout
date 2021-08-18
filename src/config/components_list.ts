@@ -42,7 +42,10 @@ const components_list: any = {
           name: 'el-col',
           title: '列 el-col',
           props: {
-            span: 2, //默认一列 属性右边自己调
+            span: 24,
+            offset: 0,
+            push: 0,
+            pull: 0,
             class: ''
           },
           children: []
@@ -51,8 +54,16 @@ const components_list: any = {
           name: 'el-button',
           title: '按钮 el-button',
           props: {
-            class: '',
-            type: 'primary'
+            size: 'medium',
+            type: 'primary',
+            plain: false,
+            round: false,
+            circle: false,
+            loading: false,
+            disabled: false,
+            icon: '',
+            autofocus: false,
+            class: ''
           },
           text: '按钮',
           children: []
