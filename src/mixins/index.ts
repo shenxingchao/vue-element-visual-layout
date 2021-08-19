@@ -108,7 +108,7 @@ const mixins: any = () => {
           start_tag += ' :' + key + '="' + prop + '"'
         }
         if (typeof prop == 'boolean' && prop) {
-          start_tag += ' :' + key + '="' + prop + '"'
+          start_tag += ' :' + key + '="' + prop.toString() + '"'
         }
       }
       /****添加属性结束****/
