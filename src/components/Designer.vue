@@ -201,7 +201,8 @@ export default defineComponent({
     //清空布局
     const handleClearLayout = () => {
       store.dispatch('handleChangeCurrentNodeInfo', { props: {} })
-      data.component_tree_list = []
+      //这里主要响应对象不能直接赋值[] 会使其响应性失效
+      data.component_tree_list.splice(0, data.component_tree_list.length)
     }
 
     //删除控件

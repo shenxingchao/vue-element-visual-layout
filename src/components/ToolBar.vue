@@ -17,8 +17,8 @@
           </el-tooltip>
         </el-col>
         <el-col :span="6">
-          <!--  清除布局 -->
-          <el-tooltip effect="dark" content="清除布局" placement="bottom">
+          <!--  清空布局 -->
+          <el-tooltip effect="dark" content="清空布局" placement="bottom">
             <svg-icon name="clear_layout" className="icon" @click="handleClickToolBtn(3)" />
           </el-tooltip>
         </el-col>
@@ -61,11 +61,13 @@ export default defineComponent({
           break
         case 3:
           if (data.title == '设计窗口') {
+            //清空布局
             emit('handleClearLayout', val)
           }
           break
         case 4:
           if (data.title == '设计窗口') {
+            //删除控件
             emit('handleDeleteControl', val)
           }
           break
