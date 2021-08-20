@@ -1,6 +1,6 @@
 <template>
   <el-aside width="210px" style="background-color: rgb(238, 241, 246)" @dragenter="handleDragEnterContrlList">
-    <el-menu :default-openeds="['0']">
+    <el-menu :default-openeds="['0']" :unique-opened="true">
       <template v-for="(components,index) in components_list.components" :key="index">
         <el-submenu :index="index + ''">
           <template #title><i :class="components.icon"></i>{{components.title}}</template>
@@ -45,6 +45,11 @@ export default defineComponent({
       //参考自 https://github.com/OXOYO/X-Page-Editor-Vue/blob/master/example/components/CustomListItem.vue
       // 生成唯一id
       component.id = 'node-' + new Date().getTime()
+      //如果有children children也要加唯一id
+      component.children.forEach((children: any) => {
+        children.id = 'node-' + new Date().getTime()
+      })
+
       //设置拖拽数据
       e.dataTransfer.setData('node', JSON.stringify(component))
     }

@@ -99,6 +99,10 @@ const mixins: any = () => {
       }
       let start_tag = repeat_space + '<' + element.name //开始标签的左半边名称
       /****这里开始添加属性****/
+      //v-model属性单独添加
+      if (element.value && element.value != '') {
+        start_tag += ' v-model="' + element.value + '"'
+      }
       for (const key in element.props) {
         const prop: any = element.props[key]
         if (typeof prop == 'string' && prop != '') {
@@ -114,10 +118,9 @@ const mixins: any = () => {
       /****添加属性结束****/
 
       html += start_tag + '>\n' //开始标签左半边加属性加右半边
-      /****************************中间如果有插槽的话，再判断，在这个位置加,后面先做一个select*********************************/
       //渲染内部文本内容 el-button
       if (element.text && element.text != '') {
-        html += repeat_space + element.text + '\n'
+        html += '   ' + repeat_space + element.text + '\n'
       }
       switch (element.name) {
         case 'el-select':

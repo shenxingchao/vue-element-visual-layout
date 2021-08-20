@@ -150,13 +150,16 @@ export default defineComponent({
             return e.target.id
           } else if (e.id) {
             return e.id
-          } else if (level > 2) {
-            //找三层 后返回
+          } else if (level > 3) {
+            //找4层 后返回
             return false
           } else {
             //如果是点击了内部的文字则往上找id
             level++
-            return recursionFindNodeId(e.target.parentElement, level)
+            return recursionFindNodeId(
+              e.target ? e.target.parentElement : e,
+              level
+            )
           }
         }
         let target_id = recursionFindNodeId(e)

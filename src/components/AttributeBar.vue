@@ -95,6 +95,43 @@
         </el-form-item>
       </template>
       <!-- el-button end -->
+      <!-- el-radio start -->
+      <template v-if="node_info.name == 'el-radio-group'">
+        <!-- 渲染选项 -->
+        <el-form-item v-if="node_info.value||node_info.value == ''" label="绑定变量">
+          <el-input v-model="node_info.value"></el-input>
+        </el-form-item>
+        <el-form-item label="选项设置">
+          <template v-for="(item,index) in node_info.children" :key="index">
+            <el-row v-if="item.text||item.text==''" label="文本">
+              <el-col :span="10">
+                <el-input size="small" v-model="item.text" placeholder="名称"></el-input>
+              </el-col>
+              <el-col :span="8" :offset="1">
+                <el-input size="small" v-model="item.props.label" placeholder="值"></el-input>
+              </el-col>
+              <el-col :span="4" :offset="1">
+                <el-button v-if="index > 1" size="mini" type="danger" icon="el-icon-minus"
+                           @click="handleClickDeleteRadioItem(node_info,index)"></el-button>
+              </el-col>
+            </el-row>
+          </template>
+          <el-row>
+            <el-col :span="4" :offset="1">
+              <el-button size="mini" type="primary" icon="el-icon-plus" @click="handleClickAddRadioItem(node_info)">
+              </el-button>
+            </el-col>
+          </el-row>
+        </el-form-item>
+      </template>
+      <!-- el-radio end -->
+      <!-- el-form-item start -->
+      <template v-if="node_info.name == 'el-form-item'">
+        <el-form-item v-if="attribute.label||attribute.label==''" label="标签">
+          <el-input v-model="attribute.label"></el-input>
+        </el-form-item>
+      </template>
+      <!-- el-form-item end -->
       <!-- public attribute start-->
       <el-form-item v-if="attribute.class||attribute.class==''" label="class">
         <el-input v-model="attribute.class"></el-input>
@@ -111,6 +148,7 @@ import {
   computed,
   watch,
   nextTick,
+  ref,
 } from 'vue'
 import { useStore } from 'vuex'
 
@@ -162,10 +200,32 @@ export default defineComponent({
       { deep: true }
     )
 
+    //点击添加单选按钮选项
+    const handleClickAddRadioItem = (node_info: any) => {
+      //初始化
+      let radio: any = {
+        name: 'el-radio',
+        title: '单选按钮 el-radio',
+        props: {
+          label: '',
+        },
+        text: '',
+      }
+      radio.id = 'node-' + new Date().getTime()
+      node_info.children.push(radio)
+    }
+
+    //点击删除单选按钮选项
+    const handleClickDeleteRadioItem = (node_info: any, index: any) => {
+      node_info.children.splice(index, 1)
+    }
+
     return {
       ...toRefs(data),
       node_info,
       attribute,
+      handleClickAddRadioItem,
+      handleClickDeleteRadioItem,
     }
   },
 })

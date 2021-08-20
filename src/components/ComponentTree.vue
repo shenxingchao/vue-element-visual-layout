@@ -1,8 +1,8 @@
 <template>
   <!-- 递归循环渲染组件树 -->
   <template v-for="(node, index) in component_tree_list" :key="node.id + index">
-    <component :id="node.id" :is="node.name" v-bind="node.props" :style="node.style" :draggable="false"
-               @dragenter.stop.prevent="handleDragEnterOnNode"
+    <component :id="node.id" :is="node.name" v-bind="node.props" v-model="node.value" :style="node.style"
+               :draggable="false" @dragenter.stop.prevent="handleDragEnterOnNode"
                @dragover.stop.prevent="handleDragOverOnNode(node,$event)"
                @drop.stop.prevent="handleDropOnNode(node, $event)">
       {{node.text}}
@@ -13,7 +13,7 @@
   </template>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, getCurrentInstance } from 'vue'
+import { defineComponent, reactive, getCurrentInstance, toRefs } from 'vue'
 import { useStore } from 'vuex'
 
 //导入公共方法
@@ -118,6 +118,7 @@ export default defineComponent({
       handleDragEnterOnNode,
       handleDragOverOnNode,
       handleDropOnNode,
+      ...toRefs(data),
     }
   },
 })
@@ -125,11 +126,14 @@ export default defineComponent({
 <style lang="scss" scoped>
 .el-row,
 .el-container,
+.el-form,
+.el-form-item,
 [class*='el-col-'] {
   padding: 20px 0;
   border: 1px dashed #cccccc;
+  box-sizing: border-box;
 }
 .border {
-  border: 1px solid $theme;
+  border: 1px dashed $theme;
 }
 </style>

@@ -69,6 +69,55 @@ const components_list: any = {
           children: []
         }
       ]
+    },
+    {
+      title: '表单',
+      type: 'Form',
+      icon: 'el-icon-s-grid',
+      children: [
+        {
+          name: 'el-form',
+          title: '表单 el-form',
+          props: {},
+          model: '',
+          children: []
+        },
+        {
+          name: 'el-form-item',
+          title: '表单项 el-form-item',
+          props: {
+            label: ''
+          },
+          model: '',
+          children: []
+        },
+        {
+          name: 'el-radio-group',
+          title: '单选框组 el-radio-group',
+          props: {
+            disabled: false
+          },
+          value: '',
+          children: [
+            {
+              name: 'el-radio',
+              title: '单选按钮 el-radio',
+              props: {
+                label: '1'
+              },
+              text: '选项1'
+            },
+            {
+              name: 'el-radio',
+              title: '单选按钮 el-radio',
+              props: {
+                label: '2'
+              },
+              text: '选项2'
+            }
+          ]
+        }
+      ]
     }
   ]
 }
