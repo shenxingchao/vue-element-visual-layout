@@ -73,7 +73,7 @@ export default defineComponent({
           name: 'el-row',
           props: {},
           style:
-            'width:100%;height:100px;border:1px dashed #cccccc;box-sizing:border-box;background:#fafafa;',
+            'flex-grow: 1;height:100%;max-height:80px;border:1px dashed #cccccc;box-sizing:border-box;background:#fafafa;',
         }
 
         //插入到元素内部

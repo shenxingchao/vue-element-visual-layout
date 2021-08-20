@@ -103,6 +103,14 @@
     background-color: $deep-theme;
     border-color: $deep-theme;
   }
+  //折叠菜单
+  .el-menu-item.is-active {
+    color: $deep-theme;
+  }
+  .el-menu-item:hover {
+    background-color: $light-theme;
+    color: $white;
+  }
 }
 
 //下面是实际的主题类  用@include mixin 混入

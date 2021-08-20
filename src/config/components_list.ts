@@ -42,7 +42,7 @@ const components_list: any = {
           name: 'el-col',
           title: '列 el-col',
           props: {
-            span: 24,
+            span: 3,
             offset: 0,
             push: 0,
             pull: 0,
