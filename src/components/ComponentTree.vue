@@ -125,11 +125,11 @@ export default defineComponent({
 </script>
 <style lang="scss" scoped>
 .el-row,
+.el-col,
 .el-container,
 .el-form,
-.el-form-item,
-[class*='el-col-'] {
-  padding: 20px 0;
+.el-form-item {
+  padding: 20px 20px;
   border: 1px dashed #cccccc;
   box-sizing: border-box;
 }

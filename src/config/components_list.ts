@@ -105,7 +105,8 @@ const components_list: any = {
               props: {
                 label: '1'
               },
-              text: '选项1'
+              text: '选项1',
+              children: []
             },
             {
               name: 'el-radio',
@@ -113,7 +114,8 @@ const components_list: any = {
               props: {
                 label: '2'
               },
-              text: '选项2'
+              text: '选项2',
+              children: []
             }
           ]
         }
