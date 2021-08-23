@@ -258,6 +258,9 @@
       <el-form-item v-if="attribute.class||attribute.class==''" label="class">
         <el-input v-model="attribute.class" placeholder="css类名"></el-input>
       </el-form-item>
+      <el-form-item v-if="node_info.style||node_info.style==''" label="行内样式">
+        <el-input type="textarea" v-model="node_info.style" placeholder="行内样式" autosize clearable></el-input>
+      </el-form-item>
       <!-- public attribute end-->
     </el-form>
   </el-aside>
@@ -332,6 +335,8 @@ export default defineComponent({
           label: '',
         },
         text: '',
+        style: '',
+        children: [],
       }
       radio.id = 'node-' + new Date().getTime()
       node_info.children.push(radio)
@@ -352,6 +357,8 @@ export default defineComponent({
           label: '',
         },
         text: '',
+        style: '',
+        children: [],
       }
       radio.id = 'node-' + new Date().getTime()
       node_info.children.push(radio)

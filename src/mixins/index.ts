@@ -130,6 +130,11 @@ const mixins: any = () => {
           start_tag += ' :' + key + '="' + prop.toString() + '"'
         }
       }
+
+      //style 单独添加
+      if (element.style && element.style != '') {
+        start_tag += ' style="' + element.style + '"'
+      }
       /****添加属性结束****/
 
       html += start_tag + '>\n' //开始标签左半边加属性加右半边

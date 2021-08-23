@@ -36,6 +36,7 @@ const components_list: any = {
             type: 'flex',
             class: ''
           },
+          style: '',
           children: []
         },
         {
@@ -48,6 +49,7 @@ const components_list: any = {
             pull: 0,
             class: ''
           },
+          style: '',
           children: []
         },
         {
@@ -66,6 +68,7 @@ const components_list: any = {
             class: ''
           },
           text: '按钮',
+          style: '',
           children: []
         }
       ]
@@ -87,6 +90,7 @@ const components_list: any = {
             disabled: false
           },
           model: '',
+          style: '',
           children: []
         },
         {
@@ -97,7 +101,8 @@ const components_list: any = {
             label: '标签名',
             required: false
           },
-          children: []
+          children: [],
+          style: ''
         },
         {
           name: 'el-radio-group',
@@ -106,6 +111,7 @@ const components_list: any = {
             disabled: false
           },
           value: '',
+          style: '',
           children: [
             {
               name: 'el-radio',
@@ -114,6 +120,7 @@ const components_list: any = {
                 label: '1'
               },
               text: '选项1',
+              style: '',
               children: []
             },
             {
@@ -123,6 +130,7 @@ const components_list: any = {
                 label: '2'
               },
               text: '选项2',
+              style: '',
               children: []
             }
           ]
@@ -134,6 +142,7 @@ const components_list: any = {
             disabled: false
           },
           value: '',
+          style: '',
           children: [
             {
               name: 'el-checkbox',
@@ -142,6 +151,7 @@ const components_list: any = {
                 label: '1'
               },
               text: '复选框A',
+              style: '',
               children: []
             },
             {
@@ -151,6 +161,7 @@ const components_list: any = {
                 label: '2'
               },
               text: '复选框B',
+              style: '',
               children: []
             }
           ]
@@ -172,6 +183,7 @@ const components_list: any = {
             disabled: false
           },
           value: '',
+          style: '',
           children: []
         }
       ]
