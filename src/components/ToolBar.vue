@@ -2,11 +2,11 @@
   <el-alert title="测试版本v1.0.0上线啦" type="success"></el-alert>
   <el-row class="tool-bar" justify="space-between">
     <el-col :span="2">{{title}}</el-col>
-    <el-col :span="4">
+    <el-col :xs="4" :sm="4" :md="4" :lg="4">
       <el-row justify="end">
         <el-col :span="6">
           <!--  设计窗口 -->
-          <el-tooltip effect="dark" content="设计窗口" placement="bottom">
+          <el-tooltip effect="dark" content="设计窗口/切换显示边框" placement="bottom">
             <svg-icon name="layout" className="icon" @click="handleClickToolBtn(1)" />
           </el-tooltip>
         </el-col>
@@ -52,6 +52,10 @@ export default defineComponent({
     const handleClickToolBtn = (val: number) => {
       switch (val) {
         case 1:
+          //原地切换改变显示边框状态
+          if (data.title == '设计窗口') {
+            store.dispatch('handleChangeShowBorder', !store.state.show_border)
+          }
           data.title = '设计窗口'
           emit('handleChangeDesigner', val)
           break

@@ -86,9 +86,9 @@ const components_list: any = {
           name: 'el-form-item',
           title: '表单项 el-form-item',
           props: {
-            label: ''
+            label: '',
+            prop: ''
           },
-          model: '',
           children: []
         },
         {

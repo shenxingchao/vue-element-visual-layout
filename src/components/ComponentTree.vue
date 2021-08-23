@@ -1,8 +1,8 @@
 <template>
   <!-- 递归循环渲染组件树 -->
   <template v-for="(node, index) in component_tree_list" :key="node.id + index">
-    <component :id="node.id" :is="node.name" v-bind="node.props" v-model="node.value" :style="node.style"
-               :draggable="false" @dragenter.stop.prevent="handleDragEnterOnNode"
+    <component :id="node.id" :is="node.name" v-bind="node.props" v-model="node.value" :class="handleShowBorder(node)"
+               :style="node.style" :draggable="false" @dragenter.stop.prevent="handleDragEnterOnNode"
                @dragover.stop.prevent="handleDragOverOnNode(node,$event)"
                @drop.stop.prevent="handleDropOnNode(node, $event)">
       {{node.text}}
@@ -42,6 +42,7 @@ export default defineComponent({
     //数据对象
     let data: any = reactive({
       sotre_component_tree_list: store.state.component_tree_list, //组件树
+      show_border: true, //是否显示边框线
     })
 
     //递归删除旧的占位块,递归查找父级节点
@@ -114,21 +115,34 @@ export default defineComponent({
       store.dispatch('handleChangeCurrentNodeInfo', node_info)
     }
 
+    //是否显示边框线
+    const handleShowBorder = (node: any) => {
+      let white_list = [
+        'el-row',
+        'el-col',
+        'el-container',
+        'el-form',
+        'el-form-item',
+      ]
+      if (white_list.includes(node.name) && store.state.show_border) {
+        return 'padding'
+      } else {
+        return ''
+      }
+    }
+
     return {
+      ...toRefs(data),
       handleDragEnterOnNode,
       handleDragOverOnNode,
       handleDropOnNode,
-      ...toRefs(data),
+      handleShowBorder,
     }
   },
 })
 </script>
 <style lang="scss" scoped>
-.el-row,
-.el-col,
-.el-container,
-.el-form,
-.el-form-item {
+.padding {
   padding: 20px 20px;
   border: 1px dashed #cccccc;
   box-sizing: border-box;

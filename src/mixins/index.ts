@@ -103,6 +103,9 @@ const mixins: any = () => {
       if (element.value && element.value != '') {
         start_tag += ' v-model="' + element.value + '"'
       }
+      if (element.model && element.model != '') {
+        start_tag += ' :model="' + element.model + '"'
+      }
       for (const key in element.props) {
         const prop: any = element.props[key]
         if (typeof prop == 'string' && prop != '') {

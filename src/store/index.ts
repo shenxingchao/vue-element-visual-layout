@@ -10,7 +10,8 @@ export default createStore({
     component_tree_list: [], //设计组件树 全局变量
     current_node_info: {
       props: {} //当前控件的属性
-    } //当前操作对象 全局变量
+    }, //当前操作对象 全局变量
+    show_border: true //默认显示设计边框
   },
   getters: {
     // xx: state => {
@@ -32,6 +33,9 @@ export default createStore({
     },
     SET_CURRENT_NODE_INFO: (state, node_info) => {
       state.current_node_info = node_info
+    },
+    SET_SHOW_BORDER: (state, show_border) => {
+      state.show_border = show_border
     }
   },
   actions: {
@@ -80,6 +84,15 @@ export default createStore({
      */
     handleChangeCurrentNodeInfo({ commit }, node_info) {
       commit('SET_CURRENT_NODE_INFO', node_info)
+    },
+
+    /**
+     * 改变显示设计边框
+     * @param commit
+     * @param show_border 显示设计边框
+     */
+    handleChangeShowBorder({ commit }, show_border) {
+      commit('SET_SHOW_BORDER', show_border)
     }
   },
   modules: {}

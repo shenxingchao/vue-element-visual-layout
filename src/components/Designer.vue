@@ -191,11 +191,11 @@ export default defineComponent({
 
     //改变主设计窗口显示内容
     const handleChangeDesigner = (val: number) => {
-      //隐藏属性栏 设置当前操作对象 暂时先隐藏
-      store.dispatch('handleChangeCurrentNodeInfo', { props: {} })
       //切换显示内容索引
       data.tab_index = val
       if (val == 2) {
+        //隐藏属性栏 设置当前操作对象 暂时先隐藏
+        store.dispatch('handleChangeCurrentNodeInfo', { props: {} })
         //递归生成代码
         data.code = _generateCode(store.state.component_tree_list)
       }

@@ -126,9 +126,19 @@
       </template>
       <!-- el-radio end -->
       <!-- el-form-item start -->
+      <template v-if="node_info.name == 'el-form'">
+        <el-form-item v-if="node_info.model||node_info.model==''" label="表单对象">
+          <el-input v-model="node_info.model"></el-input>
+        </el-form-item>
+      </template>
+      <!-- el-form-item end -->
+      <!-- el-form-item start -->
       <template v-if="node_info.name == 'el-form-item'">
         <el-form-item v-if="attribute.label||attribute.label==''" label="标签">
           <el-input v-model="attribute.label"></el-input>
+        </el-form-item>
+        <el-form-item v-if="attribute.prop||attribute.prop==''" label="属性字段">
+          <el-input v-model="attribute.prop"></el-input>
         </el-form-item>
       </template>
       <!-- el-form-item end -->
