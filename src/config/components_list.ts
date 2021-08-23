@@ -29,6 +29,15 @@ const components_list: any = {
       icon: 'el-icon-cloudy',
       children: [
         {
+          name: 'el-container',
+          title: '布局容器 el-container',
+          props: {
+            direction: 'horizontal'
+          },
+          style: '',
+          children: []
+        },
+        {
           name: 'el-row',
           title: '行 el-row',
           props: {
@@ -38,6 +47,7 @@ const components_list: any = {
             type: 'flex',
             class: ''
           },
+          text: '',
           style: '',
           children: []
         },
@@ -51,6 +61,7 @@ const components_list: any = {
             pull: 0,
             class: ''
           },
+          text: '',
           style: '',
           children: []
         },

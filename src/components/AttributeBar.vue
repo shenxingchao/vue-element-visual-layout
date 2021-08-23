@@ -2,8 +2,21 @@
   <el-aside class="attribute-bar" width="310px">
     <h4>{{node_info.title}}</h4>
     <el-form ref="attribute" :model="attribute" label-width="68px">
+      <!-- el-container start -->
+      <template v-if="node_info.name == 'el-container'">
+        <el-form-item v-if="attribute.direction||attribute.direction==''" label="排列方向">
+          <el-select v-model="attribute.direction" placeholder="排列方向" clearable>
+            <el-option key="horizontal " label="水平" value="horizontal "></el-option>
+            <el-option key="vertical" label="垂直" value="vertical"></el-option>
+          </el-select>
+        </el-form-item>
+      </template>
+      <!-- el-container end -->
       <!-- el-row start -->
       <template v-if="node_info.name == 'el-row'">
+        <el-form-item v-if="node_info.text||node_info.text==''" label="文本">
+          <el-input v-model="node_info.text" placeholder="内部文本内容" clearable></el-input>
+        </el-form-item>
         <el-form-item v-if="attribute.gutter||attribute.gutter==0" label="栅格间隔">
           <el-input-number v-model="attribute.gutter" :controls="true" :min="0">
           </el-input-number>
@@ -31,6 +44,9 @@
       <!-- el-row end -->
       <!-- el-col start -->
       <template v-if="node_info.name == 'el-col'">
+        <el-form-item v-if="node_info.text||node_info.text==''" label="文本">
+          <el-input v-model="node_info.text" placeholder="内部文本内容" clearable></el-input>
+        </el-form-item>
         <el-form-item v-if="attribute.span" label="栅格列数">
           <el-input-number v-model="attribute.span" :controls="true" :min="1" :max="24">
           </el-input-number>

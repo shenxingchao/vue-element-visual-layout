@@ -1,6 +1,6 @@
 <template>
   <el-aside width="240px" style="background-color: rgb(238, 241, 246)" @dragenter="handleDragEnterContrlList">
-    <el-menu :default-openeds="['0']" :unique-opened="true">
+    <el-menu :default-openeds="['1']" :unique-opened="true">
       <template v-for="(components,index) in components_list.components" :key="index">
         <el-submenu :index="index + ''">
           <template #title><i :class="components.icon"></i>{{components.title}}</template>
