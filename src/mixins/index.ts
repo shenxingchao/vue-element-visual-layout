@@ -99,10 +99,7 @@ const mixins: any = () => {
       }
       let start_tag = repeat_space + '<' + element.name //开始标签的左半边名称
       /****这里开始添加属性****/
-      //v-model属性单独添加
-      if (element.value && element.value != '') {
-        start_tag += ' v-model="' + element.value + '"'
-      }
+      //model属性单独添加
       if (element.model && element.model != '') {
         start_tag += ' :model="' + element.model + '"'
       }

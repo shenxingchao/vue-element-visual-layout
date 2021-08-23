@@ -11,8 +11,10 @@
           name: '组件名称',
           title: '组件标题',
           props: '组件属性',
+          text: '内部文字',
+          value:'只是用于绑定设计窗口的变量',
+          style: '内联样式',
           children: [],//子节点
-          drop: '是否允许接受子节点'
         }
       ]
     }
@@ -108,6 +110,7 @@ const components_list: any = {
           name: 'el-radio-group',
           title: '单选框组 el-radio-group',
           props: {
+            'v-model': '',
             disabled: false
           },
           value: '',
@@ -139,6 +142,7 @@ const components_list: any = {
           name: 'el-checkbox-group',
           title: '复选框组 el-checkbox-group',
           props: {
+            'v-model': '',
             disabled: false
           },
           value: '',
@@ -170,6 +174,7 @@ const components_list: any = {
           name: 'el-input',
           title: '输入框 el-input',
           props: {
+            'v-model': '',
             type: 'text',
             maxlength: 0,
             minlength: 0,
@@ -183,6 +188,24 @@ const components_list: any = {
             disabled: false
           },
           value: '',
+          style: '',
+          children: []
+        },
+        {
+          name: 'el-input-number',
+          title: '计数器 el-input-number',
+          props: {
+            'v-model': '',
+            max: 99999999,
+            min: 0,
+            step: 1,
+            'step-strictly': false,
+            precision: 0,
+            disabled: false,
+            controls: true,
+            placeholder: '请输入数值'
+          },
+          value: 0,
           style: '',
           children: []
         }
