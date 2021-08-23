@@ -126,6 +126,34 @@ const components_list: any = {
               children: []
             }
           ]
+        },
+        {
+          name: 'el-checkbox-group',
+          title: '复选框组 el-checkbox-group',
+          props: {
+            disabled: false
+          },
+          value: '',
+          children: [
+            {
+              name: 'el-checkbox',
+              title: '复选框 el-checkbox',
+              props: {
+                label: '1'
+              },
+              text: '复选框A',
+              children: []
+            },
+            {
+              name: 'el-checkbox',
+              title: '复选框 el-checkbox',
+              props: {
+                label: '2'
+              },
+              text: '复选框B',
+              children: []
+            }
+          ]
         }
       ]
     }
