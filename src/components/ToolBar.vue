@@ -1,7 +1,7 @@
 <template>
   <el-alert title="测试版本v1.0.0上线啦" type="success"></el-alert>
   <el-row class="tool-bar" justify="space-between">
-    <el-col :span="2">{{title}}</el-col>
+    <el-col :span="20">{{title}}</el-col>
     <el-col :xs="4" :sm="4" :md="4" :lg="4">
       <el-row justify="end">
         <el-col :span="6">

@@ -4,7 +4,7 @@
     <component :id="node.id" :is="node.name" v-bind="node.props" v-model="node.value" :class="handleShowBorder(node)"
                :style="node.style" :draggable="false" @dragenter.stop.prevent="handleDragEnterOnNode"
                @dragover.stop.prevent="handleDragOverOnNode(node,$event)"
-               @drop.stop.prevent="handleDropOnNode(node, $event)">
+               @drop.stop.prevent="handleDropOnNode(node, $event)" @click.stop.prevent="handleClick">
       {{node.text}}
       <template v-if="node.children">
         <component-tree :component_tree_list="node.children"></component-tree>
@@ -45,8 +45,11 @@ export default defineComponent({
       show_border: true, //是否显示边框线
     })
 
-    //递归删除旧的占位块,递归查找父级节点
-    const { _handleRecursionDelete, _handleRecursionGetParentNode } = mixins()
+    const {
+      _handleRecursionDelete, //递归删除旧的占位块
+      _handleRecursionGetParentNode, //递归查找父级节点
+      _handleRecursionGetNodeByNodeId, //递归根据节点id查找节点信息
+    } = mixins()
 
     //被拖动元素进入到释放区所占据得屏幕空间时触发  console.log('6.控件进入子控件触发 handleDragEnterOnNode')
     const handleDragEnterOnNode = (e: any) => {}
@@ -118,9 +121,9 @@ export default defineComponent({
     //是否显示边框线
     const handleShowBorder = (node: any) => {
       let white_list = [
+        'el-container',
         'el-row',
         'el-col',
-        'el-container',
         'el-form',
         'el-form-item',
       ]
@@ -131,12 +134,56 @@ export default defineComponent({
       }
     }
 
+    const handleClick = (e: any) => {
+      //递归找id 这里可能点了内部的文字所以要递归找
+      const recursionFindNodeId: any = (e: any, level: number = 0) => {
+        if (e.target && e.target.id) {
+          return e.target.id
+        } else if (e.id) {
+          return e.id
+        } else if (level > 3) {
+          //找4层 后返回
+          return false
+        } else {
+          //如果是点击了内部的文字则往上找id
+          level++
+          return recursionFindNodeId(
+            e.target ? e.target.parentElement : e,
+            level
+          )
+        }
+      }
+      let target_id = recursionFindNodeId(e)
+      //选中高亮区域
+      if (target_id) {
+        let node_info: any = _handleRecursionGetNodeByNodeId(
+          target_id,
+          data.sotre_component_tree_list
+        )
+        //设置当前操作对象
+        store.dispatch('handleChangeCurrentNodeInfo', node_info)
+        //清除高亮边框
+        let border = document.getElementsByClassName('border')[0] as HTMLElement
+        if (border) {
+          border.className = border.className.replace(' border', '')
+        }
+        //高亮控件边框
+        let node_element = document.getElementById(
+          store.state.current_node_info.id
+        ) as HTMLElement
+        if (node_element) {
+          node_element.className = node_element.className + ' border'
+        }
+      }
+    }
+
     return {
       ...toRefs(data),
       handleDragEnterOnNode,
       handleDragOverOnNode,
       handleDropOnNode,
       handleShowBorder,
+      handleClick,
     }
   },
 })

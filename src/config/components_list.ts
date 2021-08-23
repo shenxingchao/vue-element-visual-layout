@@ -219,6 +219,43 @@ const components_list: any = {
           value: 0,
           style: '',
           children: []
+        },
+        {
+          name: 'el-select',
+          title: '选择器 el-select',
+          props: {
+            'v-model': '',
+            disabled: false,
+            clearable: false,
+            filterable: false,
+            placeholder: '请选择'
+          },
+          value: '',
+          style: '',
+          children: [
+            {
+              name: 'el-option',
+              title: '选项 el-option',
+              props: {
+                label: '黄金糕',
+                value: '1'
+              },
+              style: '',
+              text: '黄金糕1',
+              children: []
+            },
+            {
+              name: 'el-option',
+              title: '选项 el-option',
+              props: {
+                label: '双皮奶',
+                value: '2'
+              },
+              style: '',
+              text: '双皮奶1',
+              children: []
+            }
+          ]
         }
       ]
     }

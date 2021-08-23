@@ -1,5 +1,5 @@
 <template>
-  <el-aside class="attribute-bar" width="310px">
+  <el-aside class="attribute-bar" width="400px">
     <h4>{{node_info.title}}</h4>
     <el-form ref="attribute" :model="attribute" label-width="68px">
       <!-- el-container start -->
@@ -185,6 +185,9 @@
             </el-col>
           </el-row>
         </el-form-item>
+        <el-form-item label="禁用">
+          <el-switch v-model="attribute.disabled"></el-switch>
+        </el-form-item>
       </template>
       <!-- el-radio-group end -->
       <!-- el-checkbox-group start -->
@@ -214,6 +217,9 @@
               </el-button>
             </el-col>
           </el-row>
+        </el-form-item>
+        <el-form-item label="禁用">
+          <el-switch v-model="attribute.disabled"></el-switch>
         </el-form-item>
       </template>
       <!-- el-checkbox-group end -->
@@ -305,6 +311,51 @@
         </el-form-item>
       </template>
       <!-- el-input-number end -->
+      <!-- el-select start -->
+      <template v-if="node_info.name == 'el-select'">
+        <!-- 渲染选项 -->
+        <el-form-item v-if="attribute['v-model']||attribute['v-model'] == ''" label="绑定变量">
+          <el-input v-model="attribute['v-model']" placeholder="绑定变量 form.prop" clearable></el-input>
+        </el-form-item>
+        <el-form-item :label-width="0">
+          <template v-for="(item,index) in node_info.children" :key="index">
+            <el-row>
+              <el-col :span="7">
+                <el-input size="small" v-model="item.text" placeholder="下拉值" clearable></el-input>
+              </el-col>
+              <el-col :span="7" :offset="1">
+                <el-input size="small" v-model="item.props.label" placeholder="显示值" clearable></el-input>
+              </el-col>
+              <el-col :span="4" :offset="1">
+                <el-input size="small" v-model="item.props.value" placeholder="值" clearable></el-input>
+              </el-col>
+              <el-col :span="3" :offset="1">
+                <el-button v-if="index > 1" size="mini" type="danger" icon="el-icon-minus"
+                           @click="handleClickDeleteSelectItem(node_info,index)"></el-button>
+              </el-col>
+            </el-row>
+          </template>
+          <el-row>
+            <el-col :span="4" :offset="1">
+              <el-button size="mini" type="primary" icon="el-icon-plus" @click="handleClickAddSelectItem(node_info)">
+              </el-button>
+            </el-col>
+          </el-row>
+        </el-form-item>
+        <el-form-item label="禁用">
+          <el-switch v-model="attribute.disabled"></el-switch>
+        </el-form-item>
+        <el-form-item label="清空">
+          <el-switch v-model="attribute.clearable"></el-switch>
+        </el-form-item>
+        <el-form-item label="搜索">
+          <el-switch v-model="attribute.filterable"></el-switch>
+        </el-form-item>
+        <el-form-item v-if="attribute.placeholder||attribute.placeholder==''" label="占位文本">
+          <el-input v-model="attribute.placeholder" placeholder="占位文本" clearable></el-input>
+        </el-form-item>
+      </template>
+      <!-- el-select end -->
       <!-- public attribute start-->
       <el-form-item v-if="attribute.class||attribute.class==''" label="class">
         <el-input v-model="attribute.class" placeholder="css类名" clearable></el-input>
@@ -420,6 +471,28 @@ export default defineComponent({
       node_info.children.splice(index, 1)
     }
 
+    //点击添加选择器选项
+    const handleClickAddSelectItem = (node_info: any) => {
+      //初始化
+      let radio: any = {
+        name: 'el-option',
+        title: '选项 el-option',
+        props: {
+          label: '',
+          value: '',
+        },
+        style: '',
+        children: [],
+      }
+      radio.id = 'node-' + new Date().getTime()
+      node_info.children.push(radio)
+    }
+
+    //点击删除选择器选项
+    const handleClickDeleteSelectItem = (node_info: any, index: any) => {
+      node_info.children.splice(index, 1)
+    }
+
     return {
       ...toRefs(data),
       node_info,
@@ -428,6 +501,8 @@ export default defineComponent({
       handleClickDeleteRadioItem,
       handleClickAddCheckBoxItem,
       handleClickDeleteCheckBoxItem,
+      handleClickAddSelectItem,
+      handleClickDeleteSelectItem,
     }
   },
 })

@@ -103,6 +103,11 @@
     background-color: $deep-theme;
     border-color: $deep-theme;
   }
+  //选择框
+  .el-switch.is-checked .el-switch__core {
+    background-color: $deep-theme;
+    border-color: $deep-theme;
+  }
   //折叠菜单
   .el-menu-item.is-active {
     color: $deep-theme;

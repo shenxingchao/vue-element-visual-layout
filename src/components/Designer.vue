@@ -37,7 +37,6 @@ export default defineComponent({
 
     const {
       _handleRecursionDelete, //递归删除旧的占位块
-      _handleRecursionGetNodeByNodeId, //递归根据节点id查找节点信息
       _generateCode, //递归生成代码
     } = mixins()
 
@@ -143,49 +142,6 @@ export default defineComponent({
         }
         //隐藏属性栏 设置当前操作对象
         store.dispatch('handleChangeCurrentNodeInfo', { props: {} })
-      } else {
-        //递归找id 这里可能点了内部的文字所以要递归找
-        const recursionFindNodeId: any = (e: any, level: number = 0) => {
-          if (e.target && e.target.id) {
-            return e.target.id
-          } else if (e.id) {
-            return e.id
-          } else if (level > 3) {
-            //找4层 后返回
-            return false
-          } else {
-            //如果是点击了内部的文字则往上找id
-            level++
-            return recursionFindNodeId(
-              e.target ? e.target.parentElement : e,
-              level
-            )
-          }
-        }
-        let target_id = recursionFindNodeId(e)
-        //选中高亮区域
-        if (target_id) {
-          let node_info: any = _handleRecursionGetNodeByNodeId(
-            target_id,
-            data.component_tree_list
-          )
-          //设置当前操作对象
-          store.dispatch('handleChangeCurrentNodeInfo', node_info)
-          //清除高亮边框
-          let border = document.getElementsByClassName(
-            'border'
-          )[0] as HTMLElement
-          if (border) {
-            border.className = border.className.replace(' border', '')
-          }
-          //高亮控件边框
-          let node_element = document.getElementById(
-            store.state.current_node_info.id
-          ) as HTMLElement
-          if (node_element) {
-            node_element.className = node_element.className + ' border'
-          }
-        }
       }
     }
 

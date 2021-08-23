@@ -3056,10 +3056,10 @@ electron@^13.1.9:
     "@types/node" "^14.6.2"
     extract-zip "^1.0.3"
 
-element-plus@^1.0.2-beta.70:
-  version "1.0.2-beta.70"
-  resolved "https://registry.nlark.com/element-plus/download/element-plus-1.0.2-beta.70.tgz?cache=0&sync_timestamp=1628175083345&other_urls=https%3A%2F%2Fregistry.nlark.com%2Felement-plus%2Fdownload%2Felement-plus-1.0.2-beta.70.tgz#13058f4e78c5e73b19a915404d71076a13a2616e"
-  integrity sha1-EwWPTnjF5zsZqRVATXEHahOiYW4=
+element-plus@^1.0.2-beta.71:
+  version "1.0.2-beta.71"
+  resolved "https://registry.nlark.com/element-plus/download/element-plus-1.0.2-beta.71.tgz#148f16d5a0a800549989f7869bbf4d656c652d36"
+  integrity sha1-FI8W1aCoAFSZifeGm79NZWxlLTY=
   dependencies:
     "@element-plus/icons" "^0.0.11"
     "@popperjs/core" "^2.4.4"
