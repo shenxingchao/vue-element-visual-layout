@@ -78,7 +78,14 @@ const components_list: any = {
         {
           name: 'el-form',
           title: '表单 el-form',
-          props: {},
+          props: {
+            ref: 'ruleForm',
+            'label-position': 'right',
+            'label-width': '100px',
+            inline: false,
+            size: 'medium',
+            disabled: false
+          },
           model: '',
           children: []
         },
@@ -86,8 +93,9 @@ const components_list: any = {
           name: 'el-form-item',
           title: '表单项 el-form-item',
           props: {
-            label: '',
-            prop: ''
+            prop: '',
+            label: '标签名',
+            required: false
           },
           children: []
         },
