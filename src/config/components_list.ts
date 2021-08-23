@@ -154,6 +154,25 @@ const components_list: any = {
               children: []
             }
           ]
+        },
+        {
+          name: 'el-input',
+          title: '输入框 el-input',
+          props: {
+            type: 'text',
+            maxlength: 0,
+            minlength: 0,
+            placeholder: '请输入',
+            clearable: false,
+            'show-password': false,
+            rows: 2,
+            autosize: false,
+            readonly: false,
+            resize: 'none',
+            disabled: false
+          },
+          value: '',
+          children: []
         }
       ]
     }

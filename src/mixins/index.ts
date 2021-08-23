@@ -106,8 +106,20 @@ const mixins: any = () => {
       if (element.model && element.model != '') {
         start_tag += ' :model="' + element.model + '"'
       }
+
       for (const key in element.props) {
         const prop: any = element.props[key]
+        //特殊属性判断
+        //el-input rows属性 不是textarea的时候不需要加这个属性
+        if (
+          element.name == 'el-input' &&
+          element.props['type'] != 'textarea' &&
+          (key as string) == 'rows'
+        ) {
+          continue
+        }
+
+        //其他正常判断
         if (typeof prop == 'string' && prop != '') {
           start_tag += ' ' + key + '="' + prop + '"'
         }

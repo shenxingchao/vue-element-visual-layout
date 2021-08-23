@@ -201,6 +201,59 @@
         </el-form-item>
       </template>
       <!-- el-checkbox-group end -->
+      <!-- el-input start -->
+      <template v-if="node_info.name == 'el-input'">
+        <el-form-item v-if="node_info.value||node_info.value == ''" label="绑定变量">
+          <el-input v-model="node_info.value" placeholder="绑定变量 form.prop"></el-input>
+        </el-form-item>
+        <el-form-item v-if="attribute.type||attribute.type==''" label="类型">
+          <el-select v-model="attribute.type" placeholder="类型" clearable>
+            <el-option key="text" label="文本" value="text"></el-option>
+            <el-option key="number" label="数字" value="number"></el-option>
+            <el-option key="password" label="密码" value="password"></el-option>
+            <el-option key="textarea" label="文本域" value="textarea"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item v-if="attribute.maxlength||attribute.maxlength==0" label="最大长度">
+          <el-input-number v-model="attribute.maxlength" :controls="true" :min="0">
+          </el-input-number>
+        </el-form-item>
+        <el-form-item v-if="attribute.minlength||attribute.minlength==0" label="最小长度">
+          <el-input-number v-model="attribute.minlength" :controls="true" :min="0">
+          </el-input-number>
+        </el-form-item>
+        <el-form-item v-if="attribute.placeholder||attribute.placeholder==''" label="占位文本">
+          <el-input v-model="attribute.placeholder" placeholder="占位文本"></el-input>
+        </el-form-item>
+        <el-form-item label="清空">
+          <el-switch v-model="attribute.clearable"></el-switch>
+        </el-form-item>
+        <el-form-item label="密文">
+          <el-switch v-model="attribute['show-password']"></el-switch>
+        </el-form-item>
+        <el-form-item v-if="attribute.type == 'textarea'&&(attribute.rows||attribute.rows==0)" label="输入行数">
+          <el-input-number v-model="attribute.rows" :controls="true" :min="2">
+          </el-input-number>
+        </el-form-item>
+        <el-form-item v-if="attribute.type == 'textarea'" label="自动高度">
+          <el-switch v-model="attribute.autosize"></el-switch>
+        </el-form-item>
+        <el-form-item v-if="attribute.type == 'textarea'" label="缩放">
+          <el-select v-model="attribute.resize" placeholder="缩放" clearable>
+            <el-option key="none" label="无缩放" value="none"></el-option>
+            <el-option key="both" label="全部缩放" value="both"></el-option>
+            <el-option key="horizontal" label="水平缩放" value="horizontal"></el-option>
+            <el-option key="vertical" label="垂直缩放" value="vertical"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="只读">
+          <el-switch v-model="attribute.readonly"></el-switch>
+        </el-form-item>
+        <el-form-item label="禁用">
+          <el-switch v-model="attribute.disabled"></el-switch>
+        </el-form-item>
+      </template>
+      <!-- el-input end -->
       <!-- public attribute start-->
       <el-form-item v-if="attribute.class||attribute.class==''" label="class">
         <el-input v-model="attribute.class" placeholder="css类名"></el-input>
