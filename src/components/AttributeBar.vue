@@ -366,6 +366,57 @@
         </el-form-item>
       </template>
       <!-- el-switch end -->
+      <!-- el-date-picker start -->
+      <template v-if="node_info.name == 'el-date-picker'">
+        <el-form-item v-if="attribute['v-model']||attribute['v-model'] == ''" label="绑定变量">
+          <el-input v-model="attribute['v-model']" placeholder="绑定变量 form.prop" clearable></el-input>
+        </el-form-item>
+        <el-form-item v-if="attribute.type||attribute.type==''" label="类型">
+          <el-select v-model="attribute.type" placeholder="请选择选择器类型" clearable>
+            <el-option key="year" label="年" value="year"></el-option>
+            <el-option key="month" label="月" value="month"></el-option>
+            <el-option key="date" label="日" value="date"></el-option>
+            <el-option key="dates" label="日（带确定按钮）" value="dates"></el-option>
+            <el-option key="datetime" label="日期时间" value="datetime"></el-option>
+            <el-option key="datetimerange" label="日期时间范围" value="datetimerange"></el-option>
+            <el-option key="daterange" label="日期范围" value="daterange"></el-option>
+            <el-option key="monthrange" label="月份范围" value="monthrange"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item v-if="attribute.format||attribute.format==''" label="日期格式">
+          <el-input v-model="attribute.format" placeholder="日期格式" clearable></el-input>
+        </el-form-item>
+        <el-form-item label="只读">
+          <el-switch v-model="attribute.readonly"></el-switch>
+        </el-form-item>
+        <el-form-item label="禁用">
+          <el-switch v-model="attribute.disabled"></el-switch>
+        </el-form-item>
+        <el-form-item label="编辑">
+          <el-switch v-model="attribute.editable"></el-switch>
+        </el-form-item>
+        <el-form-item label="清空">
+          <el-switch v-model="attribute.clearable"></el-switch>
+        </el-form-item>
+        <template v-if="attribute.type=='year' || attribute.type=='month' || attribute.type=='date' 
+                  || attribute.type=='dates'|| attribute.type=='datetime'">
+          <el-form-item v-if="attribute.placeholder||attribute.placeholder==''" label="占位文本">
+            <el-input v-model="attribute.placeholder" placeholder="占位文本" clearable></el-input>
+          </el-form-item>
+        </template>
+        <template v-else>
+          <el-form-item v-if="attribute['start-placeholder']||attribute['start-placeholder']==''" label="开始占位">
+            <el-input v-model="attribute['start-placeholder']" placeholder="范围开始占位" clearable></el-input>
+          </el-form-item>
+          <el-form-item v-if="attribute['end-placeholder']||attribute['end-placeholder']==''" label="结束占位">
+            <el-input v-model="attribute['end-placeholder']" placeholder="范围结束占位" clearable></el-input>
+          </el-form-item>
+          <el-form-item v-if="attribute['range-separator']||attribute['range-separator']==''" label="分隔符">
+            <el-input v-model="attribute['range-separator']" placeholder="范围分隔符" clearable></el-input>
+          </el-form-item>
+        </template>
+      </template>
+      <!-- el-date-picker end -->
       <!-- public attribute start-->
       <el-form-item v-if="attribute.class||attribute.class==''" label="class">
         <el-input v-model="attribute.class" placeholder="css类名" clearable></el-input>

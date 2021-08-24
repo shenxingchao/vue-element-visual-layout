@@ -1,15 +1,35 @@
 <template>
   <!-- 递归循环渲染组件树 -->
   <template v-for="(node, index) in component_tree_list" :key="node.id + index">
-    <component :id="node.id" :is="node.name" v-bind="node.props" v-model="node.value" :class="handleShowBorder(node)"
-               :style="node.style" :draggable="false" @dragenter.stop.prevent="handleDragEnterOnNode"
-               @dragover.stop.prevent="handleDragOverOnNode(node,$event)"
-               @drop.stop.prevent="handleDropOnNode(node, $event)" @click.stop.prevent="handleClick">
-      {{node.text}}
-      <template v-if="node.children">
-        <component-tree :component_tree_list="node.children"></component-tree>
-      </template>
-    </component>
+    <!-- 日期控件加属性和选择有问题单独处理 -->
+    <template v-if="node.name =='el-date-picker'">
+      <div style="display:inline-block;" :id="node.id" :class="handleShowBorder(node)" :draggable="false"
+           @dragenter.stop.prevent="handleDragEnterOnNode" @dragover.stop.prevent="handleDragOverOnNode(node,$event)"
+           @drop.stop.prevent="handleDropOnNode(node, $event)" @click.stop.prevent="handleClick">
+        <component :is="node.name" v-model="node.value" :type="node.props.type" :readonly="node.props.readonly"
+                   :disabled="node.props.disabled" :editable="node.props.editable" :clearable="node.props.clearable"
+                   :placeholder="node.props.placeholder" :start-placeholder="node.props['start-placeholder']"
+                   :end-placeholder="node.props['end-placeholder']" :range-separator="node.props['range-separator']"
+                   :style="node.style">
+          {{node.text}}
+          <template v-if="node.children">
+            <component-tree :component_tree_list="node.children"></component-tree>
+          </template>
+        </component>
+      </div>
+    </template>
+    <!-- 其他控件没问题 -->
+    <template v-else>
+      <component :id="node.id" :is="node.name" v-bind="node.props" v-model="node.value" :class="handleShowBorder(node)"
+                 :style="node.style" :draggable="false" @dragenter.stop.prevent="handleDragEnterOnNode"
+                 @dragover.stop.prevent="handleDragOverOnNode(node,$event)"
+                 @drop.stop.prevent="handleDropOnNode(node, $event)" @click.stop.prevent="handleClick">
+        {{node.text}}
+        <template v-if="node.children">
+          <component-tree :component_tree_list="node.children"></component-tree>
+        </template>
+      </component>
+    </template>
   </template>
 </template>
 <script lang="ts">
@@ -148,11 +168,12 @@ export default defineComponent({
           //如果是点击了内部的文字则往上找id
           level++
           return recursionFindNodeId(
-            e.target ? e.target.parentElement : e,
+            e.target ? e.target.parentElement : e.parentElement,
             level
           )
         }
       }
+
       let target_id = recursionFindNodeId(e)
       if (e.target.className == 'el-switch__core') {
         //如果是开关控件，则是找到他的兄弟节点

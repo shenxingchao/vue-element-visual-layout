@@ -267,6 +267,26 @@ const components_list: any = {
           value: '',
           style: '',
           children: []
+        },
+        {
+          name: 'el-date-picker',
+          title: '日期选择器 el-date-picker',
+          props: {
+            'v-model': '',
+            type: 'date',
+            format: 'YYYY-MM-DD',
+            readonly: false,
+            disabled: false,
+            editable: true,
+            clearable: true,
+            placeholder: '',
+            'start-placeholder': '',
+            'end-placeholder': '',
+            'range-separator': ''
+          },
+          value: '',
+          style: '',
+          children: []
         }
       ]
     }
