@@ -356,6 +356,16 @@
         </el-form-item>
       </template>
       <!-- el-select end -->
+      <!-- el-switch start -->
+      <template v-if="node_info.name == 'el-switch'">
+        <el-form-item v-if="attribute['v-model']||attribute['v-model'] == ''" label="绑定变量">
+          <el-input v-model="attribute['v-model']" placeholder="绑定变量 form.prop" clearable></el-input>
+        </el-form-item>
+        <el-form-item label="禁用">
+          <el-switch v-model="attribute.disabled"></el-switch>
+        </el-form-item>
+      </template>
+      <!-- el-switch end -->
       <!-- public attribute start-->
       <el-form-item v-if="attribute.class||attribute.class==''" label="class">
         <el-input v-model="attribute.class" placeholder="css类名" clearable></el-input>

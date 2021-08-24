@@ -256,6 +256,17 @@ const components_list: any = {
               children: []
             }
           ]
+        },
+        {
+          name: 'el-switch',
+          title: '开关 el-switch',
+          props: {
+            'v-model': '',
+            disabled: false
+          },
+          value: '',
+          style: '',
+          children: []
         }
       ]
     }
