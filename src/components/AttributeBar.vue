@@ -372,11 +372,11 @@
           <el-input v-model="attribute['v-model']" placeholder="绑定变量 form.prop" clearable></el-input>
         </el-form-item>
         <el-form-item v-if="attribute.type||attribute.type==''" label="类型">
-          <el-select v-model="attribute.type" placeholder="请选择选择器类型" clearable>
+          <el-select v-model="attribute.type" placeholder="请选择选择器类型" @change="node_info.value = ''" clearable>
             <el-option key="year" label="年" value="year"></el-option>
             <el-option key="month" label="月" value="month"></el-option>
             <el-option key="date" label="日" value="date"></el-option>
-            <el-option key="dates" label="日（带确定按钮）" value="dates"></el-option>
+            <el-option key="dates" label="日（多选带确定按钮）" value="dates"></el-option>
             <el-option key="datetime" label="日期时间" value="datetime"></el-option>
             <el-option key="datetimerange" label="日期时间范围" value="datetimerange"></el-option>
             <el-option key="daterange" label="日期范围" value="daterange"></el-option>

@@ -280,9 +280,9 @@ const components_list: any = {
             editable: true,
             clearable: true,
             placeholder: '',
-            'start-placeholder': '',
-            'end-placeholder': '',
-            'range-separator': ''
+            'start-placeholder': '开始日期',
+            'end-placeholder': '结束日期',
+            'range-separator': '至'
           },
           value: '',
           style: '',
