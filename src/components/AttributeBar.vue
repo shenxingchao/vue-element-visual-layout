@@ -1,431 +1,449 @@
 <template>
   <el-aside class="attribute-bar" width="400px">
-    <h4>{{node_info.title}}</h4>
-    <el-form ref="attribute" :model="attribute" label-width="68px">
-      <!-- el-container start -->
-      <template v-if="node_info.name == 'el-container'">
-        <el-form-item v-if="attribute.direction||attribute.direction==''" label="排列方向">
-          <el-select v-model="attribute.direction" placeholder="排列方向" clearable>
-            <el-option key="horizontal " label="水平" value="horizontal "></el-option>
-            <el-option key="vertical" label="垂直" value="vertical"></el-option>
-          </el-select>
-        </el-form-item>
-      </template>
-      <!-- el-container end -->
-      <!-- el-row start -->
-      <template v-if="node_info.name == 'el-row'">
-        <el-form-item v-if="node_info.text||node_info.text==''" label="文本">
-          <el-input v-model="node_info.text" placeholder="内部文本内容" clearable></el-input>
-        </el-form-item>
-        <el-form-item v-if="attribute.gutter||attribute.gutter==0" label="栅格间隔">
-          <el-input-number v-model="attribute.gutter" :controls="true" :min="0">
-          </el-input-number>
-        </el-form-item>
-        <el-form-item v-if="attribute.justify||attribute.justify==''" label="水平对齐">
-          <el-select v-model="attribute.justify" placeholder="水平对齐" clearable>
-            <el-option key="start" label="左对齐" value="start"></el-option>
-            <el-option key="center" label="居中" value="center"></el-option>
-            <el-option key="end" label="右对齐" value="end"></el-option>
-            <el-option key="space-around" label="两端对齐(around)" value="space-around"></el-option>
-            <el-option key="space-between" label="两端对齐(between)" value="space-between"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item v-if="attribute.align||attribute.align==''" label="垂直对齐">
-          <el-select v-model="attribute.align" placeholder="垂直对齐" clearable>
-            <el-option key="top" label="顶部" value="top"></el-option>
-            <el-option key="middle" label="居中" value="middle"></el-option>
-            <el-option key="bottom" label="底部" value="bottom"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item v-if="attribute.type||attribute.type==''" label="类型">
-          <el-input v-model="attribute.type" placeholder="类型" clearable></el-input>
-        </el-form-item>
-      </template>
-      <!-- el-row end -->
-      <!-- el-col start -->
-      <template v-if="node_info.name == 'el-col'">
-        <el-form-item v-if="node_info.text||node_info.text==''" label="文本">
-          <el-input v-model="node_info.text" placeholder="内部文本内容" clearable></el-input>
-        </el-form-item>
-        <el-form-item v-if="attribute.span" label="栅格列数">
-          <el-input-number v-model="attribute.span" :controls="true" :min="1" :max="24">
-          </el-input-number>
-        </el-form-item>
-        <el-form-item v-if="attribute.offset||attribute.offset==0" label="左侧间隔">
-          <el-input-number v-model="attribute.offset" :controls="true" :min="0" :max="24">
-          </el-input-number>
-        </el-form-item>
-        <el-form-item v-if="attribute.push||attribute.push==0" label="向右移动">
-          <el-input-number v-model="attribute.push" :controls="true" :min="0" :max="24" :disabled="attribute.pull>0">
-          </el-input-number>
-        </el-form-item>
-        <el-form-item v-if="attribute.pull||attribute.pull==0" label="向左移动">
-          <el-input-number v-model="attribute.pull" :controls="true" :min="0" :max="24" :disabled="attribute.push>0">
-          </el-input-number>
-        </el-form-item>
-      </template>
-      <!-- el-col end -->
-      <!-- el-button start -->
-      <template v-if="node_info.name == 'el-button'">
-        <el-form-item v-if="node_info.text||node_info.text==''" label="文本">
-          <el-input v-model="node_info.text" placeholder="内部文本内容" clearable></el-input>
-        </el-form-item>
-        <el-form-item v-if="attribute.size||attribute.size==''" label="尺寸">
-          <el-select v-model="attribute.size" placeholder="尺寸" clearable>
-            <el-option key="medium" label="正常" value="medium"></el-option>
-            <el-option key="small" label="小" value="small"></el-option>
-            <el-option key="mini" label="迷你" value="mini"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item v-if="attribute.type||attribute.type==''" label="类型">
-          <el-select v-model="attribute.type" placeholder="类型" clearable>
-            <el-option key="default" label="默认" value="default"></el-option>
-            <el-option key="primary" label="主要" value="primary"></el-option>
-            <el-option key="success" label="成功" value="success"></el-option>
-            <el-option key="warning" label="警告" value="warning"></el-option>
-            <el-option key="danger" label="危险" value="danger"></el-option>
-            <el-option key="info" label="信息" value="info"></el-option>
-            <el-option key="text" label="文本" value="text"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="朴素按钮">
-          <el-switch v-model="attribute.plain"></el-switch>
-        </el-form-item>
-        <el-form-item label="圆角按钮">
-          <el-switch v-model="attribute.round"></el-switch>
-        </el-form-item>
-        <el-form-item label="圆形按钮">
-          <el-switch v-model="attribute.circle"></el-switch>
-        </el-form-item>
-        <el-form-item label="加载中">
-          <el-switch v-model="attribute.loading"></el-switch>
-        </el-form-item>
-        <el-form-item label="禁用">
-          <el-switch v-model="attribute.disabled"></el-switch>
-        </el-form-item>
-        <el-form-item v-if="attribute.icon||attribute.icon==''" label="图标类名">
-          <el-input v-model="attribute.icon" placeholder="图标类名" clearable></el-input>
-        </el-form-item>
-        <el-form-item label="自动聚焦">
-          <el-switch v-model="attribute.autofocus"></el-switch>
-        </el-form-item>
-      </template>
-      <!-- el-button end -->
-      <!-- el-form-item start -->
-      <template v-if="node_info.name == 'el-form'">
-        <el-form-item v-if="node_info.model||node_info.model==''" label="表单对象">
-          <el-input v-model="node_info.model" placeholder="表单对象 form" clearable></el-input>
-        </el-form-item>
-        <el-form-item v-if="attribute.ref||attribute.ref==''" label="ref">
-          <el-input v-model="attribute.ref" placeholder="ref" clearable></el-input>
-        </el-form-item>
-        <el-form-item label="行内表单">
-          <el-switch v-model="attribute.inline"></el-switch>
-        </el-form-item>
-        <el-form-item v-if="attribute['label-position']||attribute['label-position']==''" label="标签位置">
-          <el-select v-model="attribute['label-position']" placeholder="标签位置" clearable>
-            <el-option key="left" label="左对齐" value="left"></el-option>
-            <el-option key="top" label="顶部对齐" value="top"></el-option>
-            <el-option key="right" label="右对齐" value="right"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item v-if="attribute['label-width']||attribute['label-width']==''" label="标签宽度">
-          <el-input v-model="attribute['label-width']" placeholder="标签宽度 100px" clearable></el-input>
-        </el-form-item>
-        <el-form-item v-if="attribute.size||attribute.size==''" label="尺寸">
-          <el-select v-model="attribute.size" placeholder="尺寸" clearable>
-            <el-option key="medium" label="正常" value="medium"></el-option>
-            <el-option key="small" label="小" value="small"></el-option>
-            <el-option key="mini" label="迷你" value="mini"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="禁用">
-          <el-switch v-model="attribute.disabled"></el-switch>
-        </el-form-item>
-      </template>
-      <!-- el-form-item end -->
-      <!-- el-form-item start -->
-      <template v-if="node_info.name == 'el-form-item'">
-        <el-form-item v-if="attribute.prop||attribute.prop==''" label="属性字段">
-          <el-input v-model="attribute.prop" placeholder="属性字段 prop" clearable></el-input>
-        </el-form-item>
-        <el-form-item v-if="attribute.label||attribute.label==''" label="标签">
-          <el-input v-model="attribute.label" placeholder="标签" clearable></el-input>
-        </el-form-item>
-        <el-form-item label="必填">
-          <el-switch v-model="attribute.required"></el-switch>
-        </el-form-item>
-      </template>
-      <!-- el-form-item end -->
-      <!-- el-radio-group start -->
-      <template v-if="node_info.name == 'el-radio-group'">
-        <!-- 渲染选项 -->
-        <el-form-item v-if="attribute['v-model']||attribute['v-model'] == ''" label="绑定变量">
-          <el-input v-model="attribute['v-model']" placeholder="绑定变量 form.prop" clearable></el-input>
-        </el-form-item>
-        <el-form-item label="选项设置">
-          <template v-for="(item,index) in node_info.children" :key="index">
-            <el-row>
-              <el-col :span="10">
-                <el-input size="small" v-model="item.text" placeholder="名称" clearable></el-input>
-              </el-col>
-              <el-col :span="8" :offset="1">
-                <el-input size="small" v-model="item.props.label" placeholder="值" clearable></el-input>
-              </el-col>
-              <el-col :span="4" :offset="1">
-                <el-button v-if="index > 1" size="mini" type="danger" icon="el-icon-minus"
-                           @click="handleClickDeleteRadioItem(node_info,index)"></el-button>
-              </el-col>
-            </el-row>
+    <el-tabs v-model="tab_active_name">
+      <el-tab-pane name="1">
+        <template #label>
+          <span><i class="el-icon-date"></i> 控件属性</span>
+        </template>
+        <h4>{{node_info.title}}</h4>
+        <el-form ref="attribute" :model="attribute" label-width="68px">
+          <!-- el-container start -->
+          <template v-if="node_info.name == 'el-container'">
+            <el-form-item v-if="attribute.direction||attribute.direction==''" label="排列方向">
+              <el-select v-model="attribute.direction" placeholder="排列方向" clearable>
+                <el-option key="horizontal " label="水平" value="horizontal "></el-option>
+                <el-option key="vertical" label="垂直" value="vertical"></el-option>
+              </el-select>
+            </el-form-item>
           </template>
-          <el-row>
-            <el-col :span="4" :offset="1">
-              <el-button size="mini" type="primary" icon="el-icon-plus" @click="handleClickAddRadioItem(node_info)">
-              </el-button>
-            </el-col>
-          </el-row>
-        </el-form-item>
-        <el-form-item label="禁用">
-          <el-switch v-model="attribute.disabled"></el-switch>
-        </el-form-item>
-      </template>
-      <!-- el-radio-group end -->
-      <!-- el-checkbox-group start -->
-      <template v-if="node_info.name == 'el-checkbox-group'">
-        <!-- 渲染选项 -->
-        <el-form-item v-if="attribute['v-model']||attribute['v-model'] == ''" label="绑定变量">
-          <el-input v-model="attribute['v-model']" placeholder="绑定变量 form.prop" clearable></el-input>
-        </el-form-item>
-        <el-form-item label="选项设置">
-          <template v-for="(item,index) in node_info.children" :key="index">
-            <el-row>
-              <el-col :span="10">
-                <el-input size="small" v-model="item.text" placeholder="名称" clearable></el-input>
-              </el-col>
-              <el-col :span="8" :offset="1">
-                <el-input size="small" v-model="item.props.label" placeholder="值" clearable></el-input>
-              </el-col>
-              <el-col :span="4" :offset="1">
-                <el-button v-if="index > 1" size="mini" type="danger" icon="el-icon-minus"
-                           @click="handleClickDeleteCheckBoxItem(node_info,index)"></el-button>
-              </el-col>
-            </el-row>
+          <!-- el-container end -->
+          <!-- el-row start -->
+          <template v-if="node_info.name == 'el-row'">
+            <el-form-item v-if="node_info.text||node_info.text==''" label="文本">
+              <el-input v-model="node_info.text" placeholder="内部文本内容" clearable></el-input>
+            </el-form-item>
+            <el-form-item v-if="attribute.gutter||attribute.gutter==0" label="栅格间隔">
+              <el-input-number v-model="attribute.gutter" :controls="true" :min="0">
+              </el-input-number>
+            </el-form-item>
+            <el-form-item v-if="attribute.justify||attribute.justify==''" label="水平对齐">
+              <el-select v-model="attribute.justify" placeholder="水平对齐" clearable>
+                <el-option key="start" label="左对齐" value="start"></el-option>
+                <el-option key="center" label="居中" value="center"></el-option>
+                <el-option key="end" label="右对齐" value="end"></el-option>
+                <el-option key="space-around" label="两端对齐(around)" value="space-around"></el-option>
+                <el-option key="space-between" label="两端对齐(between)" value="space-between"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item v-if="attribute.align||attribute.align==''" label="垂直对齐">
+              <el-select v-model="attribute.align" placeholder="垂直对齐" clearable>
+                <el-option key="top" label="顶部" value="top"></el-option>
+                <el-option key="middle" label="居中" value="middle"></el-option>
+                <el-option key="bottom" label="底部" value="bottom"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item v-if="attribute.type||attribute.type==''" label="类型">
+              <el-input v-model="attribute.type" placeholder="类型" clearable></el-input>
+            </el-form-item>
           </template>
-          <el-row>
-            <el-col :span="4" :offset="1">
-              <el-button size="mini" type="primary" icon="el-icon-plus" @click="handleClickAddCheckBoxItem(node_info)">
-              </el-button>
-            </el-col>
-          </el-row>
-        </el-form-item>
-        <el-form-item label="禁用">
-          <el-switch v-model="attribute.disabled"></el-switch>
-        </el-form-item>
-      </template>
-      <!-- el-checkbox-group end -->
-      <!-- el-input start -->
-      <template v-if="node_info.name == 'el-input'">
-        <el-form-item v-if="attribute['v-model']||attribute['v-model'] == ''" label="绑定变量">
-          <el-input v-model="attribute['v-model']" placeholder="绑定变量 form.prop" clearable></el-input>
-        </el-form-item>
-        <el-form-item v-if="attribute.type||attribute.type==''" label="类型">
-          <el-select v-model="attribute.type" placeholder="类型" clearable>
-            <el-option key="text" label="文本" value="text"></el-option>
-            <el-option key="number" label="数字" value="number"></el-option>
-            <el-option key="password" label="密码" value="password"></el-option>
-            <el-option key="textarea" label="文本域" value="textarea"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item v-if="attribute.maxlength||attribute.maxlength==0" label="最大长度">
-          <el-input-number v-model="attribute.maxlength" :controls="true" :min="0">
-          </el-input-number>
-        </el-form-item>
-        <el-form-item v-if="attribute.minlength||attribute.minlength==0" label="最小长度">
-          <el-input-number v-model="attribute.minlength" :controls="true" :min="0">
-          </el-input-number>
-        </el-form-item>
-        <el-form-item v-if="attribute.placeholder||attribute.placeholder==''" label="占位文本">
-          <el-input v-model="attribute.placeholder" placeholder="占位文本" clearable></el-input>
-        </el-form-item>
-        <el-form-item label="清空">
-          <el-switch v-model="attribute.clearable"></el-switch>
-        </el-form-item>
-        <el-form-item label="密文">
-          <el-switch v-model="attribute['show-password']"></el-switch>
-        </el-form-item>
-        <el-form-item v-if="attribute.type == 'textarea'&&(attribute.rows||attribute.rows==0)" label="输入行数">
-          <el-input-number v-model="attribute.rows" :controls="true" :min="2">
-          </el-input-number>
-        </el-form-item>
-        <el-form-item v-if="attribute.type == 'textarea'" label="自动高度">
-          <el-switch v-model="attribute.autosize"></el-switch>
-        </el-form-item>
-        <el-form-item v-if="attribute.type == 'textarea'" label="缩放">
-          <el-select v-model="attribute.resize" placeholder="缩放" clearable>
-            <el-option key="none" label="无缩放" value="none"></el-option>
-            <el-option key="both" label="全部缩放" value="both"></el-option>
-            <el-option key="horizontal" label="水平缩放" value="horizontal"></el-option>
-            <el-option key="vertical" label="垂直缩放" value="vertical"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="只读">
-          <el-switch v-model="attribute.readonly"></el-switch>
-        </el-form-item>
-        <el-form-item label="禁用">
-          <el-switch v-model="attribute.disabled"></el-switch>
-        </el-form-item>
-      </template>
-      <!-- el-input end -->
-      <!-- el-input-number start -->
-      <template v-if="node_info.name == 'el-input-number'">
-        <el-form-item v-if="attribute['v-model']||attribute['v-model'] == ''" label="绑定变量">
-          <el-input v-model="attribute['v-model']" placeholder="绑定变量 form.prop" clearable></el-input>
-        </el-form-item>
-        <el-form-item v-if="attribute.max||attribute.max==0" label="最大值">
-          <el-input-number v-model="attribute.max" :controls="true" :min="0">
-          </el-input-number>
-        </el-form-item>
-        <el-form-item v-if="attribute.min||attribute.min==0" label="最小值">
-          <el-input-number v-model="attribute.min" :controls="true" :min="0">
-          </el-input-number>
-        </el-form-item>
-        <el-form-item v-if="attribute.step||attribute.step==0" label="步长">
-          <el-input-number v-model="attribute.step" :controls="true" :min="1">
-          </el-input-number>
-        </el-form-item>
-        <el-form-item label="输入倍数">
-          <el-switch v-model="attribute['step-strictly']"></el-switch>
-        </el-form-item>
-        <el-form-item v-if="attribute.precision||attribute.precision==0" label="精度">
-          <el-input-number v-model="attribute.precision" :controls="true" :min="0">
-          </el-input-number>
-        </el-form-item>
-        <el-form-item label="禁用">
-          <el-switch v-model="attribute.disabled"></el-switch>
-        </el-form-item>
-        <el-form-item label="控制按钮">
-          <el-switch v-model="attribute.controls"></el-switch>
-        </el-form-item>
-        <el-form-item v-if="attribute.placeholder||attribute.placeholder==''" label="占位文本">
-          <el-input v-model="attribute.placeholder" placeholder="占位文本" clearable></el-input>
-        </el-form-item>
-      </template>
-      <!-- el-input-number end -->
-      <!-- el-select start -->
-      <template v-if="node_info.name == 'el-select'">
-        <!-- 渲染选项 -->
-        <el-form-item v-if="attribute['v-model']||attribute['v-model'] == ''" label="绑定变量">
-          <el-input v-model="attribute['v-model']" placeholder="绑定变量 form.prop" clearable></el-input>
-        </el-form-item>
-        <el-form-item :label-width="0">
-          <template v-for="(item,index) in node_info.children" :key="index">
-            <el-row>
-              <el-col :span="7">
-                <el-input size="small" v-model="item.text" placeholder="下拉值" clearable></el-input>
-              </el-col>
-              <el-col :span="7" :offset="1">
-                <el-input size="small" v-model="item.props.label" placeholder="显示值" clearable></el-input>
-              </el-col>
-              <el-col :span="4" :offset="1">
-                <el-input size="small" v-model="item.props.value" placeholder="值" clearable></el-input>
-              </el-col>
-              <el-col :span="3" :offset="1">
-                <el-button v-if="index > 1" size="mini" type="danger" icon="el-icon-minus"
-                           @click="handleClickDeleteSelectItem(node_info,index)"></el-button>
-              </el-col>
-            </el-row>
+          <!-- el-row end -->
+          <!-- el-col start -->
+          <template v-if="node_info.name == 'el-col'">
+            <el-form-item v-if="node_info.text||node_info.text==''" label="文本">
+              <el-input v-model="node_info.text" placeholder="内部文本内容" clearable></el-input>
+            </el-form-item>
+            <el-form-item v-if="attribute.span" label="栅格列数">
+              <el-input-number v-model="attribute.span" :controls="true" :min="1" :max="24">
+              </el-input-number>
+            </el-form-item>
+            <el-form-item v-if="attribute.offset||attribute.offset==0" label="左侧间隔">
+              <el-input-number v-model="attribute.offset" :controls="true" :min="0" :max="24">
+              </el-input-number>
+            </el-form-item>
+            <el-form-item v-if="attribute.push||attribute.push==0" label="向右移动">
+              <el-input-number v-model="attribute.push" :controls="true" :min="0" :max="24"
+                               :disabled="attribute.pull>0">
+              </el-input-number>
+            </el-form-item>
+            <el-form-item v-if="attribute.pull||attribute.pull==0" label="向左移动">
+              <el-input-number v-model="attribute.pull" :controls="true" :min="0" :max="24"
+                               :disabled="attribute.push>0">
+              </el-input-number>
+            </el-form-item>
           </template>
-          <el-row>
-            <el-col :span="4" :offset="1">
-              <el-button size="mini" type="primary" icon="el-icon-plus" @click="handleClickAddSelectItem(node_info)">
-              </el-button>
-            </el-col>
-          </el-row>
-        </el-form-item>
-        <el-form-item label="禁用">
-          <el-switch v-model="attribute.disabled"></el-switch>
-        </el-form-item>
-        <el-form-item label="清空">
-          <el-switch v-model="attribute.clearable"></el-switch>
-        </el-form-item>
-        <el-form-item label="搜索">
-          <el-switch v-model="attribute.filterable"></el-switch>
-        </el-form-item>
-        <el-form-item v-if="attribute.placeholder||attribute.placeholder==''" label="占位文本">
-          <el-input v-model="attribute.placeholder" placeholder="占位文本" clearable></el-input>
-        </el-form-item>
-      </template>
-      <!-- el-select end -->
-      <!-- el-switch start -->
-      <template v-if="node_info.name == 'el-switch'">
-        <el-form-item v-if="attribute['v-model']||attribute['v-model'] == ''" label="绑定变量">
-          <el-input v-model="attribute['v-model']" placeholder="绑定变量 form.prop" clearable></el-input>
-        </el-form-item>
-        <el-form-item label="禁用">
-          <el-switch v-model="attribute.disabled"></el-switch>
-        </el-form-item>
-      </template>
-      <!-- el-switch end -->
-      <!-- el-date-picker start -->
-      <template v-if="node_info.name == 'el-date-picker'">
-        <el-form-item v-if="attribute['v-model']||attribute['v-model'] == ''" label="绑定变量">
-          <el-input v-model="attribute['v-model']" placeholder="绑定变量 form.prop" clearable></el-input>
-        </el-form-item>
-        <el-form-item v-if="attribute.type||attribute.type==''" label="类型">
-          <el-select v-model="attribute.type" placeholder="请选择选择器类型" @change="node_info.value = ''" clearable>
-            <el-option key="year" label="年" value="year"></el-option>
-            <el-option key="month" label="月" value="month"></el-option>
-            <el-option key="date" label="日" value="date"></el-option>
-            <el-option key="dates" label="日（多选带确定按钮）" value="dates"></el-option>
-            <el-option key="datetime" label="日期时间" value="datetime"></el-option>
-            <el-option key="datetimerange" label="日期时间范围" value="datetimerange"></el-option>
-            <el-option key="daterange" label="日期范围" value="daterange"></el-option>
-            <el-option key="monthrange" label="月份范围" value="monthrange"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item v-if="attribute.format||attribute.format==''" label="日期格式">
-          <el-input v-model="attribute.format" placeholder="日期格式" clearable></el-input>
-        </el-form-item>
-        <el-form-item label="只读">
-          <el-switch v-model="attribute.readonly"></el-switch>
-        </el-form-item>
-        <el-form-item label="禁用">
-          <el-switch v-model="attribute.disabled"></el-switch>
-        </el-form-item>
-        <el-form-item label="编辑">
-          <el-switch v-model="attribute.editable"></el-switch>
-        </el-form-item>
-        <el-form-item label="清空">
-          <el-switch v-model="attribute.clearable"></el-switch>
-        </el-form-item>
-        <template v-if="attribute.type=='year' || attribute.type=='month' || attribute.type=='date' 
+          <!-- el-col end -->
+          <!-- el-button start -->
+          <template v-if="node_info.name == 'el-button'">
+            <el-form-item v-if="node_info.text||node_info.text==''" label="文本">
+              <el-input v-model="node_info.text" placeholder="内部文本内容" clearable></el-input>
+            </el-form-item>
+            <el-form-item v-if="attribute.size||attribute.size==''" label="尺寸">
+              <el-select v-model="attribute.size" placeholder="尺寸" clearable>
+                <el-option key="medium" label="正常" value="medium"></el-option>
+                <el-option key="small" label="小" value="small"></el-option>
+                <el-option key="mini" label="迷你" value="mini"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item v-if="attribute.type||attribute.type==''" label="类型">
+              <el-select v-model="attribute.type" placeholder="类型" clearable>
+                <el-option key="default" label="默认" value="default"></el-option>
+                <el-option key="primary" label="主要" value="primary"></el-option>
+                <el-option key="success" label="成功" value="success"></el-option>
+                <el-option key="warning" label="警告" value="warning"></el-option>
+                <el-option key="danger" label="危险" value="danger"></el-option>
+                <el-option key="info" label="信息" value="info"></el-option>
+                <el-option key="text" label="文本" value="text"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="朴素按钮">
+              <el-switch v-model="attribute.plain"></el-switch>
+            </el-form-item>
+            <el-form-item label="圆角按钮">
+              <el-switch v-model="attribute.round"></el-switch>
+            </el-form-item>
+            <el-form-item label="圆形按钮">
+              <el-switch v-model="attribute.circle"></el-switch>
+            </el-form-item>
+            <el-form-item label="加载中">
+              <el-switch v-model="attribute.loading"></el-switch>
+            </el-form-item>
+            <el-form-item label="禁用">
+              <el-switch v-model="attribute.disabled"></el-switch>
+            </el-form-item>
+            <el-form-item v-if="attribute.icon||attribute.icon==''" label="图标类名">
+              <el-input v-model="attribute.icon" placeholder="图标类名" clearable></el-input>
+            </el-form-item>
+            <el-form-item label="自动聚焦">
+              <el-switch v-model="attribute.autofocus"></el-switch>
+            </el-form-item>
+          </template>
+          <!-- el-button end -->
+          <!-- el-form-item start -->
+          <template v-if="node_info.name == 'el-form'">
+            <el-form-item v-if="node_info.model||node_info.model==''" label="表单对象">
+              <el-input v-model="node_info.model" placeholder="表单对象 form" clearable></el-input>
+            </el-form-item>
+            <el-form-item v-if="attribute.ref||attribute.ref==''" label="ref">
+              <el-input v-model="attribute.ref" placeholder="ref" clearable></el-input>
+            </el-form-item>
+            <el-form-item label="行内表单">
+              <el-switch v-model="attribute.inline"></el-switch>
+            </el-form-item>
+            <el-form-item v-if="attribute['label-position']||attribute['label-position']==''" label="标签位置">
+              <el-select v-model="attribute['label-position']" placeholder="标签位置" clearable>
+                <el-option key="left" label="左对齐" value="left"></el-option>
+                <el-option key="top" label="顶部对齐" value="top"></el-option>
+                <el-option key="right" label="右对齐" value="right"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item v-if="attribute['label-width']||attribute['label-width']==''" label="标签宽度">
+              <el-input v-model="attribute['label-width']" placeholder="标签宽度 100px" clearable></el-input>
+            </el-form-item>
+            <el-form-item v-if="attribute.size||attribute.size==''" label="尺寸">
+              <el-select v-model="attribute.size" placeholder="尺寸" clearable>
+                <el-option key="medium" label="正常" value="medium"></el-option>
+                <el-option key="small" label="小" value="small"></el-option>
+                <el-option key="mini" label="迷你" value="mini"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="禁用">
+              <el-switch v-model="attribute.disabled"></el-switch>
+            </el-form-item>
+          </template>
+          <!-- el-form-item end -->
+          <!-- el-form-item start -->
+          <template v-if="node_info.name == 'el-form-item'">
+            <el-form-item v-if="attribute.prop||attribute.prop==''" label="属性字段">
+              <el-input v-model="attribute.prop" placeholder="属性字段 prop" clearable></el-input>
+            </el-form-item>
+            <el-form-item v-if="attribute.label||attribute.label==''" label="标签">
+              <el-input v-model="attribute.label" placeholder="标签" clearable></el-input>
+            </el-form-item>
+            <el-form-item label="必填">
+              <el-switch v-model="attribute.required"></el-switch>
+            </el-form-item>
+          </template>
+          <!-- el-form-item end -->
+          <!-- el-radio-group start -->
+          <template v-if="node_info.name == 'el-radio-group'">
+            <!-- 渲染选项 -->
+            <el-form-item v-if="attribute['v-model']||attribute['v-model'] == ''" label="绑定变量">
+              <el-input v-model="attribute['v-model']" placeholder="绑定变量 form.prop" clearable></el-input>
+            </el-form-item>
+            <el-form-item label="选项设置">
+              <template v-for="(item,index) in node_info.children" :key="index">
+                <el-row>
+                  <el-col :span="10">
+                    <el-input size="small" v-model="item.text" placeholder="名称" clearable></el-input>
+                  </el-col>
+                  <el-col :span="8" :offset="1">
+                    <el-input size="small" v-model="item.props.label" placeholder="值" clearable></el-input>
+                  </el-col>
+                  <el-col :span="4" :offset="1">
+                    <el-button v-if="index > 1" size="mini" type="danger" icon="el-icon-minus"
+                               @click="handleClickDeleteRadioItem(node_info,index)"></el-button>
+                  </el-col>
+                </el-row>
+              </template>
+              <el-row>
+                <el-col :span="4" :offset="1">
+                  <el-button size="mini" type="primary" icon="el-icon-plus" @click="handleClickAddRadioItem(node_info)">
+                  </el-button>
+                </el-col>
+              </el-row>
+            </el-form-item>
+            <el-form-item label="禁用">
+              <el-switch v-model="attribute.disabled"></el-switch>
+            </el-form-item>
+          </template>
+          <!-- el-radio-group end -->
+          <!-- el-checkbox-group start -->
+          <template v-if="node_info.name == 'el-checkbox-group'">
+            <!-- 渲染选项 -->
+            <el-form-item v-if="attribute['v-model']||attribute['v-model'] == ''" label="绑定变量">
+              <el-input v-model="attribute['v-model']" placeholder="绑定变量 form.prop" clearable></el-input>
+            </el-form-item>
+            <el-form-item label="选项设置">
+              <template v-for="(item,index) in node_info.children" :key="index">
+                <el-row>
+                  <el-col :span="10">
+                    <el-input size="small" v-model="item.text" placeholder="名称" clearable></el-input>
+                  </el-col>
+                  <el-col :span="8" :offset="1">
+                    <el-input size="small" v-model="item.props.label" placeholder="值" clearable></el-input>
+                  </el-col>
+                  <el-col :span="4" :offset="1">
+                    <el-button v-if="index > 1" size="mini" type="danger" icon="el-icon-minus"
+                               @click="handleClickDeleteCheckBoxItem(node_info,index)"></el-button>
+                  </el-col>
+                </el-row>
+              </template>
+              <el-row>
+                <el-col :span="4" :offset="1">
+                  <el-button size="mini" type="primary" icon="el-icon-plus"
+                             @click="handleClickAddCheckBoxItem(node_info)">
+                  </el-button>
+                </el-col>
+              </el-row>
+            </el-form-item>
+            <el-form-item label="禁用">
+              <el-switch v-model="attribute.disabled"></el-switch>
+            </el-form-item>
+          </template>
+          <!-- el-checkbox-group end -->
+          <!-- el-input start -->
+          <template v-if="node_info.name == 'el-input'">
+            <el-form-item v-if="attribute['v-model']||attribute['v-model'] == ''" label="绑定变量">
+              <el-input v-model="attribute['v-model']" placeholder="绑定变量 form.prop" clearable></el-input>
+            </el-form-item>
+            <el-form-item v-if="attribute.type||attribute.type==''" label="类型">
+              <el-select v-model="attribute.type" placeholder="类型" clearable>
+                <el-option key="text" label="文本" value="text"></el-option>
+                <el-option key="number" label="数字" value="number"></el-option>
+                <el-option key="password" label="密码" value="password"></el-option>
+                <el-option key="textarea" label="文本域" value="textarea"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item v-if="attribute.maxlength||attribute.maxlength==0" label="最大长度">
+              <el-input-number v-model="attribute.maxlength" :controls="true" :min="0">
+              </el-input-number>
+            </el-form-item>
+            <el-form-item v-if="attribute.minlength||attribute.minlength==0" label="最小长度">
+              <el-input-number v-model="attribute.minlength" :controls="true" :min="0">
+              </el-input-number>
+            </el-form-item>
+            <el-form-item v-if="attribute.placeholder||attribute.placeholder==''" label="占位文本">
+              <el-input v-model="attribute.placeholder" placeholder="占位文本" clearable></el-input>
+            </el-form-item>
+            <el-form-item label="清空">
+              <el-switch v-model="attribute.clearable"></el-switch>
+            </el-form-item>
+            <el-form-item label="密文">
+              <el-switch v-model="attribute['show-password']"></el-switch>
+            </el-form-item>
+            <el-form-item v-if="attribute.type == 'textarea'&&(attribute.rows||attribute.rows==0)" label="输入行数">
+              <el-input-number v-model="attribute.rows" :controls="true" :min="2">
+              </el-input-number>
+            </el-form-item>
+            <el-form-item v-if="attribute.type == 'textarea'" label="自动高度">
+              <el-switch v-model="attribute.autosize"></el-switch>
+            </el-form-item>
+            <el-form-item v-if="attribute.type == 'textarea'" label="缩放">
+              <el-select v-model="attribute.resize" placeholder="缩放" clearable>
+                <el-option key="none" label="无缩放" value="none"></el-option>
+                <el-option key="both" label="全部缩放" value="both"></el-option>
+                <el-option key="horizontal" label="水平缩放" value="horizontal"></el-option>
+                <el-option key="vertical" label="垂直缩放" value="vertical"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="只读">
+              <el-switch v-model="attribute.readonly"></el-switch>
+            </el-form-item>
+            <el-form-item label="禁用">
+              <el-switch v-model="attribute.disabled"></el-switch>
+            </el-form-item>
+          </template>
+          <!-- el-input end -->
+          <!-- el-input-number start -->
+          <template v-if="node_info.name == 'el-input-number'">
+            <el-form-item v-if="attribute['v-model']||attribute['v-model'] == ''" label="绑定变量">
+              <el-input v-model="attribute['v-model']" placeholder="绑定变量 form.prop" clearable></el-input>
+            </el-form-item>
+            <el-form-item v-if="attribute.max||attribute.max==0" label="最大值">
+              <el-input-number v-model="attribute.max" :controls="true" :min="0">
+              </el-input-number>
+            </el-form-item>
+            <el-form-item v-if="attribute.min||attribute.min==0" label="最小值">
+              <el-input-number v-model="attribute.min" :controls="true" :min="0">
+              </el-input-number>
+            </el-form-item>
+            <el-form-item v-if="attribute.step||attribute.step==0" label="步长">
+              <el-input-number v-model="attribute.step" :controls="true" :min="1">
+              </el-input-number>
+            </el-form-item>
+            <el-form-item label="输入倍数">
+              <el-switch v-model="attribute['step-strictly']"></el-switch>
+            </el-form-item>
+            <el-form-item v-if="attribute.precision||attribute.precision==0" label="精度">
+              <el-input-number v-model="attribute.precision" :controls="true" :min="0">
+              </el-input-number>
+            </el-form-item>
+            <el-form-item label="禁用">
+              <el-switch v-model="attribute.disabled"></el-switch>
+            </el-form-item>
+            <el-form-item label="控制按钮">
+              <el-switch v-model="attribute.controls"></el-switch>
+            </el-form-item>
+            <el-form-item v-if="attribute.placeholder||attribute.placeholder==''" label="占位文本">
+              <el-input v-model="attribute.placeholder" placeholder="占位文本" clearable></el-input>
+            </el-form-item>
+          </template>
+          <!-- el-input-number end -->
+          <!-- el-select start -->
+          <template v-if="node_info.name == 'el-select'">
+            <!-- 渲染选项 -->
+            <el-form-item v-if="attribute['v-model']||attribute['v-model'] == ''" label="绑定变量">
+              <el-input v-model="attribute['v-model']" placeholder="绑定变量 form.prop" clearable></el-input>
+            </el-form-item>
+            <el-form-item :label-width="0">
+              <template v-for="(item,index) in node_info.children" :key="index">
+                <el-row>
+                  <el-col :span="7">
+                    <el-input size="small" v-model="item.text" placeholder="下拉值" clearable></el-input>
+                  </el-col>
+                  <el-col :span="7" :offset="1">
+                    <el-input size="small" v-model="item.props.label" placeholder="显示值" clearable></el-input>
+                  </el-col>
+                  <el-col :span="4" :offset="1">
+                    <el-input size="small" v-model="item.props.value" placeholder="值" clearable></el-input>
+                  </el-col>
+                  <el-col :span="3" :offset="1">
+                    <el-button v-if="index > 1" size="mini" type="danger" icon="el-icon-minus"
+                               @click="handleClickDeleteSelectItem(node_info,index)"></el-button>
+                  </el-col>
+                </el-row>
+              </template>
+              <el-row>
+                <el-col :span="4" :offset="1">
+                  <el-button size="mini" type="primary" icon="el-icon-plus"
+                             @click="handleClickAddSelectItem(node_info)">
+                  </el-button>
+                </el-col>
+              </el-row>
+            </el-form-item>
+            <el-form-item label="禁用">
+              <el-switch v-model="attribute.disabled"></el-switch>
+            </el-form-item>
+            <el-form-item label="清空">
+              <el-switch v-model="attribute.clearable"></el-switch>
+            </el-form-item>
+            <el-form-item label="搜索">
+              <el-switch v-model="attribute.filterable"></el-switch>
+            </el-form-item>
+            <el-form-item v-if="attribute.placeholder||attribute.placeholder==''" label="占位文本">
+              <el-input v-model="attribute.placeholder" placeholder="占位文本" clearable></el-input>
+            </el-form-item>
+          </template>
+          <!-- el-select end -->
+          <!-- el-switch start -->
+          <template v-if="node_info.name == 'el-switch'">
+            <el-form-item v-if="attribute['v-model']||attribute['v-model'] == ''" label="绑定变量">
+              <el-input v-model="attribute['v-model']" placeholder="绑定变量 form.prop" clearable></el-input>
+            </el-form-item>
+            <el-form-item label="禁用">
+              <el-switch v-model="attribute.disabled"></el-switch>
+            </el-form-item>
+          </template>
+          <!-- el-switch end -->
+          <!-- el-date-picker start -->
+          <template v-if="node_info.name == 'el-date-picker'">
+            <el-form-item v-if="attribute['v-model']||attribute['v-model'] == ''" label="绑定变量">
+              <el-input v-model="attribute['v-model']" placeholder="绑定变量 form.prop" clearable></el-input>
+            </el-form-item>
+            <el-form-item v-if="attribute.type||attribute.type==''" label="类型">
+              <el-select v-model="attribute.type" placeholder="请选择选择器类型" @change="node_info.value = ''" clearable>
+                <el-option key="year" label="年" value="year"></el-option>
+                <el-option key="month" label="月" value="month"></el-option>
+                <el-option key="date" label="日" value="date"></el-option>
+                <el-option key="dates" label="日（多选带确定按钮）" value="dates"></el-option>
+                <el-option key="datetime" label="日期时间" value="datetime"></el-option>
+                <el-option key="datetimerange" label="日期时间范围" value="datetimerange"></el-option>
+                <el-option key="daterange" label="日期范围" value="daterange"></el-option>
+                <el-option key="monthrange" label="月份范围" value="monthrange"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item v-if="attribute.format||attribute.format==''" label="日期格式">
+              <el-input v-model="attribute.format" placeholder="日期格式" clearable></el-input>
+            </el-form-item>
+            <el-form-item label="只读">
+              <el-switch v-model="attribute.readonly"></el-switch>
+            </el-form-item>
+            <el-form-item label="禁用">
+              <el-switch v-model="attribute.disabled"></el-switch>
+            </el-form-item>
+            <el-form-item label="编辑">
+              <el-switch v-model="attribute.editable"></el-switch>
+            </el-form-item>
+            <el-form-item label="清空">
+              <el-switch v-model="attribute.clearable"></el-switch>
+            </el-form-item>
+            <template v-if="attribute.type=='year' || attribute.type=='month' || attribute.type=='date' 
                   || attribute.type=='dates'|| attribute.type=='datetime'">
-          <el-form-item v-if="attribute.placeholder||attribute.placeholder==''" label="占位文本">
-            <el-input v-model="attribute.placeholder" placeholder="占位文本" clearable></el-input>
+              <el-form-item v-if="attribute.placeholder||attribute.placeholder==''" label="占位文本">
+                <el-input v-model="attribute.placeholder" placeholder="占位文本" clearable></el-input>
+              </el-form-item>
+            </template>
+            <template v-else>
+              <el-form-item v-if="attribute['start-placeholder']||attribute['start-placeholder']==''" label="开始占位">
+                <el-input v-model="attribute['start-placeholder']" placeholder="范围开始占位" clearable></el-input>
+              </el-form-item>
+              <el-form-item v-if="attribute['end-placeholder']||attribute['end-placeholder']==''" label="结束占位">
+                <el-input v-model="attribute['end-placeholder']" placeholder="范围结束占位" clearable></el-input>
+              </el-form-item>
+              <el-form-item v-if="attribute['range-separator']||attribute['range-separator']==''" label="分隔符">
+                <el-input v-model="attribute['range-separator']" placeholder="范围分隔符" clearable></el-input>
+              </el-form-item>
+            </template>
+          </template>
+          <!-- el-date-picker end -->
+          <!-- public attribute start-->
+          <el-form-item v-if="attribute.class||attribute.class==''" label="class">
+            <el-input v-model="attribute.class" placeholder="css类名" clearable></el-input>
           </el-form-item>
-        </template>
-        <template v-else>
-          <el-form-item v-if="attribute['start-placeholder']||attribute['start-placeholder']==''" label="开始占位">
-            <el-input v-model="attribute['start-placeholder']" placeholder="范围开始占位" clearable></el-input>
+          <el-form-item v-if="node_info.style||node_info.style==''" label="行内样式">
+            <el-input type="textarea" v-model="node_info.style" placeholder="行内样式" autosize clearable></el-input>
           </el-form-item>
-          <el-form-item v-if="attribute['end-placeholder']||attribute['end-placeholder']==''" label="结束占位">
-            <el-input v-model="attribute['end-placeholder']" placeholder="范围结束占位" clearable></el-input>
-          </el-form-item>
-          <el-form-item v-if="attribute['range-separator']||attribute['range-separator']==''" label="分隔符">
-            <el-input v-model="attribute['range-separator']" placeholder="范围分隔符" clearable></el-input>
-          </el-form-item>
-        </template>
-      </template>
-      <!-- el-date-picker end -->
-      <!-- public attribute start-->
-      <el-form-item v-if="attribute.class||attribute.class==''" label="class">
-        <el-input v-model="attribute.class" placeholder="css类名" clearable></el-input>
-      </el-form-item>
-      <el-form-item v-if="node_info.style||node_info.style==''" label="行内样式">
-        <el-input type="textarea" v-model="node_info.style" placeholder="行内样式" autosize clearable></el-input>
-      </el-form-item>
-      <!-- public attribute end-->
-    </el-form>
+          <!-- public attribute end-->
+        </el-form>
+      </el-tab-pane>
+      <el-tab-pane label="节点树" name="2">
+        <el-tree :data="tree" :props="defaultProps" :render-after-expand="false" :highlight-current="true" node-key="id"
+                 :indent="32" :default-expand-all="true" :expand-on-click-node="false" draggable
+                 @node-click="handleClickTreeNode">
+        </el-tree>
+      </el-tab-pane>
+    </el-tabs>
+
   </el-aside>
 </template>
 <script lang="ts">
@@ -436,9 +454,11 @@ import {
   computed,
   watch,
   nextTick,
-  ref,
 } from 'vue'
 import { useStore } from 'vuex'
+
+//导入公共方法
+import mixins from '@/mixins/index'
 
 export default defineComponent({
   name: 'AttributeBar',
@@ -446,7 +466,18 @@ export default defineComponent({
     const store = useStore()
 
     //数据对象
-    let data: any = reactive({})
+    let data: any = reactive({
+      tab_active_name: '1', //激活的tab栏
+      tree: store.state.component_tree_list, //节点树
+      defaultProps: {
+        children: 'children',
+        label: 'name',
+      }, //节点树 属性
+    })
+
+    const {
+      _handleRecursionGetNodeByNodeId, //递归根据节点id查找节点信息
+    } = mixins()
 
     //当前操作控件信息
     const node_info: any = computed({
@@ -554,6 +585,28 @@ export default defineComponent({
       node_info.children.splice(index, 1)
     }
 
+    //点击节点树节点
+    const handleClickTreeNode = (val: any) => {
+      //选中高亮区域
+      if (val.id) {
+        let node_info: any = _handleRecursionGetNodeByNodeId(val.id, data.tree)
+        //设置当前操作对象
+        store.dispatch('handleChangeCurrentNodeInfo', node_info)
+        //清除高亮边框
+        let border = document.getElementsByClassName('border')[0] as HTMLElement
+        if (border) {
+          border.className = border.className.replace(' border', '')
+        }
+        //高亮控件边框
+        let node_element = document.getElementById(
+          store.state.current_node_info.id
+        ) as HTMLElement
+        if (node_element) {
+          node_element.className = node_element.className + ' border'
+        }
+      }
+    }
+
     return {
       ...toRefs(data),
       node_info,
@@ -564,13 +617,15 @@ export default defineComponent({
       handleClickDeleteCheckBoxItem,
       handleClickAddSelectItem,
       handleClickDeleteSelectItem,
+      handleClickTreeNode,
     }
   },
 })
 </script>
 <style lang="scss" scoped>
 .attribute-bar {
-  background-color: rgb(238, 241, 246);
   padding: 20px;
+  background: #ffffff;
+  border-left: 1px solid #e6e6e6;
 }
 </style>

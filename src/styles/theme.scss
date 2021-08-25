@@ -116,6 +116,14 @@
     background-color: $light-theme;
     color: $white;
   }
+  //选项卡
+  .el-tabs__item:hover,
+  .el-tabs__item.is-active {
+    color: $deep-theme;
+  }
+  .el-tabs__active-bar {
+    background-color: $deep-theme;
+  }
 }
 
 //下面是实际的主题类  用@include mixin 混入
