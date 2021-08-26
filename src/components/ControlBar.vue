@@ -45,6 +45,7 @@ export default defineComponent({
       //参考自 https://github.com/OXOYO/X-Page-Editor-Vue/blob/master/example/components/CustomListItem.vue
       // 生成唯一id
       component.id = 'node-' + new Date().getTime()
+
       //如果有children children也要加唯一id
       component.children.forEach((children: any) => {
         children.id = 'node-' + new Date().getTime()

@@ -58,7 +58,6 @@ export default defineComponent({
         case 'winclose':
           ipcRenderer.send('win-close', '')
           break
-
         default:
           break
       }
@@ -91,6 +90,7 @@ export default defineComponent({
     //数据实时计算显示，字符处理的用computed  涉及交互事件，异步处理，样式变化，符合条件逻辑处理，开销较大的用watch
     watch(store.state.route_list, (newValue, oldValue) => {
       let active_index = newValue.findIndex((item: any) => item.active == true)
+
       if (active_index == 0 && newValue.length == 1) {
         //不能前进也不能返回
         is_back.value = false

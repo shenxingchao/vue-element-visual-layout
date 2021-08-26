@@ -53,10 +53,12 @@ export default defineComponent({
       //监听 键盘按下事件
       document.onkeydown = function (event: any) {
         var e = event || window.event || arguments.callee.caller.arguments[0]
+
         if (e && e.keyCode == 46) {
           // 按下DELETE 删除控件
           handleDeleteControl()
         }
+
         if (e.ctrlKey && e.keyCode == 67) {
           //复制节点
           if (Object.keys(store.state.current_node_info.props).length > 0) {
@@ -67,6 +69,7 @@ export default defineComponent({
             store.dispatch('handleChangeCopyNodeInfo', copy_node_info)
           }
         }
+
         if (e.ctrlKey && e.keyCode == 86) {
           //粘贴节点
           if (Object.keys(store.state.copy_node_info).length > 0) {
@@ -140,8 +143,10 @@ export default defineComponent({
           break
         }
       }
+
       //递归删除所有占位块
       _handleRecursionDelete('block_node', data.component_tree_list)
+
       //生成一个占位块
       let block_node: any = {
         id: 'block_node',
@@ -151,6 +156,7 @@ export default defineComponent({
         style:
           'flex-grow: 1;height:100%;max-height:80px;border:1px dashed #cccccc;box-sizing:border-box;background:#fafafa;',
       }
+
       //插入到指定位置
       data.component_tree_list.splice(data.insert_index, 0, block_node)
     }
@@ -161,12 +167,16 @@ export default defineComponent({
     //当被拖动元素在释放区里放下时触发       console.log('5.控件在最外层释放区放下 handleDrop')
     const handleDrop = (e: any) => {
       e.preventDefault()
+
       //删除占位块
       _handleRecursionDelete('block_node', data.component_tree_list)
+
       //获取拖动数据
       let node_info: any = JSON.parse(e.dataTransfer.getData('node'))
+
       //插入到指定位置
       data.component_tree_list.splice(data.insert_index, 0, node_info)
+
       //设置当前操作对象
       store.dispatch('handleChangeCurrentNodeInfo', node_info)
     }
@@ -189,6 +199,7 @@ export default defineComponent({
     const handleChangeDesigner = (val: number) => {
       //切换显示内容索引
       data.tab_index = val
+
       if (val == 2) {
         //隐藏属性栏 设置当前操作对象 暂时先隐藏
         store.dispatch('handleChangeCurrentNodeInfo', { props: {} })
@@ -200,6 +211,7 @@ export default defineComponent({
     //清空布局
     const handleClearLayout = () => {
       store.dispatch('handleChangeCurrentNodeInfo', { props: {} })
+
       //这里主要响应对象不能直接赋值[] 会使其响应性失效
       data.component_tree_list.splice(0, data.component_tree_list.length)
     }

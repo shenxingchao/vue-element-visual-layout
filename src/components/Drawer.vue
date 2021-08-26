@@ -29,8 +29,10 @@ export default defineComponent({
   name: 'Drawer',
   setup() {
     const store = useStore()
+
     //获取版本号
     let package_json = require('../../package.json')
+
     const handleClickChangeTheme = (theme_type: number) => {
       store.dispatch('handleChangeTheme', theme_type)
     }

@@ -78,6 +78,7 @@ export default defineComponent({
     const handleDragOverOnNode = (node: any, e: any) => {
       //如果是在占位块上移动，则算是在他父级上移动,且占位块不发生任何变化
       let parent_node: any = null
+
       if (node.id == 'block_node') {
         parent_node = _handleRecursionGetParentNode(
           node,
@@ -90,6 +91,7 @@ export default defineComponent({
       if (!parent_node) {
         //删除之前的占位块
         _handleRecursionDelete('block_node', data.sotre_component_tree_list)
+
         //生成一个占位块
         let block_node: any = {
           id: 'block_node',
@@ -134,6 +136,7 @@ export default defineComponent({
         //放入最外层数组或者是子控件的children数组里面
         node.push(node_info)
       }
+
       //设置当前操作对象
       store.dispatch('handleChangeCurrentNodeInfo', node_info)
     }
@@ -147,6 +150,7 @@ export default defineComponent({
         'el-form',
         'el-form-item',
       ]
+
       if (white_list.includes(node.name) && store.state.show_border) {
         return 'padding'
       } else {
@@ -175,6 +179,7 @@ export default defineComponent({
       }
 
       let target_id = recursionFindNodeId(e)
+
       if (e.target.className == 'el-switch__core') {
         //如果是开关控件，则是找到他的兄弟节点
         target_id = e.target.parentNode.children[0].id
@@ -182,6 +187,7 @@ export default defineComponent({
         //如果是多选下拉框，则找到他兄弟节点的子节点
         target_id = e.target.parentNode.children[1].children[0].id
       }
+
       //选中高亮区域
       if (target_id) {
         let node_info: any = _handleRecursionGetNodeByNodeId(
