@@ -26,11 +26,11 @@ const components_list: any = {
     {
       title: '基础',
       type: 'Basic',
-      icon: 'el-icon-cloudy',
+      icon: 'basic',
       children: [
         {
           name: 'el-container',
-          title: '布局容器 el-container',
+          title: '布局容器',
           props: {
             direction: 'horizontal'
           },
@@ -39,7 +39,7 @@ const components_list: any = {
         },
         {
           name: 'el-row',
-          title: '行 el-row',
+          title: '行',
           props: {
             gutter: 0,
             justify: '',
@@ -53,7 +53,7 @@ const components_list: any = {
         },
         {
           name: 'el-col',
-          title: '列 el-col',
+          title: '列',
           props: {
             span: 3,
             offset: 0,
@@ -67,7 +67,7 @@ const components_list: any = {
         },
         {
           name: 'el-button',
-          title: '按钮 el-button',
+          title: '按钮',
           props: {
             size: 'medium',
             type: 'primary',
@@ -89,11 +89,11 @@ const components_list: any = {
     {
       title: '表单',
       type: 'Form',
-      icon: 'el-icon-s-grid',
+      icon: 'form',
       children: [
         {
           name: 'el-form',
-          title: '表单 el-form',
+          title: '表单',
           props: {
             ref: 'ruleForm',
             'label-position': 'right',
@@ -108,7 +108,7 @@ const components_list: any = {
         },
         {
           name: 'el-form-item',
-          title: '表单项 el-form-item',
+          title: '表单项',
           props: {
             prop: '',
             label: '标签名',
@@ -119,7 +119,7 @@ const components_list: any = {
         },
         {
           name: 'el-radio-group',
-          title: '单选框组 el-radio-group',
+          title: '单选框组',
           props: {
             'v-model': '',
             disabled: false
@@ -129,7 +129,7 @@ const components_list: any = {
           children: [
             {
               name: 'el-radio',
-              title: '单选按钮 el-radio',
+              title: '单选按钮',
               props: {
                 label: '1'
               },
@@ -139,7 +139,7 @@ const components_list: any = {
             },
             {
               name: 'el-radio',
-              title: '单选按钮 el-radio',
+              title: '单选按钮',
               props: {
                 label: '2'
               },
@@ -151,7 +151,7 @@ const components_list: any = {
         },
         {
           name: 'el-checkbox-group',
-          title: '复选框组 el-checkbox-group',
+          title: '复选框组',
           props: {
             'v-model': '',
             disabled: false
@@ -161,7 +161,7 @@ const components_list: any = {
           children: [
             {
               name: 'el-checkbox',
-              title: '复选框 el-checkbox',
+              title: '复选框',
               props: {
                 label: '1'
               },
@@ -171,7 +171,7 @@ const components_list: any = {
             },
             {
               name: 'el-checkbox',
-              title: '复选框 el-checkbox',
+              title: '复选框',
               props: {
                 label: '2'
               },
@@ -183,7 +183,7 @@ const components_list: any = {
         },
         {
           name: 'el-input',
-          title: '输入框 el-input',
+          title: '输入框',
           props: {
             'v-model': '',
             type: 'text',
@@ -204,7 +204,7 @@ const components_list: any = {
         },
         {
           name: 'el-input-number',
-          title: '计数器 el-input-number',
+          title: '计数器',
           props: {
             'v-model': '',
             max: 99999999,
@@ -222,7 +222,7 @@ const components_list: any = {
         },
         {
           name: 'el-select',
-          title: '选择器 el-select',
+          title: '选择器',
           props: {
             'v-model': '',
             multiple: false,
@@ -237,7 +237,7 @@ const components_list: any = {
           children: [
             {
               name: 'el-option',
-              title: '选项 el-option',
+              title: '选项',
               props: {
                 label: '黄金糕',
                 value: '1'
@@ -248,7 +248,7 @@ const components_list: any = {
             },
             {
               name: 'el-option',
-              title: '选项 el-option',
+              title: '选项',
               props: {
                 label: '双皮奶',
                 value: '2'
@@ -261,7 +261,7 @@ const components_list: any = {
         },
         {
           name: 'el-switch',
-          title: '开关 el-switch',
+          title: '开关',
           props: {
             'v-model': '',
             disabled: false
@@ -272,7 +272,7 @@ const components_list: any = {
         },
         {
           name: 'el-date-picker',
-          title: '日期选择器 el-date-picker',
+          title: '日期选择器',
           props: {
             'v-model': '',
             type: 'date',

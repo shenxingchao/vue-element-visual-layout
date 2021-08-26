@@ -3,12 +3,17 @@
     <el-menu :default-openeds="['1']" :unique-opened="true">
       <template v-for="(components,index) in components_list.components" :key="index">
         <el-submenu :index="index + ''">
-          <template #title><i :class="components.icon"></i>{{components.title}}</template>
+          <template #title>
+            <div class="icon-box">
+              <svg-icon :name="components.icon" className="icon" />
+              {{components.title}}
+            </div>
+          </template>
           <el-menu-item-group>
             <template #title>{{components.type}}</template>
             <template v-for="(component,i) in components.children" :key="i">
               <el-menu-item :index="index+'-'+i" :draggable="true" @dragstart="handleDragStart(component,$event)">
-                {{component.title}}
+                {{component.title}} <span class="en-title">{{component.name}}</span>
               </el-menu-item>
             </template>
           </el-menu-item-group>
@@ -72,4 +77,13 @@ export default defineComponent({
 })
 </script>
 <style lang="scss" scoped>
+.icon {
+  width: 16px;
+  height: 16px;
+  fill: $h3c;
+}
+.en-title {
+  color: $h3c;
+  font-size: 12px;
+}
 </style>

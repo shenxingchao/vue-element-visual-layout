@@ -45,3 +45,15 @@ h2 {
 h3 {
   color: $h3c;
 }
+.icon-box {
+  display: flex;
+  align-items: center;
+  .icon {
+    margin-right: 4px;
+  }
+}
+.icon {
+  -webkit-app-region: no-drag;
+  width: 12px;
+  height: 12px;
+}

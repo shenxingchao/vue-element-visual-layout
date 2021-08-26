@@ -3,7 +3,9 @@
     <el-tabs v-model="tab_active_name">
       <el-tab-pane name="1">
         <template #label>
-          <span><i class="el-icon-date"></i> 控件属性</span>
+          <div class="icon-box tab-label">
+            <svg-icon name="attribute" className="icon" />控件属性
+          </div>
         </template>
         <h4>{{node_info.title}}</h4>
         <el-form ref="attribute" :model="attribute" label-width="68px">
@@ -180,14 +182,17 @@
                     <el-input size="small" v-model="item.props.label" placeholder="值" clearable></el-input>
                   </el-col>
                   <el-col :span="4" :offset="1">
-                    <el-button v-if="index > 1" size="mini" type="danger" icon="el-icon-minus"
-                               @click="handleClickDeleteRadioItem(node_info,index)"></el-button>
+                    <el-button v-if="index > 1" size="mini" type="danger"
+                               @click="handleClickDeleteRadioItem(node_info,index)">
+                      <svg-icon name="minus" className="icon" />
+                    </el-button>
                   </el-col>
                 </el-row>
               </template>
               <el-row>
                 <el-col :span="4" :offset="1">
-                  <el-button size="mini" type="primary" icon="el-icon-plus" @click="handleClickAddRadioItem(node_info)">
+                  <el-button size="mini" type="primary" @click="handleClickAddRadioItem(node_info)">
+                    <svg-icon name="plus" className="icon" />
                   </el-button>
                 </el-col>
               </el-row>
@@ -213,15 +218,17 @@
                     <el-input size="small" v-model="item.props.label" placeholder="值" clearable></el-input>
                   </el-col>
                   <el-col :span="4" :offset="1">
-                    <el-button v-if="index > 1" size="mini" type="danger" icon="el-icon-minus"
-                               @click="handleClickDeleteCheckBoxItem(node_info,index)"></el-button>
+                    <el-button v-if="index > 1" size="mini" type="danger"
+                               @click="handleClickDeleteCheckBoxItem(node_info,index)">
+                      <svg-icon name="minus" className="icon" />
+                    </el-button>
                   </el-col>
                 </el-row>
               </template>
               <el-row>
                 <el-col :span="4" :offset="1">
-                  <el-button size="mini" type="primary" icon="el-icon-plus"
-                             @click="handleClickAddCheckBoxItem(node_info)">
+                  <el-button size="mini" type="primary" @click="handleClickAddCheckBoxItem(node_info)">
+                    <svg-icon name="plus" className="icon" />
                   </el-button>
                 </el-col>
               </el-row>
@@ -341,15 +348,17 @@
                     <el-input size="small" v-model="item.props.value" placeholder="值" clearable></el-input>
                   </el-col>
                   <el-col :span="3" :offset="1">
-                    <el-button v-if="index > 1" size="mini" type="danger" icon="el-icon-minus"
-                               @click="handleClickDeleteSelectItem(node_info,index)"></el-button>
+                    <el-button v-if="index > 1" size="mini" type="danger"
+                               @click="handleClickDeleteSelectItem(node_info,index)">
+                      <svg-icon name="minus" className="icon" />
+                    </el-button>
                   </el-col>
                 </el-row>
               </template>
               <el-row>
                 <el-col :span="4" :offset="1">
-                  <el-button size="mini" type="primary" icon="el-icon-plus"
-                             @click="handleClickAddSelectItem(node_info)">
+                  <el-button size="mini" type="primary" @click="handleClickAddSelectItem(node_info)">
+                    <svg-icon name="plus" className="icon" />
                   </el-button>
                 </el-col>
               </el-row>
@@ -454,6 +463,11 @@
         </el-form>
       </el-tab-pane>
       <el-tab-pane label="节点树" name="2">
+        <template #label>
+          <div class="icon-box tab-label">
+            <svg-icon name="tree" className="icon" />节点树
+          </div>
+        </template>
         <el-tree :data="tree" :props="defaultProps" :render-after-expand="false" :highlight-current="true" node-key="id"
                  :indent="32" :default-expand-all="true" :expand-on-click-node="false" draggable
                  @node-click="handleClickTreeNode">
@@ -542,7 +556,7 @@ export default defineComponent({
       //初始化
       let radio: any = {
         name: 'el-radio',
-        title: '单选按钮 el-radio',
+        title: '单选按钮',
         props: {
           label: '',
         },
@@ -566,7 +580,7 @@ export default defineComponent({
       //初始化
       let radio: any = {
         name: 'el-checkbox',
-        title: '复选框 el-checkbox',
+        title: '复选框',
         props: {
           label: '',
         },
@@ -590,7 +604,7 @@ export default defineComponent({
       //初始化
       let radio: any = {
         name: 'el-option',
-        title: '选项 el-option',
+        title: '选项',
         props: {
           label: '',
           value: '',
@@ -654,5 +668,13 @@ export default defineComponent({
   padding: 20px;
   background: #ffffff;
   border-left: 1px solid #e6e6e6;
+  .icon {
+    fill: $white;
+  }
+  .tab-label {
+    .icon {
+      fill: $h3c;
+    }
+  }
 }
 </style>
