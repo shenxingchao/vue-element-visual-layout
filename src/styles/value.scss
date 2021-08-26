@@ -1,6 +1,7 @@
 $theme: #c62f2f;
 $deep-theme: #ad0f0f;
 $light-theme: #eb5c5c;
+$thin-theme: rgba($theme, 0.2);
 $bg-theme: url('../assets/images/bg_theme.png') no-repeat;
 $white: #ffffff;
 $h1c: #333333;
@@ -14,22 +15,26 @@ $bg: #fafafa;
 $theme2: #409eff;
 $deep-theme2: #1463b3;
 $light-theme2: #66b1ff;
+$thin-theme2: rgba($theme2, 0.2);
 $bg-theme2: url('../assets/images/bg_theme2.png') no-repeat;
 
 $theme3: #2ba245;
 $deep-theme3: #137c2a;
 $light-theme3: #3fb837;
+$thin-theme3: rgba($theme3, 0.2);
 $bg-theme3: url('../assets/images/bg_theme3.png') no-repeat;
 
 $theme4: #967efd;
 $deep-theme4: #876ff3;
 $light-theme4: #a692fc;
+$thin-theme4: rgba($theme4, 0.2);
 $bg-theme4: url('../assets/images/bg_theme4.png') no-repeat center center;
 
 :export {
   theme: $theme;
   deep-theme: $deep-theme;
   light-theme: $light-theme;
+  thin-theme: $thin-theme;
   white: $white;
   h1c: $h1c;
   h2c: $h2c;

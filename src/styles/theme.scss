@@ -1,4 +1,4 @@
-@mixin theme($theme, $deep-theme, $light-theme, $bg-theme) {
+@mixin theme($theme, $deep-theme, $light-theme, $thin-theme, $bg-theme) {
   // 下面写需要该主题的文件
   //状态栏
   .title_bar {
@@ -138,6 +138,12 @@
   .el-tabs__active-bar {
     background-color: $deep-theme;
   }
+  //树
+  .el-tree--highlight-current
+    .el-tree-node.is-current
+    > .el-tree-node__content {
+    background-color: $thin-theme;
+  }
 }
 
 //下面是实际的主题类  用@include mixin 混入
@@ -146,6 +152,7 @@
     $theme !important,
     $deep-theme !important,
     $light-theme !important,
+    $thin-theme !important,
     $bg-theme !important
   );
 }
@@ -154,6 +161,7 @@
     $theme2 !important,
     $deep-theme2 !important,
     $light-theme2 !important,
+    $thin-theme2 !important,
     $bg-theme2 !important
   );
 }
@@ -162,6 +170,7 @@
     $theme3 !important,
     $deep-theme3 !important,
     $light-theme3 !important,
+    $thin-theme3 !important,
     $bg-theme3 !important
   );
 }
@@ -170,6 +179,7 @@
     $theme4 !important,
     $deep-theme4 !important,
     $light-theme4 !important,
+    $thin-theme4 !important,
     $bg-theme4 !important
   );
 }
