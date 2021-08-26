@@ -11,7 +11,8 @@ export default createStore({
     current_node_info: {
       props: {} //当前控件的属性
     }, //当前操作对象 全局变量
-    show_border: true //默认显示设计边框
+    show_border: true, //默认显示设计边框
+    copy_node_info: {} //当前剪贴板复制的节点信息
   },
   getters: {
     // xx: state => {
@@ -36,6 +37,9 @@ export default createStore({
     },
     SET_SHOW_BORDER: (state, show_border) => {
       state.show_border = show_border
+    },
+    SET_COPY_NODE_INFO: (state, copy_node_info) => {
+      state.copy_node_info = copy_node_info
     }
   },
   actions: {
@@ -93,6 +97,15 @@ export default createStore({
      */
     handleChangeShowBorder({ commit }, show_border) {
       commit('SET_SHOW_BORDER', show_border)
+    },
+
+    /**
+     * 改变复制节点信息
+     * @param commit
+     * @param copy_node_info 复制节点信息
+     */
+    handleChangeCopyNodeInfo({ commit }, copy_node_info) {
+      commit('SET_COPY_NODE_INFO', copy_node_info)
     }
   },
   modules: {}
