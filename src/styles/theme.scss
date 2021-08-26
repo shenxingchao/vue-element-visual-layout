@@ -40,8 +40,9 @@
   .border {
     border-color: $theme;
   }
-  //属性图标颜色
 
+  //属性选项卡图标颜色
+  .el-tabs__item:hover,
   .el-tabs__nav .is-active {
     .icon {
       fill: $theme;
