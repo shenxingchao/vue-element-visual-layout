@@ -225,8 +225,10 @@ const components_list: any = {
           title: '选择器 el-select',
           props: {
             'v-model': '',
+            multiple: false,
             disabled: false,
             clearable: false,
+            'collapse-tags': false,
             filterable: false,
             placeholder: '请选择'
           },

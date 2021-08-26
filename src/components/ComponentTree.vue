@@ -178,6 +178,9 @@ export default defineComponent({
       if (e.target.className == 'el-switch__core') {
         //如果是开关控件，则是找到他的兄弟节点
         target_id = e.target.parentNode.children[0].id
+      } else if (e.target.className == 'el-select__tags') {
+        //如果是多选下拉框，则找到他兄弟节点的子节点
+        target_id = e.target.parentNode.children[1].children[0].id
       }
       //选中高亮区域
       if (target_id) {

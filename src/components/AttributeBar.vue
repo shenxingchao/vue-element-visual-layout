@@ -351,11 +351,25 @@
                 </el-col>
               </el-row>
             </el-form-item>
+            <el-form-item label="多选">
+              <el-switch v-model="attribute.multiple" @change="((val)=>{
+                          if(val){
+                            node_info.value = []
+                          }else{
+                            node_info.value = ''
+                            attribute['collapse-tags'] = false
+                          }
+                         })">
+              </el-switch>
+            </el-form-item>
             <el-form-item label="禁用">
               <el-switch v-model="attribute.disabled"></el-switch>
             </el-form-item>
             <el-form-item label="清空">
               <el-switch v-model="attribute.clearable"></el-switch>
+            </el-form-item>
+            <el-form-item v-if="attribute.multiple" label="多选合并">
+              <el-switch v-model="attribute['collapse-tags']"></el-switch>
             </el-form-item>
             <el-form-item label="搜索">
               <el-switch v-model="attribute.filterable"></el-switch>
