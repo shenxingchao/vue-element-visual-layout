@@ -18,7 +18,7 @@
 
 ### 如何使用
 ***下载安装***
-
+[下载地址](https://github.com/shenxingchao/vue-element-visual-layout/releases/tag/v1.0.0)
 
 ***创建栅格布局***
 ![calc](./images/row-col.gif)  
