@@ -1,5 +1,5 @@
 <template>
-  <el-alert title="测试版本v1.0.0上线啦" type="success"></el-alert>
+  <el-alert v-if="show_tips" title="测试版本v1.0.0上线啦" type="success"></el-alert>
   <el-row class="tool-bar" justify="space-between">
     <el-col :span="20">{{title}}</el-col>
     <el-col :xs="4" :sm="4" :md="4" :lg="4">
@@ -33,7 +33,7 @@
   </el-row>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, toRefs } from 'vue'
+import { defineComponent, reactive, toRefs, onMounted } from 'vue'
 import { useStore } from 'vuex'
 
 export default defineComponent({
@@ -46,6 +46,14 @@ export default defineComponent({
     //数据对象
     let data: any = reactive({
       title: '设计窗口', //工具栏标题
+      show_tips: true, //是否显示提示消息
+    })
+
+    //挂载事件
+    onMounted(() => {
+      setTimeout(() => {
+        data.show_tips = false //隐藏提示消息
+      }, 3000)
     })
 
     //点击工具栏按钮
