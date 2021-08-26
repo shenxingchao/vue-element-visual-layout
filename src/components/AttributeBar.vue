@@ -326,6 +326,9 @@
               <el-input v-model="attribute['v-model']" placeholder="绑定变量 form.prop" clearable></el-input>
             </el-form-item>
             <el-form-item :label-width="0">
+              <el-row>
+                <label class="el-form-item__label" style="width: 68px;">选项设置</label>
+              </el-row>
               <template v-for="(item,index) in node_info.children" :key="index">
                 <el-row>
                   <el-col :span="7">
