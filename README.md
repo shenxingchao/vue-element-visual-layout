@@ -28,13 +28,23 @@
 
 ## 如何使用
 
-**下载安装**
+**客户端**
 
 [下载地址](https://github.com/shenxingchao/vue-element-visual-layout/releases/tag/v1.0.0)  
 
-**在线使用**
+**网页版**
 
-[演示网址](https://shenxingchao.github.io/vue-element-visual-layout/#/)
+[在线使用](https://shenxingchao.github.io/vue-element-visual-layout/#/)
+
+切换到 vue-web 分支
+```shell
+npm run serve
+npm run build
+```
+```shell
+yarn run serve
+yarn run build
+```
 
 **创建栅格布局**
 
