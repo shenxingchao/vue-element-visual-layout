@@ -1,6 +1,6 @@
 # 欢迎使用 vue-element-visual-layout
 **基于vue3 + electron13 + element-plus 开发的可视化拖动布局工具** 
-
+![calc](https://img.shields.io/badge/version-1.0.0-COLOR)  ![calc](https://img.shields.io/badge/-vue3-red) ![calc](https://img.shields.io/badge/-elementplus-blue) ![calc](https://img.shields.io/badge/-electron13-yellow)
 ## 更新日志
 **v1.0.1**
 待发布
@@ -83,3 +83,4 @@ yarn run electron:build
 ```
 
 > 免费使用！！其他有问题的地方欢迎提问，需要其他功能的可以提出来，酌情增加
+![Total visitor](https://visitor-count-badge.herokuapp.com/total.svg?repo_id=vue-element-visual-layout)
