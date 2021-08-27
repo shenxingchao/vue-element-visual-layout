@@ -2,14 +2,17 @@
 **基于vue3 + electron13 + element-plus 开发的可视化拖动布局工具**  
 ![calc](https://img.shields.io/badge/version-1.0.0-COLOR)  ![calc](https://img.shields.io/badge/-vue3-red) ![calc](https://img.shields.io/badge/-elementplus-blue) ![calc](https://img.shields.io/badge/-electron13-yellow)
 ## 更新日志
-**v1.0.1**
+**v1.0.2**
 待发布
+- 剪切控件快捷键功能（未完成）
+- 更多
+
+**v1.0.1**
 - 优化左侧控件栏显示
 - 打开默认主题色
 - 优化部分主题色
 - class="el-icon-*"类 全部替换成自定义svg-icon组件
 - 修复复制节点生成的id问题
-- 更多
 
 **v1.0.0**
 - 栅格布局拖拽
