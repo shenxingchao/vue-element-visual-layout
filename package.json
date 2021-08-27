@@ -4,34 +4,23 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "electron:build": "vue-cli-service electron:build",
-    "electron:serve": "vue-cli-service electron:serve",
-    "postinstall": "electron-builder install-app-deps",
-    "postuninstall": "electron-builder install-app-deps"
+    "build": "vue-cli-service build"
   },
   "main": "background.js",
   "dependencies": {
-    "@electron/remote": "^1.0.4",
-    "electron-updater": "^4.3.8",
     "element-plus": "^1.0.2-beta.71",
     "moment": "^2.29.1",
-    "nedb": "^1.8.0",
     "normalize.css": "^8.0.1",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.0-0"
   },
   "devDependencies": {
-    "@types/electron-devtools-installer": "^2.2.0",
-    "@types/nedb": "^1.8.12",
     "@vue/cli-plugin-router": "~4.5.0",
     "@vue/cli-plugin-typescript": "~4.5.0",
     "@vue/cli-plugin-vuex": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "@vue/compiler-sfc": "^3.0.0",
-    "electron": "^13.2.2",
-    "electron-devtools-installer": "^3.1.0",
     "eslint": "^7.21.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-prettier": "^3.3.1",
@@ -41,7 +30,6 @@
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
     "svg-sprite-loader": "^6.0.0",
-    "typescript": "~4.1.5",
-    "vue-cli-plugin-electron-builder": "~2.1.1"
+    "typescript": "~4.1.5"
   }
 }

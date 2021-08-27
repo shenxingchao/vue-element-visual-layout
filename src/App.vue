@@ -44,6 +44,7 @@ export default defineComponent({
 <style lang="scss">
 #app {
   width: 100%;
+  height: 100vh;
   padding-top: 40px;
   height: calc(100vh - 40px);
   overflow: auto;

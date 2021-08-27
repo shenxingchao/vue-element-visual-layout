@@ -14,34 +14,11 @@ import SvgPlugin from '@/components/SvgIcon'
 //引入代码高亮
 import HightLightjsPlugin from '@/components/HightLightjs'
 
-//引入nedb数据库
-import Db from '@/db/index'
 //引入momentjs
 import moment from 'moment'
-//引入path和remote
-import path from 'path'
-const remote = require('@electron/remote')
 
 const app = createApp(App)
 
-//配置全局属性
-//引入db
-// const database = [
-//   {
-//     table_name: 'template',
-//     filename: path.join(remote.app.getPath('userData'), './template.db')
-//   },
-//   {
-//     table_name: 'control',
-//     filename: path.join(remote.app.getPath('userData'), './control.db')
-//   }
-//   // { table_name: 'template', filename: './src/db/template.db' }, //表名, 表数据库文件路径  //生成环境用绝对路径E:/codetool/code-auto-tool/template.db
-//   // { table_name: 'control', filename: './src/db/control.db' } //表名, 表数据库文件路径
-// ]
-app.config.globalProperties.$db = []
-// database.forEach((table: any) => {
-//   app.config.globalProperties.$db[table.table_name] = new Db(table.filename)
-// })
 //引入momentjs
 app.config.globalProperties.$moment = moment
 
