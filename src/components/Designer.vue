@@ -77,12 +77,22 @@ export default defineComponent({
             let copy_node_info = JSON.parse(
               JSON.stringify(store.state.copy_node_info)
             )
+            //白名单 只要在这里面的节点 循环的时候子级的id和父级的相同即可 这样选中子级的时候就等同于选择了父级
+            let white_list = [
+              'el-radio-group',
+              'el-checkbox-group',
+              'el-select',
+            ]
             //递归所有children重新生成id方法
-            let recursionGenerateNode = (node: any) => {
-              node.id = 'node-' + new Date().getTime()
+            let recursionGenerateNode = (node: any, level: number = 0) => {
+              node.id = 'node-' + new Date().getTime() + level
               if (node.children) {
                 node.children.forEach((element: any) => {
-                  recursionGenerateNode(element)
+                  if (!white_list.includes(node.name)) {
+                    //不在白名单里的控件id需要加1
+                    level++
+                  }
+                  recursionGenerateNode(element, level)
                 })
               }
               return node
