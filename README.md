@@ -84,5 +84,5 @@ yarn run electron:build
 
 > 免费使用！！其他有问题的地方欢迎提问，需要其他功能的可以提出来，酌情增加
 
-![Total visitor](https://visitor-count-badge.herokuapp.com/total.svg?repo_id=vue-element-visual-layout)
-![Total visitor](https://visitor-count-badge.herokuapp.com/total.svg?repo_id=jwenjian.ghiblog.issue.43)
+
+![Total visitor](https://visitor-count-badge.herokuapp.com/total.svg?repo_id=${vue-element-visual-layout})
