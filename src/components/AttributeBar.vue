@@ -471,6 +471,15 @@
         <el-tree :data="tree" :props="defaultProps" :render-after-expand="false" :highlight-current="true" node-key="id"
                  :indent="32" :default-expand-all="true" :expand-on-click-node="false" draggable
                  @node-click="handleClickTreeNode">
+          <template #="{ node, data }">
+            <!-- 用于显示内容 -->
+            <div class="custom-tree-node">
+              {{data.name}}
+            </div>
+            <!-- 用于触发事件 机智 -->
+            <div class="custom-tree-node-block" @mouseover="handleMouseOverTreeNode(node,data)"
+                 @mouseout="handleMouseOutTreeNode(node,data)">用于触发事件 机智</div>
+          </template>
         </el-tree>
       </el-tab-pane>
     </el-tabs>
@@ -648,6 +657,27 @@ export default defineComponent({
       }
     }
 
+    //鼠标移入节点树节点，显示边框
+    const handleMouseOverTreeNode = (node: any, data: any) => {
+      if (data.id) {
+        //高亮控件边框
+        let node_element = document.getElementById(data.id) as HTMLElement
+        if (node_element) {
+          node_element.className = node_element.className + ' hover-border'
+        }
+      }
+    }
+    //鼠标移除节点树节点隐藏边框
+    const handleMouseOutTreeNode = (node: any, data: any) => {
+      //清除高亮边框
+      let border = document.getElementsByClassName(
+        'hover-border'
+      )[0] as HTMLElement
+      if (border) {
+        border.className = border.className.replace(' hover-border', '')
+      }
+    }
+
     return {
       ...toRefs(data),
       node_info,
@@ -659,6 +689,8 @@ export default defineComponent({
       handleClickAddSelectItem,
       handleClickDeleteSelectItem,
       handleClickTreeNode,
+      handleMouseOverTreeNode,
+      handleMouseOutTreeNode,
     }
   },
 })
@@ -675,6 +707,24 @@ export default defineComponent({
     .icon {
       fill: $h3c;
     }
+  }
+  .custom-tree-node {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    height: 100%;
+  }
+  .custom-tree-node-block {
+    position: absolute;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
   }
 }
 </style>

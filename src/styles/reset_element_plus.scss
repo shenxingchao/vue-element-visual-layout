@@ -13,3 +13,7 @@
 .el-select {
   width: 100%;
 }
+//重置tree 样式 这里是自定义节点移入移出所需要的的
+.el-tree-node__content {
+  position: relative;
+}
