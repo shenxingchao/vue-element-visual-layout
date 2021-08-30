@@ -229,6 +229,9 @@ export default defineComponent({
   box-sizing: border-box;
 }
 .border {
+  border: 1px solid $theme;
+}
+.hover-border {
   border: 1px dashed $theme;
 }
 </style>
