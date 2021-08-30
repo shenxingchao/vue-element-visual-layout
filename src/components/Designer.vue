@@ -60,55 +60,19 @@ export default defineComponent({
         }
 
         if (e.ctrlKey && e.keyCode == 67) {
-          //复制节点
-          if (Object.keys(store.state.current_node_info.props).length > 0) {
-            //如果当前选中节点
-            let copy_node_info = JSON.parse(
-              JSON.stringify(store.state.current_node_info)
-            )
-            store.dispatch('handleChangeCopyNodeInfo', copy_node_info)
-          }
+          //ctrl+c 复制节点
+          handleCopyControl()
+        }
+
+        if (e.ctrlKey && e.keyCode == 88) {
+          //ctrl+x 剪切节点 先复制后删除
+          handleCopyControl()
+          handleDeleteControl()
         }
 
         if (e.ctrlKey && e.keyCode == 86) {
-          //粘贴节点
-          if (Object.keys(store.state.copy_node_info).length > 0) {
-            //如果有复制节点
-            let copy_node_info = JSON.parse(
-              JSON.stringify(store.state.copy_node_info)
-            )
-            //白名单 只要在这里面的节点 循环的时候子级的id和父级的相同即可 这样选中子级的时候就等同于选择了父级
-            let white_list = [
-              'el-radio-group',
-              'el-checkbox-group',
-              'el-select',
-            ]
-            //递归所有children重新生成id方法
-            let recursionGenerateNode = (node: any, level: number = 0) => {
-              node.id = 'node-' + new Date().getTime() + level
-              if (node.children) {
-                node.children.forEach((element: any) => {
-                  if (!white_list.includes(node.name)) {
-                    //不在白名单里的控件id需要加1
-                    level++
-                  }
-                  recursionGenerateNode(element, level)
-                })
-              }
-              return node
-            }
-            copy_node_info = recursionGenerateNode(copy_node_info) //递归所有children重新生成id，保证粘贴的都是不一样的元素，不然粘贴的元素就和前面的一样啦
-            store.dispatch('handleChangeCopyNodeInfo', copy_node_info)
-            if (Object.keys(store.state.current_node_info.props).length > 0) {
-              //放到选中的控件children中
-              store.state.current_node_info.children.push(
-                store.state.copy_node_info
-              )
-            } else {
-              //放到最外层
-              store.state.component_tree_list.push(store.state.copy_node_info)
-            }
-          }
+          //ctrl+v 粘贴节点
+          handlePasteControl()
         }
       }
     })
@@ -239,6 +203,53 @@ export default defineComponent({
       }
     }
 
+    //复制控件
+    const handleCopyControl = () => {
+      if (Object.keys(store.state.current_node_info.props).length > 0) {
+        //如果当前选中节点
+        let copy_node_info = JSON.parse(
+          JSON.stringify(store.state.current_node_info)
+        )
+        store.dispatch('handleChangeCopyNodeInfo', copy_node_info)
+      }
+    }
+
+    const handlePasteControl = () => {
+      if (Object.keys(store.state.copy_node_info).length > 0) {
+        //如果有复制节点
+        let copy_node_info = JSON.parse(
+          JSON.stringify(store.state.copy_node_info)
+        )
+        //白名单 只要在这里面的节点 循环的时候子级的id和父级的相同即可 这样选中子级的时候就等同于选择了父级
+        let white_list = ['el-radio-group', 'el-checkbox-group', 'el-select']
+        //递归所有children重新生成id方法
+        let recursionGenerateNode = (node: any, level: number = 0) => {
+          node.id = 'node-' + new Date().getTime() + level
+          if (node.children) {
+            node.children.forEach((element: any) => {
+              if (!white_list.includes(node.name)) {
+                //不在白名单里的控件id需要加1
+                level++
+              }
+              recursionGenerateNode(element, level)
+            })
+          }
+          return node
+        }
+        copy_node_info = recursionGenerateNode(copy_node_info) //递归所有children重新生成id，保证粘贴的都是不一样的元素，不然粘贴的元素就和前面的一样啦
+        store.dispatch('handleChangeCopyNodeInfo', copy_node_info)
+        if (Object.keys(store.state.current_node_info.props).length > 0) {
+          //放到选中的控件children中
+          store.state.current_node_info.children.push(
+            store.state.copy_node_info
+          )
+        } else {
+          //放到最外层
+          store.state.component_tree_list.push(store.state.copy_node_info)
+        }
+      }
+    }
+
     return {
       ...toRefs(data),
       handleDragEnter,
@@ -249,6 +260,8 @@ export default defineComponent({
       handleChangeDesigner,
       handleClearLayout,
       handleDeleteControl,
+      handleCopyControl,
+      handlePasteControl,
     }
   },
 })
