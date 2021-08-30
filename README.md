@@ -6,6 +6,7 @@
 待发布
 - 剪切控件快捷键功能
 - 鼠标移入节点树对应控件高亮
+- 解决快捷键监听和输入框复制粘贴冲突（BUG待修复） 
 - 更多
 
 **v1.0.1**
@@ -26,37 +27,26 @@
 - 控件删除功能
 - 自定义主题
 
-## 界面介绍
-
-![calc](./images/designer.png)  
-
 ## 如何使用
 
 **客户端**
 
-[下载地址](https://github.com/shenxingchao/vue-element-visual-layout/releases/tag/v1.0.0)  
+[下载 v1.0.1](https://github.com/shenxingchao/vue-element-visual-layout/releases/tag/v1.0.1)  
+[下载 v1.0.0](https://github.com/shenxingchao/vue-element-visual-layout/releases/tag/v1.0.1)  
 
 **网页版**
 
-[在线使用](https://shenxingchao.github.io/vue-element-visual-layout/#/)
-
-切换到 vue-web 分支
-```shell
-npm run serve
-npm run build
-```
-```shell
-yarn run serve
-yarn run build
-```
+[在线使用最新版v1.0.2](https://shenxingchao.github.io/vue-element-visual-layout/#/)
 
 **创建栅格布局**
 
 ![calc](./images/row-col.gif)  
+[查看大图](https://github.com/shenxingchao/vue-element-visual-layout/blob/master/images/row-col.gif)
 
 **创建表单**
 
 ![calc](./images/form.gif)  
+[查看大图](https://github.com/shenxingchao/vue-element-visual-layout/blob/master/images/form.gif)
 
 **快捷键**
 
@@ -65,6 +55,7 @@ yarn run build
 | DELETE | 删除选中控件及其子控件                                 |
 | CTRL+C | 复制选中控件                                           |
 | CTRL+V | 粘贴复制的控件到选中控件的子控件中或者粘贴到最外层控件 |
+| CTRL+X | 剪切控件及其子控件                                     |
 
 **工具栏**
 
@@ -81,11 +72,27 @@ yarn run build
 **主题**
 - 右上角设置按钮下可切换界面主题色
 
-## 二次开发
-**下载代码**
+## 下载代码
 ```git
 git clone https://github.com/shenxingchao/vue-element-visual-layout.git
 ```
+
+## 基于web开发
+切换到 vue-web 分支
+
+**使用npm**
+```shell
+npm run serve
+npm run build
+```
+
+**使用yarn**
+```shell
+yarn run serve
+yarn run build
+```
+
+## 基于electron开发
 
 **使用npm**
 ```shell
