@@ -17,3 +17,7 @@
 .el-tree-node__content {
   position: relative;
 }
+//重置tree 图标样式 展开缩放被自定义移入移出的div挡住了 设个层级
+.el-tree-node__expand-icon {
+  z-index: 1;
+}
