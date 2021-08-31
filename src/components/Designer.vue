@@ -254,7 +254,12 @@ export default defineComponent({
           JSON.stringify(store.state.copy_node_info)
         )
         //白名单 只要在这里面的节点 循环的时候子级的id和父级的相同即可 这样选中子级的时候就等同于选择了父级
-        let white_list = ['el-radio-group', 'el-checkbox-group', 'el-select']
+        let white_list = [
+          'el-radio-group',
+          'el-checkbox-group',
+          'el-select',
+          'el-descriptions',
+        ]
         //递归所有children重新生成id方法
         let recursionGenerateNode = (node: any, level: number = 0) => {
           node.id = 'node-' + new Date().getTime() + level
