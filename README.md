@@ -2,14 +2,15 @@
 **基于vue3 + electron13 + element-plus 开发的可视化拖动布局工具**  
 ![calc](https://img.shields.io/badge/version-1.0.0-COLOR)  ![calc](https://img.shields.io/badge/-vue3-red) ![calc](https://img.shields.io/badge/-elementplus-blue) ![calc](https://img.shields.io/badge/-electron13-yellow)
 ## 更新日志
+**v1.0.3**
+- 待更新
+
 **v1.0.2**
-待发布
 - 剪切控件快捷键功能
 - 鼠标移入节点树对应控件高亮
 - 修复快捷键监听和浏览器默认复制剪切粘贴冲突 
 - 新增描述列表控件
-- 鼠标点击节点树 图标不能缩放问题(BUG待修复)
-- 更多
+- 鼠标点击节点树 图标不能缩放问题
 
 **v1.0.1**
 - 优化左侧控件栏显示
@@ -33,6 +34,7 @@
 
 **客户端**
 
+[下载 v1.0.2](https://github.com/shenxingchao/vue-element-visual-layout/releases/tag/v1.0.2)  
 [下载 v1.0.1](https://github.com/shenxingchao/vue-element-visual-layout/releases/tag/v1.0.1)  
 [下载 v1.0.0](https://github.com/shenxingchao/vue-element-visual-layout/releases/tag/v1.0.1)  
 
