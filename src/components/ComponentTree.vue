@@ -18,6 +18,26 @@
         </component>
       </div>
     </template>
+    <!-- 描述列表渲染子级有bug目前无法解决 单独处理-->
+    <template v-else-if="node.name == 'el-descriptions'">
+      <component :id="node.id" :is="node.name" v-bind="node.props" v-model="node.value" :class="handleShowBorder(node)"
+                 :style="node.style" :draggable="false" @dragenter.stop.prevent="handleDragEnterOnNode"
+                 @dragover.stop.prevent="handleDragOverOnNode(node,$event)"
+                 @drop.stop.prevent="handleDropOnNode(node, $event)" @click.stop.prevent="handleClick">
+        <template v-for="(node, index) in node.children" :key="node.id + index">
+          <component :id="node.id" :is="node.name" v-bind="node.props" v-model="node.value"
+                     :class="handleShowBorder(node)" :style="node.style" :draggable="false"
+                     @dragenter.stop.prevent="handleDragEnterOnNode"
+                     @dragover.stop.prevent="handleDragOverOnNode(node,$event)"
+                     @drop.stop.prevent="handleDropOnNode(node, $event)" @click.stop.prevent="handleClick">
+            {{node.text}}
+            <template v-if="node.children">
+              <component-tree :component_tree_list="node.children"></component-tree>
+            </template>
+          </component>
+        </template>
+      </component>
+    </template>
     <!-- 其他控件没问题 -->
     <template v-else>
       <component :id="node.id" :is="node.name" v-bind="node.props" v-model="node.value" :class="handleShowBorder(node)"
@@ -149,6 +169,7 @@ export default defineComponent({
         'el-col',
         'el-form',
         'el-form-item',
+        'el-descriptions',
       ]
 
       if (white_list.includes(node.name) && store.state.show_border) {
@@ -165,8 +186,8 @@ export default defineComponent({
           return e.target.id
         } else if (e.id) {
           return e.id
-        } else if (level > 3) {
-          //找4层 后返回
+        } else if (level > 4) {
+          //找5层 后返回
           return false
         } else {
           //如果是点击了内部的文字则往上找id

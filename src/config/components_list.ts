@@ -291,6 +291,55 @@ const components_list: any = {
           children: []
         }
       ]
+    },
+    {
+      title: '数据',
+      type: 'Data',
+      icon: 'data',
+      children: [
+        {
+          name: 'el-descriptions',
+          title: '描述列表',
+          props: {
+            border: true,
+            column: 3,
+            direction: 'horizontal',
+            size: 'medium',
+            title: '标题文本'
+          },
+          style: '',
+          children: [
+            {
+              name: 'el-descriptions-item',
+              props: {
+                label: '标签一',
+                span: 1,
+                width: '',
+                'min-width': '',
+                align: '',
+                'label-align': ''
+              },
+              text: '内容一',
+              style: '',
+              children: []
+            },
+            {
+              name: 'el-descriptions-item',
+              props: {
+                label: '标签二',
+                span: 1,
+                width: '',
+                'min-width': '',
+                align: '',
+                'label-align': ''
+              },
+              text: '内容二',
+              style: '',
+              children: []
+            }
+          ]
+        }
+      ]
     }
   ]
 }
