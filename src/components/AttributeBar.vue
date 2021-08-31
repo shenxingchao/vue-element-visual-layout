@@ -452,6 +452,79 @@
             </template>
           </template>
           <!-- el-date-picker end -->
+          <!-- el-el-descriptions start -->
+          <template v-if="node_info.name == 'el-descriptions'">
+            <!-- 渲染选项 -->
+            <el-form-item label="边框">
+              <el-switch v-model="attribute.border"></el-switch>
+            </el-form-item>
+            <el-form-item v-if="attribute.column" label="项数">
+              <!-- 感觉5项差不多了，再多不好了 -->
+              <el-input-number v-model="attribute.column" :controls="true" :min="1" :max="5">
+              </el-input-number>
+            </el-form-item>
+            <el-form-item v-if="attribute.direction||attribute.direction==''" label="排列方向">
+              <el-select v-model="attribute.direction" placeholder="排列方向" clearable>
+                <el-option key="horizontal " label="水平" value="horizontal "></el-option>
+                <el-option key="vertical" label="垂直" value="vertical"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item v-if="attribute.size||attribute.size==''" label="尺寸">
+              <el-select v-model="attribute.size" placeholder="尺寸" clearable>
+                <el-option key="medium" label="正常" value="medium"></el-option>
+                <el-option key="small" label="小" value="small"></el-option>
+                <el-option key="mini" label="迷你" value="mini"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item v-if="attribute.title||attribute.title==''" label="标题文本">
+              <el-input v-model="attribute.title" placeholder="标题文本" clearable></el-input>
+            </el-form-item>
+            <el-form-item :label-width="0">
+              <el-row>
+                <label class="el-form-item__label" style="width: 68px;">选项设置</label>
+              </el-row>
+              <template v-for="(item,index) in node_info.children" :key="index">
+                <el-row class="el-desc-item-top">
+                  <el-col :span="9">
+                    <el-input size="small" v-model="item.props.label" placeholder="选项标签" clearable></el-input>
+                  </el-col>
+                  <el-col :span="9" :offset="1">
+                    <el-select v-model="item.props['label-align']" placeholder="标签对齐" clearable>
+                      <el-option key="left" label="左" value="left"></el-option>
+                      <el-option key="center" label="中" value="center"></el-option>
+                      <el-option key="right" label="右" value="right"></el-option>
+                    </el-select>
+                  </el-col>
+                </el-row>
+                <el-row class="el-desc-item">
+                  <el-col :span="9">
+                    <el-input size="small" v-model="item.text" placeholder="选项内容" clearable></el-input>
+                  </el-col>
+                  <el-col :span="9" :offset="1">
+                    <el-select v-model="item.props.align" placeholder="内容对齐" clearable>
+                      <el-option key="left" label="左" value="left"></el-option>
+                      <el-option key="center" label="中" value="center"></el-option>
+                      <el-option key="right" label="右" value="right"></el-option>
+                    </el-select>
+                  </el-col>
+                  <el-col :span="4" :offset="1">
+                    <el-button v-if="index > 1" size="mini" type="danger"
+                               @click="handleClickDeleteDescriptionsItem(node_info,index)">
+                      <svg-icon name="minus" className="icon" />
+                    </el-button>
+                  </el-col>
+                </el-row>
+              </template>
+              <el-row>
+                <el-col :span="4" :offset="1">
+                  <el-button size="mini" type="primary" @click="handleClickAddDescriptionsItem(node_info)">
+                    <svg-icon name="plus" className="icon" />
+                  </el-button>
+                </el-col>
+              </el-row>
+            </el-form-item>
+          </template>
+          <!-- el-descriptions end -->
           <!-- public attribute start-->
           <el-form-item v-if="attribute.class||attribute.class==''" label="class">
             <el-input v-model="attribute.class" placeholder="css类名" clearable></el-input>
@@ -587,7 +660,7 @@ export default defineComponent({
     //点击添加复选框选项
     const handleClickAddCheckBoxItem = (node_info: any) => {
       //初始化
-      let radio: any = {
+      let checkbox: any = {
         name: 'el-checkbox',
         title: '复选框',
         props: {
@@ -598,9 +671,9 @@ export default defineComponent({
         children: [],
       }
 
-      radio.id = 'node-' + new Date().getTime()
+      checkbox.id = 'node-' + new Date().getTime()
 
-      node_info.children.push(radio)
+      node_info.children.push(checkbox)
     }
 
     //点击删除复选框选项
@@ -611,7 +684,7 @@ export default defineComponent({
     //点击添加选择器选项
     const handleClickAddSelectItem = (node_info: any) => {
       //初始化
-      let radio: any = {
+      let select: any = {
         name: 'el-option',
         title: '选项',
         props: {
@@ -622,13 +695,41 @@ export default defineComponent({
         children: [],
       }
 
-      radio.id = 'node-' + new Date().getTime()
+      select.id = 'node-' + new Date().getTime()
 
-      node_info.children.push(radio)
+      node_info.children.push(select)
     }
 
     //点击删除选择器选项
     const handleClickDeleteSelectItem = (node_info: any, index: any) => {
+      node_info.children.splice(index, 1)
+    }
+
+    //点击添描述列表选项
+    const handleClickAddDescriptionsItem = (node_info: any) => {
+      //初始化
+      let descriptions: any = {
+        name: 'el-descriptions-item',
+        props: {
+          label: '',
+          span: 1,
+          width: '',
+          'min-width': '',
+          align: '',
+          'label-align': '',
+        },
+        text: '',
+        style: '',
+        children: [],
+      }
+
+      descriptions.id = 'node-' + new Date().getTime()
+
+      node_info.children.push(descriptions)
+    }
+
+    //点击删除描述列表选项
+    const handleClickDeleteDescriptionsItem = (node_info: any, index: any) => {
       node_info.children.splice(index, 1)
     }
 
@@ -688,6 +789,8 @@ export default defineComponent({
       handleClickDeleteCheckBoxItem,
       handleClickAddSelectItem,
       handleClickDeleteSelectItem,
+      handleClickAddDescriptionsItem,
+      handleClickDeleteDescriptionsItem,
       handleClickTreeNode,
       handleMouseOverTreeNode,
       handleMouseOutTreeNode,
@@ -725,6 +828,14 @@ export default defineComponent({
     top: 0;
     bottom: 0;
     margin: auto;
+  }
+  .el-desc-item-top {
+    padding-top: 6px;
+    border-top: 1px solid #ececec;
+  }
+  .el-desc-item {
+    padding-top: 2px;
+    padding-bottom: 6px;
   }
 }
 </style>
