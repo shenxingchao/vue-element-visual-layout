@@ -16,7 +16,14 @@
   </el-container>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, toRefs, nextTick, onMounted } from 'vue'
+import {
+  defineComponent,
+  reactive,
+  toRefs,
+  nextTick,
+  onMounted,
+  ref,
+} from 'vue'
 import { useStore } from 'vuex'
 //导入公共方法
 import mixins from '@/mixins/index'
@@ -48,6 +55,9 @@ export default defineComponent({
       code: '', //根据组件树生成的代码
     })
 
+    //基本数据类型
+    let is_system_shortcut_key = ref(false) //是否是系统快捷键
+
     //挂载事件
     onMounted(() => {
       //监听 键盘按下事件
@@ -61,18 +71,41 @@ export default defineComponent({
 
         if (e.ctrlKey && e.keyCode == 67) {
           //ctrl+c 复制节点
-          handleCopyControl()
+          //判断是否是浏览器默认快捷键 原理：判断是否选中了内容
+          let content = (<any>window).getSelection().toString()
+          if (!content) {
+            //不是系统快捷键
+            is_system_shortcut_key.value = false
+            //复制控件
+            handleCopyControl()
+            e.preventDefault()
+          } else {
+            //是系统快捷键
+            is_system_shortcut_key.value = true
+          }
         }
 
         if (e.ctrlKey && e.keyCode == 88) {
           //ctrl+x 剪切节点 先复制后删除
-          handleCopyControl()
-          handleDeleteControl()
+          //判断是否是浏览器默认快捷键 原理：判断是否选中了内容
+          let content = (<any>window).getSelection().toString()
+          if (!content) {
+            //不是系统快捷键
+            is_system_shortcut_key.value = false
+            handleCopyControl()
+            handleDeleteControl()
+          } else {
+            //是系统快捷键
+            is_system_shortcut_key.value = true
+          }
         }
 
         if (e.ctrlKey && e.keyCode == 86) {
           //ctrl+v 粘贴节点
-          handlePasteControl()
+          if (!is_system_shortcut_key.value) {
+            handlePasteControl()
+            e.preventDefault()
+          }
         }
       }
     })
