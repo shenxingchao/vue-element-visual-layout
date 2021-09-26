@@ -45,8 +45,7 @@ export default defineComponent({
 .drawer {
   width: 200px;
   max-width: 200px;
-  padding: 20px;
-  padding-top: 60px;
+  padding-top: 40px;
   overflow: auto;
 }
 </style>

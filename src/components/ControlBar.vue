@@ -2,7 +2,7 @@
   <el-aside width="240px" style="background-color: rgb(238, 241, 246)" @dragenter="handleDragEnterContrlList">
     <el-menu :default-openeds="['0']" :unique-opened="true">
       <template v-for="(components,index) in components_list.components" :key="index">
-        <el-submenu :index="index + ''">
+        <el-sub-menu :index="index + ''">
           <template #title>
             <div class="icon-box">
               <svg-icon :name="components.icon" className="icon" />
@@ -17,7 +17,7 @@
               </el-menu-item>
             </template>
           </el-menu-item-group>
-        </el-submenu>
+        </el-sub-menu>
       </template>
     </el-menu>
   </el-aside>
