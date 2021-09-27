@@ -3057,10 +3057,10 @@ electron@^13.2.2:
     "@types/node" "^14.6.2"
     extract-zip "^1.0.3"
 
-element-plus@^1.1.0-beta.16:
-  version "1.1.0-beta.16"
-  resolved "https://registry.npmmirror.com/element-plus/download/element-plus-1.1.0-beta.16.tgz#4409d9e33d005693f6039f5ed1fe05e301b3170d"
-  integrity sha1-RAnZ4z0AVpP2A59e0f4F4wGzFw0=
+element-plus@^1.1.0-beta.17:
+  version "1.1.0-beta.17"
+  resolved "https://registry.npmmirror.com/element-plus/download/element-plus-1.1.0-beta.17.tgz#580177916236f8bddf649db7f901b1aca175f98b"
+  integrity sha1-WAF3kWI2+L3fZJ23+QGxrKF1+Ys=
   dependencies:
     "@popperjs/core" "^2.10.1"
     "@vueuse/core" "~6.1.0"
@@ -3068,7 +3068,7 @@ element-plus@^1.1.0-beta.16:
     dayjs "^1.10.7"
     lodash "^4.17.21"
     memoize-one "^5.2.1"
-    normalize-wheel "^1.0.1"
+    normalize-wheel-es "^1.1.0"
     resize-observer-polyfill "^1.5.1"
 
 elliptic@^6.5.3:
@@ -6027,10 +6027,10 @@ normalize-url@^4.1.0:
   resolved "https://registry.nlark.com/normalize-url/download/normalize-url-4.5.1.tgz?cache=0&sync_timestamp=1625826787829&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fnormalize-url%2Fdownload%2Fnormalize-url-4.5.1.tgz#0dd90cf1288ee1d1313b87081c9a5932ee48518a"
   integrity sha1-DdkM8SiO4dExO4cIHJpZMu5IUYo=
 
-normalize-wheel@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.nlark.com/normalize-wheel/download/normalize-wheel-1.0.1.tgz#aec886affdb045070d856447df62ecf86146ec45"
-  integrity sha1-rsiGr/2wRQcNhWRH32Ls+GFG7EU=
+normalize-wheel-es@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.npmmirror.com/normalize-wheel-es/download/normalize-wheel-es-1.1.0.tgz#db017af1dd5d4c6222c07ae38bc224049d25861e"
+  integrity sha1-2wF68d1dTGIiwHrji8IkBJ0lhh4=
 
 normalize.css@^8.0.1:
   version "8.0.1"
