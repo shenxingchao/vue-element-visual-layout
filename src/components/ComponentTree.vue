@@ -180,6 +180,8 @@ export default defineComponent({
       let parent_node: any = null
       //是否放在内层的占位块上 占位块的索引
       data.block_node_index = 0
+      //是否放在内层的占位块上
+      data.is_block_node_release = false
       if (node.id == 'block_node') {
         //如果是在占位块上释放，则算是在他父级上释放
         parent_node = _handleRecursionGetParentNode(
@@ -187,6 +189,7 @@ export default defineComponent({
           props.component_tree_list
         )
         //直接找到占位块释放的index start
+        data.is_block_node_release = true
         let block_parent_node = parent_node.children
           ? parent_node.children
           : parent_node
@@ -207,7 +210,7 @@ export default defineComponent({
       //获取拖动数据
       let node_info: any = JSON.parse(e.dataTransfer.getData('node'))
 
-      if (data.block_node_index !== 0) {
+      if (data.is_block_node_release) {
         parent_node.splice(data.block_node_index, 0, node_info)
         //设置当前操作对象
         store.dispatch('handleChangeCurrentNodeInfo', node_info)
