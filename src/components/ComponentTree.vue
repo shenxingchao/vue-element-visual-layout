@@ -124,7 +124,50 @@ export default defineComponent({
 
         //插入到元素内部
         if (node.children) {
-          node.children.push(block_node)
+          //判断是否是在最外层的边界，如果在最外层的边界移动，那么插入到对应的最外层索引后
+          const ele = document.getElementById(node.id) as HTMLElement
+          //递归获取当前元素距离最外层父元素的距离
+          const recursionGetOffsetTop = (ele: any, offset_top: number = 0) => {
+            offset_top = ele.offsetTop
+            let parent_ele = ele.offsetParent
+            if (parent_ele != null) {
+              offset_top += parent_ele.offsetTop
+              recursionGetOffsetTop(parent_ele, offset_top)
+            }
+            return offset_top
+          }
+          //这里>=1和<=1是为了放大边界，不然会有bug
+          if (
+            e.clientY +
+              (document.getElementById('desginer') as HTMLElement).scrollTop >=
+              recursionGetOffsetTop(ele) - 1 &&
+            e.clientY +
+              (document.getElementById('desginer') as HTMLElement).scrollTop <=
+              recursionGetOffsetTop(ele) + 1
+          ) {
+            //落在边界上 获取当前元素的父级
+            parent_node = _handleRecursionGetParentNode(
+              node,
+              data.sotre_component_tree_list
+            )
+            if (parent_node.children) {
+              //说明在内 二层及以上
+              parent_node = parent_node.children
+            }
+            //当前鼠标所在元素边界元素索引
+            data.index = 0
+            for (let i = 0; i < parent_node.length; i++) {
+              const child = parent_node[i]
+              if (child.id == node.id) {
+                data.index = i
+                break
+              }
+            }
+            parent_node.splice(data.index, 0, block_node)
+          } else {
+            //插入到内部
+            node.children.push(block_node)
+          }
         } else {
           //说明是在最外层 添加占位块
           node.push(block_node)
@@ -134,12 +177,27 @@ export default defineComponent({
 
     //当被拖动元素在节点上释放时
     const handleDropOnNode = (node: any, e: any) => {
+      let parent_node: any = null
+      //是否放在内层的占位块上 占位块的索引
+      data.block_node_index = 0
       if (node.id == 'block_node') {
         //如果是在占位块上释放，则算是在他父级上释放
-        let parent_node = _handleRecursionGetParentNode(
+        parent_node = _handleRecursionGetParentNode(
           node,
           props.component_tree_list
         )
+        //直接找到占位块释放的index start
+        let block_parent_node = parent_node.children
+          ? parent_node.children
+          : parent_node
+        for (let i = 0; i < block_parent_node.length; i++) {
+          const child = block_parent_node[i]
+          if (child.id == node.id) {
+            data.block_node_index = i
+            break
+          }
+        }
+        //直接找到占位块释放的index end
         node = parent_node
       }
 
@@ -149,9 +207,45 @@ export default defineComponent({
       //获取拖动数据
       let node_info: any = JSON.parse(e.dataTransfer.getData('node'))
 
+      if (data.block_node_index !== 0) {
+        parent_node.splice(data.block_node_index, 0, node_info)
+        //设置当前操作对象
+        store.dispatch('handleChangeCurrentNodeInfo', node_info)
+        return
+      }
+
       if (node.children) {
-        //添加到子控件
-        node.children.push(node_info)
+        //判断是否是在最外层的边界，如果在最外层的边界移动，那么插入到对应的最外层索引后
+        const ele = document.getElementById(node.id) as HTMLElement
+        //这里不需要放大了边界了，不会有bug了
+        if (
+          e.clientY +
+            (document.getElementById('desginer') as HTMLElement).scrollTop ==
+          ele.offsetTop
+        ) {
+          //落在边界上 获取当前元素的父级
+          parent_node = _handleRecursionGetParentNode(
+            node,
+            data.sotre_component_tree_list
+          )
+          if (parent_node.children) {
+            //说明在内 二层及以上
+            parent_node = parent_node.children
+          }
+          //当前鼠标所在元素边界元素索引
+          data.index = 0
+          for (let i = 0; i < parent_node.length; i++) {
+            const child = parent_node[i]
+            if (child.id == node.id) {
+              data.index = i
+              break
+            }
+          }
+          parent_node.splice(data.index, 0, node_info)
+        } else {
+          //插入到内部
+          node.children.push(node_info)
+        }
       } else {
         //放入最外层数组或者是子控件的children数组里面
         node.push(node_info)

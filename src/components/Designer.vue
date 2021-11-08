@@ -3,7 +3,7 @@
     <el-container style="flex-direction: column;">
       <tool-bar @handleChangeDesigner="handleChangeDesigner" @handleClearLayout="handleClearLayout"
                 @handleDeleteControl="handleDeleteControl"> </tool-bar>
-      <el-main v-if="tab_index == 1" @dragenter="handleDragEnter" @dragover="handleDragOver"
+      <el-main id="desginer" v-if="tab_index == 1" @dragenter="handleDragEnter" @dragover="handleDragOver"
                @dragleave="handleDragLeave" @drop="handleDrop" @click="handleClick">
         <!-- 使用递归组件 -->
         <component-tree :component_tree_list="component_tree_list"></component-tree>
@@ -118,31 +118,23 @@ export default defineComponent({
       e.preventDefault()
 
       let flag_position = false //有没有找到元素所在位置标志
+      let mouse_absolute__y =
+        e.clientY +
+        (document.getElementById('desginer') as HTMLElement).scrollTop //鼠标在设计窗口的绝对位置
 
       //循环第一层的元素 判断该当前鼠标位置在对应水平线元素的中线上面还是下面，上面就在上面插入占位块，下面就在下面插入占位块
       for (let i = 0; i < data.component_tree_list.length; i++) {
         const node = data.component_tree_list[i]
         const ele = document.getElementById(node.id) as HTMLElement
-        if (i == 0 && e.clientY < ele.offsetTop) {
+        if (i == 0 && mouse_absolute__y < ele.offsetTop) {
           //在第一个的上面，插入到最前面
           flag_position = true
           data.insert_index = 0
           break
-        } else if (
-          e.clientY >= ele.offsetTop &&
-          e.clientY < ele.offsetTop + ele.offsetHeight / 2
-        ) {
+        } else if (mouse_absolute__y < ele.offsetTop + ele.offsetHeight / 2) {
           //在当前元素的水平中线上面
           flag_position = true
           data.insert_index = i
-          break
-        } else if (
-          e.clientY >= ele.offsetTop + ele.offsetHeight / 2 &&
-          e.clientY < ele.offsetTop + ele.offsetHeight
-        ) {
-          //在当前元素的水平中线下面
-          flag_position = true
-          data.insert_index = i + 1
           break
         } else if (i == data.component_tree_list.length - 1 && !flag_position) {
           //在最后一个的下面，插入的最后面
