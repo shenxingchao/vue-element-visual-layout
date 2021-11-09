@@ -33,7 +33,7 @@ const mixins: any = () => {
     return flag
   }
 
-  //递归查找父级节点的children List
+  //递归查找父级节点 一级节点是list 内层节点是Object
   const _handleRecursionGetParentNode: any = (
     node: any,
     component_tree_list: any,
