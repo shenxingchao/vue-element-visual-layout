@@ -36,6 +36,18 @@ const fixNedbForElectronRenderer = {
 }
 
 module.exports = {
+  publicPath: '/vue-element-visual-layout/', //自己跟换部署的目录
+  configureWebpack: {
+    module: {
+      rules: [
+        {
+          test: /\.mjs$/,
+          include: /node_modules/,
+          type: 'javascript/auto'
+        }
+      ]
+    }
+  },
   chainWebpack: config => {
     // fix nedb
     config.resolve
