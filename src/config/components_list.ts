@@ -14,6 +14,7 @@
           text: '内部文字',
           value:'只是用于绑定设计窗口的变量',
           style: '内联样式',
+          allow:false,//是否允许有子控件
           children: [],//子节点
         }
       ]
@@ -35,6 +36,7 @@ const components_list: any = {
             direction: 'horizontal'
           },
           style: '',
+          allow: true,
           children: []
         },
         {
@@ -49,6 +51,7 @@ const components_list: any = {
           },
           text: '',
           style: '',
+          allow: true,
           children: []
         },
         {
@@ -63,6 +66,7 @@ const components_list: any = {
           },
           text: '',
           style: '',
+          allow: true,
           children: []
         },
         {
@@ -82,6 +86,7 @@ const components_list: any = {
           },
           text: '按钮',
           style: '',
+          allow: false,
           children: []
         }
       ]
@@ -104,6 +109,7 @@ const components_list: any = {
           },
           model: '',
           style: '',
+          allow: true,
           children: []
         },
         {
@@ -114,8 +120,9 @@ const components_list: any = {
             label: '标签名',
             required: false
           },
-          children: [],
-          style: ''
+          style: '',
+          allow: true,
+          children: []
         },
         {
           name: 'el-radio-group',
@@ -126,6 +133,7 @@ const components_list: any = {
           },
           value: '',
           style: '',
+          allow: false,
           children: [
             {
               name: 'el-radio',
@@ -135,6 +143,7 @@ const components_list: any = {
               },
               text: '选项1',
               style: '',
+              allow: false,
               children: []
             },
             {
@@ -145,6 +154,7 @@ const components_list: any = {
               },
               text: '选项2',
               style: '',
+              allow: false,
               children: []
             }
           ]
@@ -158,6 +168,7 @@ const components_list: any = {
           },
           value: '',
           style: '',
+          allow: false,
           children: [
             {
               name: 'el-checkbox',
@@ -167,6 +178,7 @@ const components_list: any = {
               },
               text: '复选框A',
               style: '',
+              allow: false,
               children: []
             },
             {
@@ -177,6 +189,7 @@ const components_list: any = {
               },
               text: '复选框B',
               style: '',
+              allow: false,
               children: []
             }
           ]
@@ -200,6 +213,7 @@ const components_list: any = {
           },
           value: '',
           style: '',
+          allow: false,
           children: []
         },
         {
@@ -218,6 +232,7 @@ const components_list: any = {
           },
           value: 0,
           style: '',
+          allow: false,
           children: []
         },
         {
@@ -234,6 +249,7 @@ const components_list: any = {
           },
           value: '',
           style: '',
+          allow: false,
           children: [
             {
               name: 'el-option',
@@ -244,6 +260,7 @@ const components_list: any = {
               },
               style: '',
               text: '黄金糕1',
+              allow: false,
               children: []
             },
             {
@@ -255,6 +272,7 @@ const components_list: any = {
               },
               style: '',
               text: '双皮奶1',
+              allow: false,
               children: []
             }
           ]
@@ -268,6 +286,7 @@ const components_list: any = {
           },
           value: '',
           style: '',
+          allow: false,
           children: []
         },
         {
@@ -288,6 +307,7 @@ const components_list: any = {
           },
           value: '',
           style: '',
+          allow: false,
           children: []
         }
       ]
@@ -308,6 +328,7 @@ const components_list: any = {
             title: '标题文本'
           },
           style: '',
+          allow: false,
           children: [
             {
               name: 'el-descriptions-item',
@@ -321,6 +342,7 @@ const components_list: any = {
               },
               text: '内容一',
               style: '',
+              allow: false,
               children: []
             },
             {
@@ -335,6 +357,7 @@ const components_list: any = {
               },
               text: '内容二',
               style: '',
+              allow: false,
               children: []
             }
           ]

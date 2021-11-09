@@ -155,15 +155,15 @@ export default defineComponent({
               parent_node = parent_node.children
             }
             //当前鼠标所在元素边界元素索引
-            data.index = 0
+            let index = 0
             for (let i = 0; i < parent_node.length; i++) {
               const child = parent_node[i]
               if (child.id == node.id) {
-                data.index = i
+                index = i
                 break
               }
             }
-            parent_node.splice(data.index, 0, block_node)
+            parent_node.splice(index, 0, block_node)
           } else {
             //插入到内部
             node.children.push(block_node)
@@ -177,26 +177,29 @@ export default defineComponent({
 
     //当被拖动元素在节点上释放时
     const handleDropOnNode = (node: any, e: any) => {
+      //当前元素的父节点
       let parent_node: any = null
+      //占位块的父节点
+      let block_parent_node: any = null
       //是否放在内层的占位块上 占位块的索引
-      data.block_node_index = 0
+      let block_node_index = 0
       //是否放在内层的占位块上
-      data.is_block_node_release = false
+      let is_block_node_release = false
       if (node.id == 'block_node') {
         //如果是在占位块上释放，则算是在他父级上释放
         parent_node = _handleRecursionGetParentNode(
           node,
-          props.component_tree_list
+          data.sotre_component_tree_list
         )
-        //直接找到占位块释放的index start
-        data.is_block_node_release = true
-        let block_parent_node = parent_node.children
+        //直接找到占位块释放的索引index start
+        is_block_node_release = true
+        block_parent_node = parent_node.children
           ? parent_node.children
           : parent_node
         for (let i = 0; i < block_parent_node.length; i++) {
           const child = block_parent_node[i]
           if (child.id == node.id) {
-            data.block_node_index = i
+            block_node_index = i
             break
           }
         }
@@ -210,8 +213,19 @@ export default defineComponent({
       //获取拖动数据
       let node_info: any = JSON.parse(e.dataTransfer.getData('node'))
 
-      if (data.is_block_node_release) {
-        parent_node.splice(data.block_node_index, 0, node_info)
+      if (is_block_node_release) {
+        if (parent_node.children) {
+          if (node.allow) {
+            //插入到内部
+            parent_node.children.splice(block_node_index, 0, node_info)
+          } else {
+            node_info = { props: {} }
+          }
+        } else {
+          //最外层
+          parent_node.splice(block_node_index, 0, node_info)
+        }
+
         //设置当前操作对象
         store.dispatch('handleChangeCurrentNodeInfo', node_info)
         return
@@ -236,21 +250,25 @@ export default defineComponent({
             parent_node = parent_node.children
           }
           //当前鼠标所在元素边界元素索引
-          data.index = 0
+          let index = 0
           for (let i = 0; i < parent_node.length; i++) {
             const child = parent_node[i]
             if (child.id == node.id) {
-              data.index = i
+              index = i
               break
             }
           }
-          parent_node.splice(data.index, 0, node_info)
+          parent_node.splice(index, 0, node_info)
         } else {
-          //插入到内部
-          node.children.push(node_info)
+          if (node.allow) {
+            //插入到内部
+            node.children.push(node_info)
+          } else {
+            node_info = { props: {} }
+          }
         }
       } else {
-        //放入最外层数组或者是子控件的children数组里面
+        //放入最外层数组
         node.push(node_info)
       }
 
