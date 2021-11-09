@@ -33,23 +33,26 @@ const mixins: any = () => {
     return flag
   }
 
-  //递归查找父级节点
+  //递归查找父级节点的children List
   const _handleRecursionGetParentNode: any = (
     node: any,
     component_tree_list: any,
     parent_node: any = null
   ) => {
-    for (const item of component_tree_list) {
+    //list
+    let list =
+      typeof component_tree_list.children != 'undefined'
+        ? component_tree_list.children
+        : component_tree_list
+    for (const item of list) {
       if (item.id == node.id) {
+        //这个是父级children
         parent_node = component_tree_list
         break
       } else {
+        //这里有个问题 如果children是空的
         if (item.children && item.children.length > 0) {
-          parent_node = _handleRecursionGetParentNode(
-            node,
-            item.children,
-            parent_node
-          )
+          parent_node = _handleRecursionGetParentNode(node, item, parent_node)
           if (parent_node) {
             //如果找到了终止递归
             break
