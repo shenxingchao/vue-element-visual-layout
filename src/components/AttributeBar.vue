@@ -541,9 +541,10 @@
             <svg-icon name="tree" className="icon" />节点树
           </div>
         </template>
-        <el-tree :data="tree" :props="defaultProps" :render-after-expand="false" :highlight-current="true" node-key="id"
-                 :indent="32" :default-expand-all="true" :expand-on-click-node="false" draggable
-                 @node-click="handleClickTreeNode">
+        <el-tree ref="treeRef" :data="tree" :props="defaultProps" :render-after-expand="false" :highlight-current="true"
+                 node-key="id" :indent="32" :default-expand-all="true" :expand-on-click-node="false"
+                 @node-click="handleClickTreeNode" draggable :allow-drop="handleAllowDrop"
+                 :filter-node-method="handleFilter">
           <template #="{ node, data }">
             <!-- 用于显示内容 -->
             <div class="custom-tree-node">
@@ -561,12 +562,14 @@
 </template>
 <script lang="ts">
 import {
+  getCurrentInstance,
   defineComponent,
   reactive,
   toRefs,
   computed,
   watch,
   nextTick,
+  ref,
 } from 'vue'
 import { useStore } from 'vuex'
 
@@ -577,6 +580,12 @@ export default defineComponent({
   name: 'AttributeBar',
   setup() {
     const store = useStore()
+
+    //当前组件实例
+    const { proxy } = getCurrentInstance() as any
+
+    //ref
+    const treeRef: any = ref(null)
 
     //数据对象
     let data: any = reactive({
@@ -612,6 +621,7 @@ export default defineComponent({
     watch(
       attribute,
       (a: any, b: any) => {
+        //过滤节点树
         nextTick(() => {
           //清除高亮边框
           let border = document.getElementsByClassName(
@@ -632,6 +642,13 @@ export default defineComponent({
       },
       { deep: true }
     )
+
+    watch(store.state.component_tree_list, (val: any) => {
+      nextTick(() => {
+        //过滤节点树
+        treeRef.value.filter()
+      })
+    })
 
     //点击添加单选按钮选项
     const handleClickAddRadioItem = (node_info: any) => {
@@ -779,8 +796,32 @@ export default defineComponent({
       }
     }
 
+    //判断目标节点是否接受放置内容
+    const handleAllowDrop = (draggingNode: any, dropNode: any, type: any) => {
+      if (type == 'inner' && !dropNode.data.allow) {
+        //不允许拖入内部
+        return false
+      } else {
+        return true
+      }
+    }
+
+    //过滤节点
+    const handleFilter = (value: any, data: any) => {
+      console.log(data.name)
+      if (
+        data.name == 'el-radio' ||
+        data.name == 'el-checkbox' ||
+        data.name == 'el-option'
+      ) {
+        return false
+      }
+      return true
+    }
+
     return {
       ...toRefs(data),
+      treeRef,
       node_info,
       attribute,
       handleClickAddRadioItem,
@@ -794,6 +835,8 @@ export default defineComponent({
       handleClickTreeNode,
       handleMouseOverTreeNode,
       handleMouseOutTreeNode,
+      handleAllowDrop,
+      handleFilter,
     }
   },
 })
