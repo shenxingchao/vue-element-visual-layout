@@ -74,10 +74,7 @@ export default defineComponent({
     const store = useStore()
 
     //当前组件实例
-    const internalInstance = getCurrentInstance()
-
-    //访问 globalProperties
-    const global: any = internalInstance?.appContext.config.globalProperties
+    const { proxy } = getCurrentInstance() as any
 
     //数据对象
     let data: any = reactive({
@@ -265,6 +262,10 @@ export default defineComponent({
             node.children.push(node_info)
           } else {
             node_info = { props: {} }
+            proxy.$message({
+              message: '禁止拖入',
+              type: 'warning',
+            })
           }
         }
       } else {
