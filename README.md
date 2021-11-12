@@ -1,6 +1,6 @@
 # 欢迎使用 vue-element-visual-layout
 **基于vue3 + electron13 + element-plus 开发的可视化拖动布局工具**  
-![calc](https://img.shields.io/badge/version-1.0.2-COLOR)  ![calc](https://img.shields.io/badge/-vue3-red) ![calc](https://img.shields.io/badge/-elementPlus-blue) ![calc](https://img.shields.io/badge/-electron13-yellow)
+![calc](https://img.shields.io/badge/version-1.0.3-COLOR)  ![calc](https://img.shields.io/badge/-vue3-red) ![calc](https://img.shields.io/badge/-elementPlus-blue) ![calc](https://img.shields.io/badge/-electron13-yellow)
 ## 更新日志
 **v1.0.3**
 - 1.边界拖动处理
@@ -36,14 +36,14 @@
 ## 如何使用
 
 **客户端**
-
+下载 v1.0.3 暂未打包 使用网页版吧
 [下载 v1.0.2](https://github.com/shenxingchao/vue-element-visual-layout/releases/tag/v1.0.2)  
 [下载 v1.0.1](https://github.com/shenxingchao/vue-element-visual-layout/releases/tag/v1.0.1)  
 [下载 v1.0.0](https://github.com/shenxingchao/vue-element-visual-layout/releases/tag/v1.0.1)  
 
 **网页版**
 
-[在线使用最新版v1.0.2](https://shenxingchao.github.io/vue-element-visual-layout/#/)
+[在线使用最新版v1.0.3](https://shenxingchao.github.io/vue-element-visual-layout/#/)
 
 **创建栅格布局**
 
