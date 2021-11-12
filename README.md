@@ -3,7 +3,10 @@
 ![calc](https://img.shields.io/badge/version-1.0.2-COLOR)  ![calc](https://img.shields.io/badge/-vue3-red) ![calc](https://img.shields.io/badge/-elementPlus-blue) ![calc](https://img.shields.io/badge/-electron13-yellow)
 ## 更新日志
 **v1.0.3**
-- 待更新
+- 1.边界拖动处理
+- 2.添加控件是否允许被拖入
+- 3.组件树拖入判断
+- 4.隐藏el-radio el-checkbox el-option 在节点树中的显示
 
 **v1.0.2**
 - 剪切控件快捷键功能
