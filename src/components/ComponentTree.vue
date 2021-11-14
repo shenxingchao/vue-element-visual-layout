@@ -11,10 +11,6 @@
                    :placeholder="node.props.placeholder" :start-placeholder="node.props['start-placeholder']"
                    :end-placeholder="node.props['end-placeholder']" :range-separator="node.props['range-separator']"
                    :style="node.style">
-          {{node.text}}
-          <template v-if="node.children">
-            <component-tree :component_tree_list="node.children"></component-tree>
-          </template>
         </component>
       </div>
     </template>

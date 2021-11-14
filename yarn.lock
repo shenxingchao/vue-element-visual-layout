@@ -3158,10 +3158,10 @@ electron@^13.2.2:
     "@types/node" "^14.6.2"
     extract-zip "^1.0.3"
 
-element-plus@^1.2.0-beta.2:
-  version "1.2.0-beta.2"
-  resolved "https://registry.npmmirror.com/element-plus/download/element-plus-1.2.0-beta.2.tgz#f6c6093405cce55fad45f08d15b8a92dfa72e9c3"
-  integrity sha1-9sYJNAXM5V+tRfCNFbipLfpy6cM=
+element-plus@^1.2.0-beta.3:
+  version "1.2.0-beta.3"
+  resolved "https://registry.npmmirror.com/element-plus/download/element-plus-1.2.0-beta.3.tgz#0ded059e6c8ddc6f5d9dcdf32e1b7ed44ac38099"
+  integrity sha1-De0FnmyN3G9dnc3zLht+1ErDgJk=
   dependencies:
     "@element-plus/icons" "^0.0.11"
     "@popperjs/core" "^2.10.2"

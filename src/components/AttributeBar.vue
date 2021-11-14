@@ -808,7 +808,6 @@ export default defineComponent({
 
     //过滤节点
     const handleFilter = (value: any, data: any) => {
-      console.log(data.name)
       if (
         data.name == 'el-radio' ||
         data.name == 'el-checkbox' ||
