@@ -36,7 +36,7 @@
 ## 如何使用
 
 **客户端**
-下载 v1.0.3 暂未打包 使用网页版吧
+[下载 v1.0.3](https://github.com/shenxingchao/vue-element-visual-layout/releases/tag/v1.0.3)  
 [下载 v1.0.2](https://github.com/shenxingchao/vue-element-visual-layout/releases/tag/v1.0.2)  
 [下载 v1.0.1](https://github.com/shenxingchao/vue-element-visual-layout/releases/tag/v1.0.1)  
 [下载 v1.0.0](https://github.com/shenxingchao/vue-element-visual-layout/releases/tag/v1.0.1)  
