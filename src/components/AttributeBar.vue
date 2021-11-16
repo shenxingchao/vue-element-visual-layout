@@ -760,7 +760,15 @@ export default defineComponent({
         store.dispatch('handleChangeCurrentNodeInfo', node_info)
 
         //清除高亮边框
-        let border = document.getElementsByClassName('border')[0] as HTMLElement
+        let border = document.getElementsByClassName(
+          'hover-border'
+        )[0] as HTMLElement
+        if (border) {
+          border.className = border.className.replace(' hover-border', '')
+        }
+
+        //清除高亮边框
+        border = document.getElementsByClassName('border')[0] as HTMLElement
         if (border) {
           border.className = border.className.replace(' border', '')
         }
