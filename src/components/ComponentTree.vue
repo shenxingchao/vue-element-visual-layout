@@ -3,7 +3,8 @@
   <template v-for="(node, index) in component_tree_list" :key="node.id + index">
     <!-- 日期控件加属性和选择有问题单独处理 -->
     <template v-if="node.name =='el-date-picker'">
-      <div style="display:inline-block;" :id="node.id" :class="handleShowBorder(node)" :draggable="false"
+      <div style="display:inline-block;" :id="node.id" :class="handleShowBorder(node)" :draggable="true"
+           @dragstart.stop="handleDragStart(node,$event)" @dragend="handleDragEnd"
            @dragenter.stop.prevent="handleDragEnterOnNode" @dragover.stop.prevent="handleDragOverOnNode(node,$event)"
            @drop.stop.prevent="handleDropOnNode(node, $event)" @click.stop.prevent="handleClick">
         <component :is="node.name" v-model="node.value" :type="node.props.type" :readonly="node.props.readonly"
@@ -17,12 +18,14 @@
     <!-- 描述列表渲染子级有bug目前无法解决 单独处理-->
     <template v-else-if="node.name == 'el-descriptions'">
       <component :id="node.id" :is="node.name" v-bind="node.props" v-model="node.value" :class="handleShowBorder(node)"
-                 :style="node.style" :draggable="false" @dragenter.stop.prevent="handleDragEnterOnNode"
+                 :style="node.style" :draggable="true" @dragstart.stop="handleDragStart(node,$event)"
+                 @dragend="handleDragEnd" @dragenter.stop.prevent="handleDragEnterOnNode"
                  @dragover.stop.prevent="handleDragOverOnNode(node,$event)"
                  @drop.stop.prevent="handleDropOnNode(node, $event)" @click.stop.prevent="handleClick">
         <template v-for="(node, index) in node.children" :key="node.id + index">
           <component :id="node.id" :is="node.name" v-bind="node.props" v-model="node.value"
-                     :class="handleShowBorder(node)" :style="node.style" :draggable="false"
+                     :class="handleShowBorder(node)" :style="node.style" :draggable="true"
+                     @dragstart.stop="handleDragStart(node,$event)" @dragend="handleDragEnd"
                      @dragenter.stop.prevent="handleDragEnterOnNode"
                      @dragover.stop.prevent="handleDragOverOnNode(node,$event)"
                      @drop.stop.prevent="handleDropOnNode(node, $event)" @click.stop.prevent="handleClick">
@@ -37,7 +40,8 @@
     <!-- 其他控件没问题 -->
     <template v-else>
       <component :id="node.id" :is="node.name" v-bind="node.props" v-model="node.value" :class="handleShowBorder(node)"
-                 :style="node.style" :draggable="false" @dragenter.stop.prevent="handleDragEnterOnNode"
+                 :style="node.style" :draggable="true" @dragstart.stop="handleDragStart(node,$event)"
+                 @dragend="handleDragEnd" @dragenter.stop.prevent="handleDragEnterOnNode"
                  @dragover.stop.prevent="handleDragOverOnNode(node,$event)"
                  @drop.stop.prevent="handleDropOnNode(node, $event)" @click.stop.prevent="handleClick">
         {{node.text}}
@@ -49,7 +53,13 @@
   </template>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, getCurrentInstance, toRefs } from 'vue'
+import {
+  defineComponent,
+  reactive,
+  getCurrentInstance,
+  toRefs,
+  nextTick,
+} from 'vue'
 import { useStore } from 'vuex'
 
 //导入公共方法
@@ -170,107 +180,137 @@ export default defineComponent({
 
     //当被拖动元素在节点上释放时
     const handleDropOnNode = (node: any, e: any) => {
-      //当前元素的父节点
-      let parent_node: any = null
-      //占位块的父节点
-      let block_parent_node: any = null
-      //是否放在内层的占位块上 占位块的索引
-      let block_node_index = 0
-      //是否放在内层的占位块上
-      let is_block_node_release = false
-      if (node.id == 'block_node') {
-        //如果是在占位块上释放，则算是在他父级上释放
-        parent_node = _handleRecursionGetParentNode(
-          node,
-          data.sotre_component_tree_list
-        )
-        //直接找到占位块释放的索引index start
-        is_block_node_release = true
-        block_parent_node = parent_node.children
-          ? parent_node.children
-          : parent_node
-        for (let i = 0; i < block_parent_node.length; i++) {
-          const child = block_parent_node[i]
-          if (child.id == node.id) {
-            block_node_index = i
-            break
-          }
-        }
-        //直接找到占位块释放的index end
-        node = parent_node
-      }
-
-      //删除之前的占位块 要在找父级之后，不然占位块都没了，怎么找父级
-      _handleRecursionDelete('block_node', data.sotre_component_tree_list)
-
-      //获取拖动数据
-      let node_info: any = JSON.parse(e.dataTransfer.getData('node'))
-
-      if (is_block_node_release) {
-        if (parent_node.children) {
-          if (node.allow) {
-            //插入到内部
-            parent_node.children.splice(block_node_index, 0, node_info)
-          } else {
-            node_info = { props: {} }
-          }
-        } else {
-          //最外层
-          parent_node.splice(block_node_index, 0, node_info)
-        }
-
-        //设置当前操作对象
-        store.dispatch('handleChangeCurrentNodeInfo', node_info)
-        return
-      }
-
-      if (node.children) {
-        //判断是否是在最外层的边界，如果在最外层的边界移动，那么插入到对应的最外层索引后
-        const ele = document.getElementById(node.id) as HTMLElement
-        //这里不需要放大了边界了，不会有bug了
-        if (
-          e.clientY +
-            (document.getElementById('desginer') as HTMLElement).scrollTop ==
-          ele.offsetTop
-        ) {
-          //落在边界上 获取当前元素的父级
+      nextTick(() => {
+        //当前元素的父节点
+        let parent_node: any = null
+        //占位块的父节点
+        let block_parent_node: any = null
+        //是否放在内层的占位块上 占位块的索引
+        let block_node_index = 0
+        //是否放在内层的占位块上
+        let is_block_node_release = false
+        if (node.id == 'block_node') {
+          //如果是在占位块上释放，则算是在他父级上释放
           parent_node = _handleRecursionGetParentNode(
             node,
             data.sotre_component_tree_list
           )
-          if (parent_node.children) {
-            //说明在内 二层及以上
-            parent_node = parent_node.children
-          }
-          //当前鼠标所在元素边界元素索引
-          let index = 0
-          for (let i = 0; i < parent_node.length; i++) {
-            const child = parent_node[i]
+          //直接找到占位块释放的索引index start
+          is_block_node_release = true
+          block_parent_node = parent_node.children
+            ? parent_node.children
+            : parent_node
+          for (let i = 0; i < block_parent_node.length; i++) {
+            const child = block_parent_node[i]
             if (child.id == node.id) {
-              index = i
+              block_node_index = i
+              //判断是否是设计窗口内上拖还是下拖 还是控件栏拖入 计算插入的索引
+              block_node_index = _handleCalcDragInsertIndex(block_node_index)
               break
             }
           }
-          parent_node.splice(index, 0, node_info)
-        } else {
-          if (node.allow) {
-            //插入到内部
-            node.children.push(node_info)
-          } else {
-            node_info = { props: {} }
-            proxy.$message({
-              message: '禁止拖入',
-              type: 'warning',
-            })
-          }
+          //直接找到占位块释放的index end
+          node = parent_node
         }
-      } else {
-        //放入最外层数组
-        node.push(node_info)
-      }
 
-      //设置当前操作对象
-      store.dispatch('handleChangeCurrentNodeInfo', node_info)
+        //删除之前的占位块 要在找父级之后，不然占位块都没了，怎么找父级  必须要删掉 不然会闪一下
+        _handleRecursionDelete('block_node', data.sotre_component_tree_list)
+
+        //获取拖动数据
+        let node_info: any = JSON.parse(e.dataTransfer.getData('node'))
+
+        if (is_block_node_release) {
+          if (parent_node.children) {
+            if (node.allow) {
+              //判断是否是自己拖到自己
+              if (node.id == node_info.id) {
+                proxy.$message({
+                  message: '禁止拖入自身',
+                  type: 'warning',
+                })
+                return false
+              }
+              //删除旧节点
+              _deleteOldNodeInfo()
+              //插入到内部
+              parent_node.children.splice(block_node_index, 0, node_info)
+            } else {
+              node_info = { props: {} }
+            }
+          } else {
+            //删除旧节点
+            _deleteOldNodeInfo()
+            //最外层
+            parent_node.splice(block_node_index, 0, node_info)
+          }
+
+          //设置当前操作对象
+          store.dispatch('handleChangeCurrentNodeInfo', node_info)
+          return
+        }
+
+        if (node.children) {
+          //判断是否是在最外层的边界，如果在最外层的边界移动，那么插入到对应的最外层索引后
+          const ele = document.getElementById(node.id) as HTMLElement
+          //这里不需要放大了边界了，不会有bug了
+          if (
+            e.clientY +
+              (document.getElementById('desginer') as HTMLElement).scrollTop ==
+            ele.offsetTop
+          ) {
+            //落在边界上 获取当前元素的父级
+            parent_node = _handleRecursionGetParentNode(
+              node,
+              data.sotre_component_tree_list
+            )
+            if (parent_node.children) {
+              //说明在内 二层及以上
+              parent_node = parent_node.children
+            }
+            //当前鼠标所在元素边界元素索引
+            let index = 0
+            for (let i = 0; i < parent_node.length; i++) {
+              const child = parent_node[i]
+              if (child.id == node.id) {
+                index = i
+                break
+              }
+            }
+            //删除旧节点
+            _deleteOldNodeInfo()
+            parent_node.splice(index, 0, node_info)
+          } else {
+            if (node.allow) {
+              //判断是否是自己拖到自己
+              if (node.id == node_info.id) {
+                proxy.$message({
+                  message: '禁止拖入自身',
+                  type: 'warning',
+                })
+                return false
+              }
+              //删除旧节点
+              _deleteOldNodeInfo()
+              //插入到内部
+              node.children.push(node_info)
+            } else {
+              node_info = { props: {} }
+              proxy.$message({
+                message: '禁止拖入',
+                type: 'warning',
+              })
+            }
+          }
+        } else {
+          //删除旧节点
+          _deleteOldNodeInfo()
+          //放入最外层数组
+          node.push(node_info)
+        }
+
+        //设置当前操作对象
+        store.dispatch('handleChangeCurrentNodeInfo', node_info)
+      })
     }
 
     //是否显示边框线
@@ -344,6 +384,78 @@ export default defineComponent({
       }
     }
 
+    /**
+     * 控件拖动开始 设计窗口内的控件拖动 相当于先复制一个节点 然后拖动完成后删除原节点
+     * @param componet 单个控件节点 包含children
+     */
+    const handleDragStart = (node: any, e: any) => {
+      //设置拖拽数据
+      e.dataTransfer.setData('node', JSON.stringify(node))
+      //隐藏属性栏 设置当前操作对象
+      store.dispatch('handleChangeCurrentNodeInfo', { props: {} })
+      //设置当前拖动对象
+      store.dispatch('handleChangeDragNodeInfo', node)
+    }
+
+    /**
+     * 设计窗口内拖拽删除旧节点方法
+     */
+    const _deleteOldNodeInfo = () => {
+      //判断是否是设计窗口内控件拖拽
+      if (Object.keys(store.state.drag_node_info).length > 0) {
+        //删除之前的控件
+        _handleRecursionDelete(
+          store.state.drag_node_info.id,
+          data.sotre_component_tree_list
+        )
+        //设置当前拖动对象
+        store.dispatch('handleChangeDragNodeInfo', {})
+      }
+    }
+
+    /**
+     * 判断是否是设计窗口内,上拖还是下拖 还是控件栏拖入 计算插入的索引
+     */
+    const _handleCalcDragInsertIndex = (block_node_index: number) => {
+      //判断是否是设计窗口内控件拖拽
+      if (Object.keys(store.state.drag_node_info).length > 0) {
+        //找到拖拽节点的位置  和 占位块索引做比较 如果是往上拖 则不需要重新计算 往下拖 则需要删除
+        let parent_node = _handleRecursionGetParentNode(
+          store.state.drag_node_info,
+          data.sotre_component_tree_list
+        )
+        if (parent_node.children) {
+          //说明在内 二层及以上
+          parent_node = parent_node.children
+        }
+        //当前鼠标所在元素边界元素索引
+        let index = 0
+        for (let i = 0; i < parent_node.length; i++) {
+          const child = parent_node[i]
+          if (child.id == store.state.drag_node_info.id) {
+            index = i
+            break
+          }
+        }
+        if (block_node_index - index >= 1) {
+          //说明占位块在拖动元素的下面
+          return block_node_index - 1
+        } else {
+          //在上面
+          return block_node_index
+        }
+      } else {
+        return block_node_index
+      }
+    }
+
+    /**
+     * 放开拖动元素 删除占位块
+     */
+    const handleDragEnd = (e: any) => {
+      _handleRecursionDelete('block_node', data.sotre_component_tree_list)
+    }
+
     return {
       ...toRefs(data),
       handleDragEnterOnNode,
@@ -351,6 +463,8 @@ export default defineComponent({
       handleDropOnNode,
       handleShowBorder,
       handleClick,
+      handleDragStart,
+      handleDragEnd,
     }
   },
 })
