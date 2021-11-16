@@ -173,6 +173,9 @@ export default defineComponent({
       //获取拖动数据
       let node_info: any = JSON.parse(e.dataTransfer.getData('node'))
 
+      //删除旧节点
+      _deleteOldNodeInfo()
+
       //插入到指定位置
       data.component_tree_list.splice(data.insert_index, 0, node_info)
 
@@ -277,6 +280,20 @@ export default defineComponent({
           //放到最外层
           store.state.component_tree_list.push(store.state.copy_node_info)
         }
+      }
+    }
+
+    //设计窗口内拖拽删除旧节点方法
+    const _deleteOldNodeInfo = () => {
+      //判断是否是设计窗口内控件拖拽
+      if (Object.keys(store.state.drag_node_info).length > 0) {
+        //删除之前的控件
+        _handleRecursionDelete(
+          store.state.drag_node_info.id,
+          data.component_tree_list
+        )
+        //设置当前拖动对象
+        store.dispatch('handleChangeDragNodeInfo', {})
       }
     }
 

@@ -1,5 +1,6 @@
 <template>
-  <el-aside width="240px" style="background-color: rgb(238, 241, 246)" @dragenter="handleDragEnterContrlList">
+  <el-aside width="240px" style="background-color: rgb(238, 241, 246)" @dragenter="handleDragEnterContrlList"
+            @dragend="handleDragEnd">
     <el-menu :default-openeds="['0']" :unique-opened="true">
       <template v-for="(components,index) in components_list.components" :key="index">
         <el-sub-menu :index="index + ''">
@@ -67,11 +68,19 @@ export default defineComponent({
       _handleRecursionDelete('block_node', store.state.component_tree_list)
     }
 
+    /**
+     * 放开拖动元素 删除占位块
+     */
+    const handleDragEnd = (e: any) => {
+      _handleRecursionDelete('block_node', store.state.component_tree_list)
+    }
+
     return {
       ...toRefs(data),
       components_list,
       handleDragStart,
       handleDragEnterContrlList,
+      handleDragEnd,
     }
   },
 })

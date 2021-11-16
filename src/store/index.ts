@@ -12,7 +12,8 @@ export default createStore({
       props: {} //当前控件的属性
     }, //当前操作对象 全局变量
     show_border: true, //默认显示设计边框
-    copy_node_info: {} //当前剪贴板复制的节点信息
+    copy_node_info: {}, //当前剪贴板复制的节点信息
+    drag_node_info: {} //当前拖动对象
   },
   getters: {
     // xx: state => {
@@ -40,6 +41,9 @@ export default createStore({
     },
     SET_COPY_NODE_INFO: (state, copy_node_info) => {
       state.copy_node_info = copy_node_info
+    },
+    SET_DRAG_NODE_INFO: (state, drag_node_info) => {
+      state.drag_node_info = drag_node_info
     }
   },
   actions: {
@@ -106,6 +110,15 @@ export default createStore({
      */
     handleChangeCopyNodeInfo({ commit }, copy_node_info) {
       commit('SET_COPY_NODE_INFO', copy_node_info)
+    },
+
+    /**
+     * 改变拖动节点信息
+     * @param commit
+     * @param darg_node_info 拖动节点信息
+     */
+    handleChangeDragNodeInfo({ commit }, darg_node_info) {
+      commit('SET_DRAG_NODE_INFO', darg_node_info)
     }
   },
   modules: {}
