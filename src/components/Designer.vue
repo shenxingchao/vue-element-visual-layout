@@ -258,13 +258,15 @@ export default defineComponent({
         //递归所有children重新生成id方法
         let recursionGenerateNode = (node: any, level: number = 0) => {
           node.id = 'node-' + new Date().getTime() + level
-          if (node.children) {
+          if (node.children && node.children.length > 0) {
             node.children.forEach((element: any) => {
               if (!white_list.includes(node.name)) {
                 //不在白名单里的控件id需要加1
                 level++
               }
               recursionGenerateNode(element, level)
+              //循环完成还得增加以下，不然这次循环和上次循环的id一样了
+              level++
             })
           }
           return node
