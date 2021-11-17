@@ -55,9 +55,6 @@ export default defineComponent({
       code: '', //根据组件树生成的代码
     })
 
-    //基本数据类型
-    let is_system_shortcut_key = ref(false) //是否是系统快捷键
-
     //挂载事件
     onMounted(() => {
       //监听 键盘按下事件
@@ -75,13 +72,9 @@ export default defineComponent({
           let content = (<any>window).getSelection().toString()
           if (!content) {
             //不是系统快捷键
-            is_system_shortcut_key.value = false
             //复制控件
             handleCopyControl()
             e.preventDefault()
-          } else {
-            //是系统快捷键
-            is_system_shortcut_key.value = true
           }
         }
 
@@ -91,18 +84,17 @@ export default defineComponent({
           let content = (<any>window).getSelection().toString()
           if (!content) {
             //不是系统快捷键
-            is_system_shortcut_key.value = false
             handleCopyControl()
             handleDeleteControl()
-          } else {
-            //是系统快捷键
-            is_system_shortcut_key.value = true
           }
         }
 
         if (e.ctrlKey && e.keyCode == 86) {
           //ctrl+v 粘贴节点
-          if (!is_system_shortcut_key.value) {
+          if (
+            (document.activeElement as HTMLElement).tagName != 'INPUT' &&
+            (document.activeElement as HTMLElement).tagName != 'TEXTAREA'
+          ) {
             handlePasteControl()
             e.preventDefault()
           }
