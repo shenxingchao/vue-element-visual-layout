@@ -46,7 +46,6 @@ const components_list: any = {
             gutter: 0,
             justify: '',
             align: '',
-            type: 'flex',
             class: ''
           },
           text: '',
