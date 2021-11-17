@@ -44,9 +44,6 @@
                 <el-option key="bottom" label="底部" value="bottom"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item v-if="attribute.type||attribute.type==''" label="类型">
-              <el-input v-model="attribute.type" placeholder="类型" clearable></el-input>
-            </el-form-item>
           </template>
           <!-- el-row end -->
           <!-- el-col start -->
