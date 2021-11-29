@@ -1,7 +1,18 @@
 # 欢迎使用 vue-element-visual-layout
 **基于vue3 + electron13 + element-plus 开发的可视化拖动布局工具**  
-![calc](https://img.shields.io/badge/version-1.0.3-COLOR)  ![calc](https://img.shields.io/badge/-vue3-red) ![calc](https://img.shields.io/badge/-elementPlus-blue) ![calc](https://img.shields.io/badge/-electron13-yellow)
+![calc](https://img.shields.io/badge/version-1.0.4-COLOR)  ![calc](https://img.shields.io/badge/-vue3-red) ![calc](https://img.shields.io/badge/-elementPlus-blue) ![calc](https://img.shields.io/badge/-electron13-yellow)
 ## 更新日志
+**v1.0.4**
+- 1.实现设计窗口内任意拖动
+- 2.解决移动过快占位块出现问题
+- 3.判断是否是设计窗口内,上拖还是下拖 还是控件栏拖入 计算插入的索引
+- 4.禁止拖入自身
+- 5.修复拖动时占位块还未渲染完成，就去取索引，取不到的问题
+- 6.鼠标移入组件边框滞留问题
+- 7.修复复制节点的id生成错误
+- 8.解决复制粘贴冲突问题
+- 9.修复边界拖动问题，这样就可以任意换顺序了
+
 **v1.0.3**
 - 1.边界拖动处理
 - 2.添加控件是否允许被拖入
@@ -43,7 +54,7 @@
 
 **网页版**
 
-[在线使用最新版v1.0.3](https://shenxingchao.github.io/vue-element-visual-layout/#/)
+[在线使用最新版v1.0.4](https://shenxingchao.github.io/vue-element-visual-layout/#/)
 
 **创建栅格布局**
 
