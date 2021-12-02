@@ -2509,10 +2509,10 @@ electron-to-chromium@^1.3.793:
   resolved "https://registry.nlark.com/electron-to-chromium/download/electron-to-chromium-1.3.800.tgz?cache=0&sync_timestamp=1628547065586&other_urls=https%3A%2F%2Fregistry.nlark.com%2Felectron-to-chromium%2Fdownload%2Felectron-to-chromium-1.3.800.tgz#8efbb11e88b0a072d5c0250e6249123d3a76cb9a"
   integrity sha1-jvuxHoiwoHLVwCUOYkkSPTp2y5o=
 
-element-plus@^1.2.0-beta.4:
-  version "1.2.0-beta.4"
-  resolved "https://registry.npmmirror.com/element-plus/download/element-plus-1.2.0-beta.4.tgz#970c7c6307ef7433a84691720cdd4c979116677b"
-  integrity sha512-wYOwa/Zop5xMqhqkS7jOd32FF0Y2IpquIu8JLMbmvwlWvRUVetE5RO5lvxiF6etZgq8urRVttisXnOzJ9YOItQ==
+element-plus@^1.2.0-beta.5:
+  version "1.2.0-beta.5"
+  resolved "https://registry.npmmirror.com/element-plus/download/element-plus-1.2.0-beta.5.tgz#ef4498c2d051a122cf5898189f4215129bb368bb"
+  integrity sha512-8KNGsNZ6RjVJ7kmxq/WLeTBMhVxSjfaGdW2QdcdXz4km1MgxbyBfdiNGVQG4XH/n+hbtLFldCPw0mVT4vkncuA==
   dependencies:
     "@element-plus/icons" "^0.0.11"
     "@popperjs/core" "^2.10.2"
