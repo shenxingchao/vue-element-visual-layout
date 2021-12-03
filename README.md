@@ -55,6 +55,8 @@
 **网页版**
 
 [在线使用最新版v1.0.4](https://shenxingchao.github.io/vue-element-visual-layout/#/)
+[衍生产品](https://shenxingchao.github.io/vue3-visual-cms/admin#/design?id=1)  
+账号密码随便输 暂不提供源码
 
 **创建栅格布局**
 
