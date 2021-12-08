@@ -1,5 +1,5 @@
 <template>
-  <el-alert v-if="show_tips" title="v1.0.4上线啦" type="success"></el-alert>
+  <el-alert v-if="show_tips" title="v1.0.5上线啦" type="success"></el-alert>
   <el-row class="tool-bar" justify="space-between">
     <el-col :span="20">{{title}}</el-col>
     <el-col :xs="4" :sm="4" :md="4" :lg="4">
