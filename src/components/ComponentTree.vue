@@ -6,7 +6,8 @@
       <div style="display:inline-block;" :id="node.id" :class="handleShowBorder(node)" :draggable="true"
            @dragstart.stop="handleDragStart(node,$event)" @dragend="handleDragEnd"
            @dragenter.stop.prevent="handleDragEnterOnNode" @dragover.stop.prevent="handleDragOverOnNode(node,$event)"
-           @drop.stop.prevent="handleDropOnNode(node, $event)" @click.stop.prevent="handleClick">
+           @drop.stop.prevent="handleDropOnNode(node, $event)" @click.stop.prevent="handleClick"
+           @contextmenu.prevent="openMenu(node,$event)">
         <component :is="node.name" v-model="node.value" :type="node.props.type" :readonly="node.props.readonly"
                    :disabled="node.props.disabled" :editable="node.props.editable" :clearable="node.props.clearable"
                    :placeholder="node.props.placeholder" :start-placeholder="node.props['start-placeholder']"
@@ -21,14 +22,16 @@
                  :style="node.style" :draggable="true" @dragstart.stop="handleDragStart(node,$event)"
                  @dragend="handleDragEnd" @dragenter.stop.prevent="handleDragEnterOnNode"
                  @dragover.stop.prevent="handleDragOverOnNode(node,$event)"
-                 @drop.stop.prevent="handleDropOnNode(node, $event)" @click.stop.prevent="handleClick">
+                 @drop.stop.prevent="handleDropOnNode(node, $event)" @click.stop.prevent="handleClick"
+                 @contextmenu.prevent="openMenu(node,$event)">
         <template v-for="(node, index) in node.children" :key="node.id + index">
           <component :id="node.id" :is="node.name" v-bind="node.props" v-model="node.value"
                      :class="handleShowBorder(node)" :style="node.style" :draggable="true"
                      @dragstart.stop="handleDragStart(node,$event)" @dragend="handleDragEnd"
                      @dragenter.stop.prevent="handleDragEnterOnNode"
                      @dragover.stop.prevent="handleDragOverOnNode(node,$event)"
-                     @drop.stop.prevent="handleDropOnNode(node, $event)" @click.stop.prevent="handleClick">
+                     @drop.stop.prevent="handleDropOnNode(node, $event)" @click.stop.prevent="handleClick"
+                     @contextmenu.prevent="openMenu(node,$event)">
             {{node.text}}
             <template v-if="node.children">
               <component-tree :component_tree_list="node.children"></component-tree>
@@ -43,7 +46,8 @@
                  :style="node.style" :draggable="true" @dragstart.stop="handleDragStart(node,$event)"
                  @dragend="handleDragEnd" @dragenter.stop.prevent="handleDragEnterOnNode"
                  @dragover.stop.prevent="handleDragOverOnNode(node,$event)"
-                 @drop.stop.prevent="handleDropOnNode(node, $event)" @click.stop.prevent="handleClick">
+                 @drop.stop.prevent="handleDropOnNode(node, $event)" @click.stop.prevent="handleClick"
+                 @contextmenu.prevent="openMenu(node,$event)">
         {{node.text}}
         <template v-if="node.children">
           <component-tree :component_tree_list="node.children"></component-tree>
@@ -513,6 +517,34 @@ export default defineComponent({
       _handleRecursionDelete('block_node', data.sotre_component_tree_list)
     }
 
+    //右键节点显示节点及其所有父节点的右键菜单
+    //因为每个组件都加了右键事件 所以可以取到所有父级节点 然后每个右键事件的点击位置是相同的，根据这个来判断是否清空数组
+    const openMenu = (node: any, e: any) => {
+      const location = store.state.content_location
+      if (e.clientX != location.x || e.clientY != location.y) {
+        //点击的是不同位置   清除list
+        store.dispatch('handleChangeContentNodeList', [])
+        //记录点击位置
+        store.dispatch('handleChangeContentLocation', {
+          x: e.clientX,
+          y: e.clientY,
+        })
+      }
+      //如果节点已存在不需要重复添加，这种情况是在同一个节点的不同位置点击
+      if (store.state.content_node_list.includes(node)) {
+        //记录点击位置
+        store.dispatch('handleChangeContentLocation', {
+          x: e.clientX,
+          y: e.clientY,
+        })
+      } else {
+        store.dispatch(
+          'handleChangeContentNodeList',
+          store.state.content_node_list.concat([node])
+        )
+      }
+    }
+
     return {
       ...toRefs(data),
       handleDragEnterOnNode,
@@ -522,6 +554,7 @@ export default defineComponent({
       handleClick,
       handleDragStart,
       handleDragEnd,
+      openMenu,
     }
   },
 })
