@@ -111,8 +111,8 @@ npm run build
 
 **使用yarn**
 ```shell
-yarn run serve
-yarn run build
+yarn serve
+yarn build
 ```
 
 ## 基于electron开发
@@ -127,8 +127,8 @@ npm run electron:build
 **使用yarn**
 ```shell
 yarn
-yarn run electron:serve
-yarn run electron:build
+yarn electron:serve
+yarn electron:build
 ```
 
 > 免费使用！！其他有问题的地方欢迎提问，需要其他功能的可以提出来，酌情增加
