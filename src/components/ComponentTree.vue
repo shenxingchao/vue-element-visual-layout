@@ -407,9 +407,13 @@ export default defineComponent({
 
       let target_id = recursionFindNodeId(e)
 
+      console.log(e.target.className)
       if (e.target.className == 'el-switch__core') {
         //如果是开关控件，则是找到他的兄弟节点
         target_id = e.target.parentNode.children[0].id
+      } else if (e.target.className == 'el-switch__action') {
+        //如果是开关控件2，则是找到他的兄弟节点
+        target_id = e.target.parentNode.parentNode.children[0].id
       } else if (e.target.className == 'el-select__tags') {
         //如果是多选下拉框，则找到他兄弟节点的子节点
         target_id = e.target.parentNode.children[1].children[0].id
