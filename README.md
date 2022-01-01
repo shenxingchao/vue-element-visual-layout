@@ -1,7 +1,21 @@
 # 欢迎使用 vue-element-visual-layout
 **基于vue3 + electron13 + element-plus 开发的可视化拖动布局工具**  
-![calc](https://img.shields.io/badge/version-1.0.3-COLOR)  ![calc](https://img.shields.io/badge/-vue3-red) ![calc](https://img.shields.io/badge/-elementPlus-blue) ![calc](https://img.shields.io/badge/-electron13-yellow)
+![calc](https://img.shields.io/badge/version-1.0.5-COLOR)  ![calc](https://img.shields.io/badge/-vue3-red) ![calc](https://img.shields.io/badge/-elementPlus-blue) ![calc](https://img.shields.io/badge/-electron13-yellow)
 ## 更新日志
+**v1.0.5**
+- 1.实现组件上右键显示组件及其所有父级组件列表的右键菜单
+
+**v1.0.4**
+- 1.实现设计窗口内任意拖动
+- 2.解决移动过快占位块出现问题
+- 3.判断是否是设计窗口内,上拖还是下拖 还是控件栏拖入 计算插入的索引
+- 4.禁止拖入自身
+- 5.修复拖动时占位块还未渲染完成，就去取索引，取不到的问题
+- 6.鼠标移入组件边框滞留问题
+- 7.修复复制节点的id生成错误
+- 8.解决复制粘贴冲突问题
+- 9.修复边界拖动问题，这样就可以任意换顺序了
+
 **v1.0.3**
 - 1.边界拖动处理
 - 2.添加控件是否允许被拖入
@@ -36,6 +50,7 @@
 ## 如何使用
 
 **客户端**
+[下载 v1.0.5](https://github.com/shenxingchao/vue-element-visual-layout/releases/tag/v1.0.5)  
 [下载 v1.0.3](https://github.com/shenxingchao/vue-element-visual-layout/releases/tag/v1.0.3)  
 [下载 v1.0.2](https://github.com/shenxingchao/vue-element-visual-layout/releases/tag/v1.0.2)  
 [下载 v1.0.1](https://github.com/shenxingchao/vue-element-visual-layout/releases/tag/v1.0.1)  
@@ -43,7 +58,9 @@
 
 **网页版**
 
-[在线使用最新版v1.0.3](https://shenxingchao.github.io/vue-element-visual-layout/#/)
+[在线使用最新版v1.0.5](https://shenxingchao.github.io/vue-element-visual-layout/#/)  
+[衍生产品](https://shenxingchao.github.io/vue3-visual-cms/admin#/design?id=1)  
+账号密码随便输 暂不提供源码
 
 **创建栅格布局**
 
@@ -95,8 +112,8 @@ npm run build
 
 **使用yarn**
 ```shell
-yarn run serve
-yarn run build
+yarn serve
+yarn build
 ```
 
 ## 基于electron开发
@@ -111,8 +128,8 @@ npm run electron:build
 **使用yarn**
 ```shell
 yarn
-yarn run electron:serve
-yarn run electron:build
+yarn electron:serve
+yarn electron:build
 ```
 
 > 免费使用！！其他有问题的地方欢迎提问，需要其他功能的可以提出来，酌情增加

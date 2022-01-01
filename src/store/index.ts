@@ -13,7 +13,12 @@ export default createStore({
     }, //当前操作对象 全局变量
     show_border: true, //默认显示设计边框
     copy_node_info: {}, //当前剪贴板复制的节点信息
-    drag_node_info: {} //当前拖动对象
+    drag_node_info: {}, //当前拖动对象
+    content_location: {
+      x: null,
+      y: null
+    }, //右键菜单位置
+    content_node_list: [] //右键节点列表
   },
   getters: {
     // xx: state => {
@@ -44,6 +49,12 @@ export default createStore({
     },
     SET_DRAG_NODE_INFO: (state, drag_node_info) => {
       state.drag_node_info = drag_node_info
+    },
+    SET_CONTENT_LOCATION: (state, content_location) => {
+      state.content_location = content_location
+    },
+    SET_CONTENT_NODE_LIST: (state, content_node_list) => {
+      state.content_node_list = content_node_list
     }
   },
   actions: {
@@ -119,6 +130,24 @@ export default createStore({
      */
     handleChangeDragNodeInfo({ commit }, darg_node_info) {
       commit('SET_DRAG_NODE_INFO', darg_node_info)
+    },
+
+    /**
+     * 改变右键位置
+     * @param commit
+     * @param content_location 右键位置
+     */
+    handleChangeContentLocation({ commit }, content_location) {
+      commit('SET_CONTENT_LOCATION', content_location)
+    },
+
+    /**
+     * 改变右键节点列表
+     * @param commit
+     * @param content_node_list 右键节点列表
+     */
+    handleChangeContentNodeList({ commit }, content_node_list) {
+      commit('SET_CONTENT_NODE_LIST', content_node_list)
     }
   },
   modules: {}

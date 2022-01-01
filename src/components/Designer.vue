@@ -1,6 +1,6 @@
 <template>
   <el-container style="height:calc(100vh - 40px);background-color: rgb(255, 255, 255);">
-    <el-container style="flex-direction: column;">
+    <el-container class="designer-container" style="flex-direction: column;">
       <tool-bar @handleChangeDesigner="handleChangeDesigner" @handleClearLayout="handleClearLayout"
                 @handleDeleteControl="handleDeleteControl"> </tool-bar>
       <el-main id="desginer" v-if="tab_index == 1" @dragenter="handleDragEnter" @dragover="handleDragOver"
@@ -12,6 +12,13 @@
         <h5 v-if="code!=''">html</h5>
         <pre v-if="code!=''"><code class="language-html" contenteditable="true">{{code}}</code></pre>
       </el-main>
+      <ul v-show="content_node_list.length > 0" class="contextmenu"
+          :style="{left:content_location.x+'px',top:content_location.y+'px'}">
+        <li v-for="(item,index) in content_node_list" :key="index" @click="handleClickContentMenuItem(item)"
+            @mouseover="handleMouseOverContentMenuItem(item)" @mouseout="handleMouseOutContentMenuItem(item)">
+          {{item.title}}
+        </li>
+      </ul>
     </el-container>
   </el-container>
 </template>
@@ -23,6 +30,8 @@ import {
   nextTick,
   onMounted,
   ref,
+  computed,
+  watch,
 } from 'vue'
 import { useStore } from 'vuex'
 //导入公共方法
@@ -46,6 +55,38 @@ export default defineComponent({
       _handleRecursionDelete, //递归删除旧的占位块
       _generateCode, //递归生成代码
     } = mixins()
+
+    //计算属性
+    const set: any = reactive({
+      //右键菜单位置
+      content_location: computed({
+        get() {
+          return store.state.content_location
+        },
+        set(val) {},
+      }),
+      //右键菜单
+      content_node_list: computed({
+        get() {
+          return store.state.content_node_list
+        },
+        set(val) {},
+      }),
+    })
+
+    watch(toRefs(set).content_node_list, (val) => {
+      if (val.length > 0) {
+        document.body.addEventListener('click', () => {
+          //点击的是不同位置   清除list
+          store.dispatch('handleChangeContentNodeList', [])
+          //记录点击位置
+          store.dispatch('handleChangeContentLocation', {
+            x: null,
+            y: null,
+          })
+        })
+      }
+    })
 
     //数据对象
     let data: any = reactive({
@@ -145,7 +186,7 @@ export default defineComponent({
         name: 'el-row',
         props: {},
         style:
-          'flex-grow: 1;height:100%;max-height:80px;border:1px dashed #cccccc;box-sizing:border-box;background:#fafafa;',
+          'flex: 1;border:1px dashed #cccccc;box-sizing:border-box;background:#fafafa;',
       }
 
       //插入到指定位置
@@ -291,8 +332,53 @@ export default defineComponent({
       }
     }
 
+    //点击右键菜单选项
+    const handleClickContentMenuItem = (node_info: any) => {
+      //设置当前操作对象
+      store.dispatch('handleChangeCurrentNodeInfo', node_info)
+      //清除高亮边框
+      let border = document.getElementsByClassName(
+        'hover-border'
+      )[0] as HTMLElement
+      if (border) {
+        border.className = border.className.replace(' hover-border', '')
+      }
+      //清除高亮边框
+      border = document.getElementsByClassName('border')[0] as HTMLElement
+      if (border) {
+        border.className = border.className.replace(' border', '')
+      }
+      //高亮控件边框
+      let node_element = document.getElementById(
+        store.state.current_node_info.id
+      ) as HTMLElement
+      if (node_element) {
+        node_element.className = node_element.className + ' border'
+      }
+    }
+
+    //鼠标移入右键菜单选项
+    const handleMouseOverContentMenuItem = (node_info: any) => {
+      //高亮控件边框
+      let node_element = document.getElementById(node_info.id) as HTMLElement
+      if (node_element) {
+        node_element.className = node_element.className + ' hover-border'
+      }
+    }
+    //鼠标移出右键菜单选项
+    const handleMouseOutContentMenuItem = (node_info: any) => {
+      //清除高亮边框
+      let border = document.getElementsByClassName(
+        'hover-border'
+      )[0] as HTMLElement
+      if (border) {
+        border.className = border.className.replace(' hover-border', '')
+      }
+    }
+
     return {
       ...toRefs(data),
+      ...toRefs(set),
       handleDragEnter,
       handleDragOver,
       handleDragLeave,
@@ -303,7 +389,35 @@ export default defineComponent({
       handleDeleteControl,
       handleCopyControl,
       handlePasteControl,
+      handleClickContentMenuItem,
+      handleMouseOverContentMenuItem,
+      handleMouseOutContentMenuItem,
     }
   },
 })
 </script>
+<style lang="scss" scoped>
+.designer-container {
+  .contextmenu {
+    margin: 0;
+    background: #fff;
+    z-index: 3000;
+    position: absolute;
+    list-style-type: none;
+    padding: 5px 0;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 400;
+    color: #333;
+    box-shadow: 2px 2px 3px 0 rgba(0, 0, 0, 0.3);
+    li {
+      margin: 0;
+      padding: 7px 16px;
+      cursor: pointer;
+      &:hover {
+        background: #eee;
+      }
+    }
+  }
+}
+</style>

@@ -6,7 +6,8 @@
       <div style="display:inline-block;" :id="node.id" :class="handleShowBorder(node)" :draggable="true"
            @dragstart.stop="handleDragStart(node,$event)" @dragend="handleDragEnd"
            @dragenter.stop.prevent="handleDragEnterOnNode" @dragover.stop.prevent="handleDragOverOnNode(node,$event)"
-           @drop.stop.prevent="handleDropOnNode(node, $event)" @click.stop.prevent="handleClick">
+           @drop.stop.prevent="handleDropOnNode(node, $event)" @click.stop.prevent="handleClick"
+           @contextmenu.prevent="openMenu(node,$event)">
         <component :is="node.name" v-model="node.value" :type="node.props.type" :readonly="node.props.readonly"
                    :disabled="node.props.disabled" :editable="node.props.editable" :clearable="node.props.clearable"
                    :placeholder="node.props.placeholder" :start-placeholder="node.props['start-placeholder']"
@@ -21,14 +22,16 @@
                  :style="node.style" :draggable="true" @dragstart.stop="handleDragStart(node,$event)"
                  @dragend="handleDragEnd" @dragenter.stop.prevent="handleDragEnterOnNode"
                  @dragover.stop.prevent="handleDragOverOnNode(node,$event)"
-                 @drop.stop.prevent="handleDropOnNode(node, $event)" @click.stop.prevent="handleClick">
+                 @drop.stop.prevent="handleDropOnNode(node, $event)" @click.stop.prevent="handleClick"
+                 @contextmenu.prevent="openMenu(node,$event)">
         <template v-for="(node, index) in node.children" :key="node.id + index">
           <component :id="node.id" :is="node.name" v-bind="node.props" v-model="node.value"
                      :class="handleShowBorder(node)" :style="node.style" :draggable="true"
                      @dragstart.stop="handleDragStart(node,$event)" @dragend="handleDragEnd"
                      @dragenter.stop.prevent="handleDragEnterOnNode"
                      @dragover.stop.prevent="handleDragOverOnNode(node,$event)"
-                     @drop.stop.prevent="handleDropOnNode(node, $event)" @click.stop.prevent="handleClick">
+                     @drop.stop.prevent="handleDropOnNode(node, $event)" @click.stop.prevent="handleClick"
+                     @contextmenu.prevent="openMenu(node,$event)">
             {{node.text}}
             <template v-if="node.children">
               <component-tree :component_tree_list="node.children"></component-tree>
@@ -43,7 +46,8 @@
                  :style="node.style" :draggable="true" @dragstart.stop="handleDragStart(node,$event)"
                  @dragend="handleDragEnd" @dragenter.stop.prevent="handleDragEnterOnNode"
                  @dragover.stop.prevent="handleDragOverOnNode(node,$event)"
-                 @drop.stop.prevent="handleDropOnNode(node, $event)" @click.stop.prevent="handleClick">
+                 @drop.stop.prevent="handleDropOnNode(node, $event)" @click.stop.prevent="handleClick"
+                 @contextmenu.prevent="openMenu(node,$event)">
         {{node.text}}
         <template v-if="node.children">
           <component-tree :component_tree_list="node.children"></component-tree>
@@ -122,33 +126,44 @@ export default defineComponent({
           name: 'el-row',
           props: {},
           style:
-            'flex-grow: 1;height:100%;max-height:80px;border:1px dashed #cccccc;box-sizing:border-box;background:#fafafa;',
+            'flex: 1;border:1px dashed #cccccc;box-sizing:border-box;background:#fafafa;',
         }
 
         //插入到元素内部
         if (node.children) {
           //判断是否是在最外层的边界，如果在最外层的边界移动，那么插入到对应的最外层索引后
           const ele = document.getElementById(node.id) as HTMLElement
-          //递归获取当前元素距离最外层父元素的距离
-          const recursionGetOffsetTop = (ele: any, offset_top: number = 0) => {
-            offset_top = ele.offsetTop
-            let parent_ele = ele.offsetParent
-            if (parent_ele != null) {
-              offset_top += parent_ele.offsetTop
-              recursionGetOffsetTop(parent_ele, offset_top)
-            }
-            return offset_top
-          }
-          //这里>=1和<=1是为了放大边界，不然会有bug
+
+          //落在边界还是内部 边界的话可以换顺序 内部的话直接扔进去
+          let position_type = 0 //0内部 1上下边界 2左右边界
+          //这里>=2和<=2是为了放大边界，不然会有bug
           if (
             e.clientY +
               (document.getElementById('desginer') as HTMLElement).scrollTop >=
-              recursionGetOffsetTop(ele) - 1 &&
+              _recursionGetOffsetTop(ele).offsetTop - 2 &&
             e.clientY +
               (document.getElementById('desginer') as HTMLElement).scrollTop <=
-              recursionGetOffsetTop(ele) + 1
+              _recursionGetOffsetTop(ele).offsetTop + 2
           ) {
-            //落在边界上 获取当前元素的父级
+            //落在上下边界上
+            position_type = 1
+          } else if (
+            e.clientX +
+              (document.getElementById('desginer') as HTMLElement).scrollLeft >=
+              _recursionGetOffsetTop(ele).offsetLeft - 2 &&
+            e.clientX +
+              (document.getElementById('desginer') as HTMLElement).scrollLeft <=
+              _recursionGetOffsetTop(ele).offsetLeft + 2
+          ) {
+            //落在左右边界上 获取当前元素的父级
+            position_type = 2
+          } else {
+            //落在内部
+            position_type = 0
+          }
+          //根据落在哪里的类型插入元素
+          if (position_type == 1 || position_type == 2) {
+            //落在上下边界上 获取当前元素的父级
             parent_node = _handleRecursionGetParentNode(
               node,
               data.sotre_component_tree_list
@@ -205,7 +220,10 @@ export default defineComponent({
             if (child.id == node.id) {
               block_node_index = i
               //判断是否是设计窗口内上拖还是下拖 还是控件栏拖入 计算插入的索引
-              block_node_index = _handleCalcDragInsertIndex(block_node_index)
+              block_node_index = _handleCalcDragInsertIndex(
+                block_node_index,
+                parent_node
+              )
               break
             }
           }
@@ -252,12 +270,35 @@ export default defineComponent({
         if (node.children) {
           //判断是否是在最外层的边界，如果在最外层的边界移动，那么插入到对应的最外层索引后
           const ele = document.getElementById(node.id) as HTMLElement
-          //这里不需要放大了边界了，不会有bug了
+          //落在边界还是内部 边界的话可以换顺序 内部的话直接扔进去
+          let position_type = 0 //0内部 1上下边界 2左右边界
+          //这里>=2和<=2是为了放大边界，不然会有bug
           if (
             e.clientY +
-              (document.getElementById('desginer') as HTMLElement).scrollTop ==
-            ele.offsetTop
+              (document.getElementById('desginer') as HTMLElement).scrollTop >=
+              _recursionGetOffsetTop(ele).offsetTop - 2 &&
+            e.clientY +
+              (document.getElementById('desginer') as HTMLElement).scrollTop <=
+              _recursionGetOffsetTop(ele).offsetTop + 2
           ) {
+            //落在上下边界上
+            position_type = 1
+          } else if (
+            e.clientX +
+              (document.getElementById('desginer') as HTMLElement).scrollLeft >=
+              _recursionGetOffsetTop(ele).offsetLeft - 2 &&
+            e.clientX +
+              (document.getElementById('desginer') as HTMLElement).scrollLeft <=
+              _recursionGetOffsetTop(ele).offsetLeft + 2
+          ) {
+            //落在左右边界上 获取当前元素的父级
+            position_type = 2
+          } else {
+            //落在内部
+            position_type = 0
+          }
+          //同样放大边界
+          if (position_type == 1 || position_type == 2) {
             //落在边界上 获取当前元素的父级
             parent_node = _handleRecursionGetParentNode(
               node,
@@ -311,6 +352,19 @@ export default defineComponent({
         //设置当前操作对象
         store.dispatch('handleChangeCurrentNodeInfo', node_info)
       })
+    }
+
+    //递归获取当前元素距离最外层父元素的距离
+    const _recursionGetOffsetTop = (ele: any) => {
+      let offsetTop = ele.offsetTop //获取该元素对应父容器的上边距
+      let offsetLeft = ele.offsetLeft //对应父容器的上边距
+      //判断是否有父容器，如果存在则累加其边距
+      while ((ele = ele.offsetParent)) {
+        //等效 obj = obj.offsetParent;while (obj != undefined)
+        offsetTop += ele.offsetTop //叠加父容器的上边距
+        offsetLeft += ele.offsetLeft //叠加父容器的左边距
+      }
+      return { offsetTop, offsetLeft }
     }
 
     //是否显示边框线
@@ -416,7 +470,10 @@ export default defineComponent({
     /**
      * 判断是否是设计窗口内,上拖还是下拖 还是控件栏拖入 计算插入的索引
      */
-    const _handleCalcDragInsertIndex = (block_node_index: number) => {
+    const _handleCalcDragInsertIndex = (
+      block_node_index: number,
+      block_parent_node: any
+    ) => {
       //判断是否是设计窗口内控件拖拽
       if (Object.keys(store.state.drag_node_info).length > 0) {
         //找到拖拽节点的位置  和 占位块索引做比较 如果是往上拖 则不需要重新计算 往下拖 则需要删除
@@ -424,6 +481,10 @@ export default defineComponent({
           store.state.drag_node_info,
           data.sotre_component_tree_list
         )
+        // ps:还有一种是不是同级别的拖拽，这个时候插入索引不需要改变
+        if (parent_node != block_parent_node) {
+          return block_node_index
+        }
         if (parent_node.children) {
           //说明在内 二层及以上
           parent_node = parent_node.children
@@ -456,6 +517,34 @@ export default defineComponent({
       _handleRecursionDelete('block_node', data.sotre_component_tree_list)
     }
 
+    //右键节点显示节点及其所有父节点的右键菜单
+    //因为每个组件都加了右键事件 所以可以取到所有父级节点 然后每个右键事件的点击位置是相同的，根据这个来判断是否清空数组
+    const openMenu = (node: any, e: any) => {
+      const location = store.state.content_location
+      if (e.clientX != location.x || e.clientY != location.y) {
+        //点击的是不同位置   清除list
+        store.dispatch('handleChangeContentNodeList', [])
+        //记录点击位置
+        store.dispatch('handleChangeContentLocation', {
+          x: e.clientX,
+          y: e.clientY,
+        })
+      }
+      //如果节点已存在不需要重复添加，这种情况是在同一个节点的不同位置点击
+      if (store.state.content_node_list.includes(node)) {
+        //记录点击位置
+        store.dispatch('handleChangeContentLocation', {
+          x: e.clientX,
+          y: e.clientY,
+        })
+      } else {
+        store.dispatch(
+          'handleChangeContentNodeList',
+          store.state.content_node_list.concat([node])
+        )
+      }
+    }
+
     return {
       ...toRefs(data),
       handleDragEnterOnNode,
@@ -465,6 +554,7 @@ export default defineComponent({
       handleClick,
       handleDragStart,
       handleDragEnd,
+      openMenu,
     }
   },
 })
