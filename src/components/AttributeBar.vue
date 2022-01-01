@@ -78,9 +78,9 @@
             </el-form-item>
             <el-form-item v-if="attribute.size||attribute.size==''" label="尺寸">
               <el-select v-model="attribute.size" placeholder="尺寸" clearable>
-                <el-option key="medium" label="正常" value="medium"></el-option>
+                <el-option key="default" label="正常" value="default"></el-option>
                 <el-option key="small" label="小" value="small"></el-option>
-                <el-option key="mini" label="迷你" value="mini"></el-option>
+                <el-option key="large" label="大" value="large"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item v-if="attribute.type||attribute.type==''" label="类型">
@@ -140,9 +140,9 @@
             </el-form-item>
             <el-form-item v-if="attribute.size||attribute.size==''" label="尺寸">
               <el-select v-model="attribute.size" placeholder="尺寸" clearable>
-                <el-option key="medium" label="正常" value="medium"></el-option>
+                <el-option key="default" label="正常" value="default"></el-option>
                 <el-option key="small" label="小" value="small"></el-option>
-                <el-option key="mini" label="迷你" value="mini"></el-option>
+                <el-option key="large" label="大" value="large"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="禁用">
@@ -179,8 +179,7 @@
                     <el-input size="small" v-model="item.props.label" placeholder="值" clearable></el-input>
                   </el-col>
                   <el-col :span="4" :offset="1">
-                    <el-button v-if="index > 1" size="mini" type="danger"
-                               @click="handleClickDeleteRadioItem(node_info,index)">
+                    <el-button v-if="index > 1" type="danger" @click="handleClickDeleteRadioItem(node_info,index)">
                       <svg-icon name="minus" className="icon" />
                     </el-button>
                   </el-col>
@@ -188,7 +187,7 @@
               </template>
               <el-row>
                 <el-col :span="4" :offset="1">
-                  <el-button size="mini" type="primary" @click="handleClickAddRadioItem(node_info)">
+                  <el-button type="primary" @click="handleClickAddRadioItem(node_info)">
                     <svg-icon name="plus" className="icon" />
                   </el-button>
                 </el-col>
@@ -215,8 +214,7 @@
                     <el-input size="small" v-model="item.props.label" placeholder="值" clearable></el-input>
                   </el-col>
                   <el-col :span="4" :offset="1">
-                    <el-button v-if="index > 1" size="mini" type="danger"
-                               @click="handleClickDeleteCheckBoxItem(node_info,index)">
+                    <el-button v-if="index > 1" type="danger" @click="handleClickDeleteCheckBoxItem(node_info,index)">
                       <svg-icon name="minus" className="icon" />
                     </el-button>
                   </el-col>
@@ -224,7 +222,7 @@
               </template>
               <el-row>
                 <el-col :span="4" :offset="1">
-                  <el-button size="mini" type="primary" @click="handleClickAddCheckBoxItem(node_info)">
+                  <el-button type="primary" @click="handleClickAddCheckBoxItem(node_info)">
                     <svg-icon name="plus" className="icon" />
                   </el-button>
                 </el-col>
@@ -345,8 +343,7 @@
                     <el-input size="small" v-model="item.props.value" placeholder="值" clearable></el-input>
                   </el-col>
                   <el-col :span="3" :offset="1">
-                    <el-button v-if="index > 1" size="mini" type="danger"
-                               @click="handleClickDeleteSelectItem(node_info,index)">
+                    <el-button v-if="index > 1" type="danger" @click="handleClickDeleteSelectItem(node_info,index)">
                       <svg-icon name="minus" className="icon" />
                     </el-button>
                   </el-col>
@@ -354,7 +351,7 @@
               </template>
               <el-row>
                 <el-col :span="4" :offset="1">
-                  <el-button size="mini" type="primary" @click="handleClickAddSelectItem(node_info)">
+                  <el-button type="primary" @click="handleClickAddSelectItem(node_info)">
                     <svg-icon name="plus" className="icon" />
                   </el-button>
                 </el-col>
@@ -468,9 +465,9 @@
             </el-form-item>
             <el-form-item v-if="attribute.size||attribute.size==''" label="尺寸">
               <el-select v-model="attribute.size" placeholder="尺寸" clearable>
-                <el-option key="medium" label="正常" value="medium"></el-option>
+                <el-option key="default" label="正常" value="default"></el-option>
                 <el-option key="small" label="小" value="small"></el-option>
-                <el-option key="mini" label="迷你" value="mini"></el-option>
+                <el-option key="large" label="大" value="large"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item v-if="attribute.title||attribute.title==''" label="标题文本">
@@ -505,7 +502,7 @@
                     </el-select>
                   </el-col>
                   <el-col :span="4" :offset="1">
-                    <el-button v-if="index > 1" size="mini" type="danger"
+                    <el-button v-if="index > 1" type="danger"
                                @click="handleClickDeleteDescriptionsItem(node_info,index)">
                       <svg-icon name="minus" className="icon" />
                     </el-button>
@@ -514,7 +511,7 @@
               </template>
               <el-row>
                 <el-col :span="4" :offset="1">
-                  <el-button size="mini" type="primary" @click="handleClickAddDescriptionsItem(node_info)">
+                  <el-button type="primary" @click="handleClickAddDescriptionsItem(node_info)">
                     <svg-icon name="plus" className="icon" />
                   </el-button>
                 </el-col>

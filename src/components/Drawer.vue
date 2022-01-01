@@ -5,18 +5,18 @@
     </el-row>
     <el-row class="block" type="flex" justify="space-between" align="middle">
       <div>
-        <el-button size="mini" @click="handleClickChangeTheme(1)">默认红</el-button>
+        <el-button @click="handleClickChangeTheme(1)">默认红</el-button>
       </div>
       <div>
-        <el-button size="mini" @click="handleClickChangeTheme(2)">天空蓝</el-button>
+        <el-button @click="handleClickChangeTheme(2)">天空蓝</el-button>
       </div>
     </el-row>
     <el-row class="block" type="flex" justify="space-between" align="middle">
       <div>
-        <el-button size="mini" @click="handleClickChangeTheme(3)">青草绿</el-button>
+        <el-button @click="handleClickChangeTheme(3)">青草绿</el-button>
       </div>
       <div>
-        <el-button size="mini" @click="handleClickChangeTheme(4)">炫酷紫</el-button>
+        <el-button @click="handleClickChangeTheme(4)">炫酷紫</el-button>
       </div>
     </el-row>
   </el-drawer>

@@ -72,7 +72,7 @@ const components_list: any = {
           name: 'el-button',
           title: '按钮',
           props: {
-            size: 'medium',
+            size: 'default',
             type: 'primary',
             plain: false,
             round: false,
@@ -103,7 +103,7 @@ const components_list: any = {
             'label-position': 'right',
             'label-width': '100px',
             inline: false,
-            size: 'medium',
+            size: 'default',
             disabled: false
           },
           model: '',
@@ -323,7 +323,7 @@ const components_list: any = {
             border: true,
             column: 3,
             direction: 'horizontal',
-            size: 'medium',
+            size: 'default',
             title: '标题文本'
           },
           style: '',
