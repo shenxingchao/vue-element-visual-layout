@@ -407,7 +407,6 @@ export default defineComponent({
 
       let target_id = recursionFindNodeId(e)
 
-      console.log(e.target.className)
       if (e.target.className == 'el-switch__core') {
         //如果是开关控件，则是找到他的兄弟节点
         target_id = e.target.parentNode.children[0].id
