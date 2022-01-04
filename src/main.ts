@@ -13,6 +13,8 @@ import '@/styles/index.scss'
 import SvgPlugin from '@/components/SvgIcon'
 //引入代码高亮
 import HightLightjsPlugin from '@/components/HightLightjs'
+//引入全局组件：elIcon
+import componentInstall from '@/components/componentInstall'
 
 //引入nedb数据库
 import Db from '@/db/index'
@@ -55,6 +57,8 @@ app.use(ElementPlus)
 app.use(SvgPlugin, {
   imports: []
 })
+//使用全局组件
+app.use(componentInstall)
 //使用代码高亮
 app.use(HightLightjsPlugin)
 
