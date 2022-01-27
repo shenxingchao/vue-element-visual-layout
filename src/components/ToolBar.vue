@@ -7,25 +7,33 @@
         <el-col :span="6">
           <!--  设计窗口 -->
           <el-tooltip effect="dark" content="设计窗口/切换显示边框" placement="bottom">
-            <svg-icon name="layout" className="icon" @click="handleClickToolBtn(1)" />
+            <div>
+              <svg-icon name="layout" className="icon" @click="handleClickToolBtn(1)" />
+            </div>
           </el-tooltip>
         </el-col>
         <el-col :span="6">
           <!--  查看代码 -->
           <el-tooltip effect="dark" content="查看代码" placement="bottom">
-            <svg-icon name="source_code" className="icon" @click="handleClickToolBtn(2)" />
+            <div>
+              <svg-icon name="source_code" className="icon" @click="handleClickToolBtn(2)" />
+            </div>
           </el-tooltip>
         </el-col>
         <el-col :span="6">
           <!--  清空布局 -->
           <el-tooltip effect="dark" content="清空布局" placement="bottom">
-            <svg-icon name="clear_layout" className="icon" @click="handleClickToolBtn(3)" />
+            <div>
+              <svg-icon name="clear_layout" className="icon" @click="handleClickToolBtn(3)" />
+            </div>
           </el-tooltip>
         </el-col>
         <el-col :span="6">
           <!--  删除控件 -->
           <el-tooltip effect="dark" content="删除控件 DELETE" placement="bottom">
-            <svg-icon name="delete" className="icon" @click="handleClickToolBtn(4)" />
+            <div>
+              <svg-icon name="delete" className="icon" @click="handleClickToolBtn(4)" />
+            </div>
           </el-tooltip>
         </el-col>
       </el-row>
