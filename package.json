@@ -9,7 +9,7 @@
   "main": "background.js",
   "dependencies": {
     "@element-plus/icons": "^0.0.11",
-    "element-plus": "^1.3.0-beta.4",
+    "element-plus": "^1.3.0-beta.9",
     "moment": "^2.29.1",
     "normalize.css": "^8.0.1",
     "vue": "3.2.19",
