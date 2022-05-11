@@ -74,6 +74,8 @@ const components_list: any = {
           props: {
             size: 'default',
             type: 'primary',
+            text: false,
+            bg: false,
             plain: false,
             round: false,
             circle: false,
