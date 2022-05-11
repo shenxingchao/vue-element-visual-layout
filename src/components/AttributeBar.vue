@@ -91,8 +91,13 @@
                 <el-option key="warning" label="警告" value="warning"></el-option>
                 <el-option key="danger" label="危险" value="danger"></el-option>
                 <el-option key="info" label="信息" value="info"></el-option>
-                <el-option key="text" label="文本" value="text"></el-option>
               </el-select>
+            </el-form-item>
+            <el-form-item label="文本按钮">
+              <el-switch v-model="attribute.text" @change="attribute.text==false?attribute.bg=false:''"></el-switch>
+            </el-form-item>
+            <el-form-item v-if="attribute.text" label="按钮背景">
+              <el-switch v-model="attribute.bg"></el-switch>
             </el-form-item>
             <el-form-item label="朴素按钮">
               <el-switch v-model="attribute.plain"></el-switch>
