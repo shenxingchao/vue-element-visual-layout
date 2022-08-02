@@ -12,7 +12,7 @@
     "element-plus": "^2.2.12",
     "moment": "^2.29.1",
     "normalize.css": "^8.0.1",
-    "vue": "3.2.31",
+    "vue": "3.2.37",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.0-0"
   },
